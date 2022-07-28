@@ -3,11 +3,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import PostList from './components/PostList';
 
-import './App.css';
 import Container from 'react-bootstrap/Container';
 import Header from './components/Header';
 import UserLogin from './components/UserLogin';
 import UserRegister from './components/UserRegister';
+
+import './App.css';
 
 function App() {
 
