@@ -11,7 +11,7 @@ const Header = (props) => {
   return (
     <Navbar expand="md">
     <Container>
-      <Navbar.Brand>Travel Log</Navbar.Brand>
+      <Navbar.Brand as={Link} to={'/'}>Travel Log</Navbar.Brand>
       <div className="justify-content-end">
         <Navbar.Toggle aria-controls='travelLog-nav'/>
         <Navbar.Collapse id="travelLog-nav">
