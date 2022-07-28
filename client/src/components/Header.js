@@ -9,15 +9,19 @@ const Header = (props) => {
   const {headerLink} = props;
   
   return (
-    <Navbar>
+    <Navbar expand="md">
     <Container>
       <Navbar.Brand>Travel Log</Navbar.Brand>
-      <Navbar.Toggle />
-      <Navbar.Collapse className="justify-content-end">
-        { headerLink.map( (link, index) =>
-        <Nav.Link as={Link} to={link[1]} key={index}>{link[0]}</Nav.Link>
-        )}
-      </Navbar.Collapse>
+      <div className="justify-content-end">
+        <Navbar.Toggle aria-controls='travelLog-nav'/>
+        <Navbar.Collapse id="travelLog-nav">
+          <Nav className='me-auto'>
+          { headerLink.map( (link, index) =>
+          <Nav.Link as={Link} to={link[1]} key={index}>{link[0]}</Nav.Link>
+          )}
+          </Nav>
+        </Navbar.Collapse>
+      </div>
     </Container>
   </Navbar>
   )
