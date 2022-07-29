@@ -68,9 +68,16 @@ class User:
         return connectToMySQL(cls.db).query_db(query, data)
     
     @classmethod
-    def add_bookmark(cls,data):
+    def add_bookmark(cls, data):
         query = "INSERT INTO favorites (user_id, post_id) VALUES (%(user_id)s, %(post_id)s);"
         return connectToMySQL(cls.db).query_db(query, data)
+    
+
+    #.. delete methods
+    @classmethod
+    def delete_bookmark(cls, data):
+        query = "DELETE FROM bookmarks WHERE user_id = %(user_id)s AND post_id = %(post_id)s;"
+        return cls
 
 
 
