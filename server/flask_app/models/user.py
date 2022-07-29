@@ -34,7 +34,7 @@ class User:
         result = connectToMySQL(cls.db).query_db(query, data)
         user = cls(result[0])
 
-        # obtain all posts
+        # add post to posts array
         for row in result:
             post = {
                 "title": row['title'],
@@ -49,6 +49,7 @@ class User:
         query = "SELECT * FROM bookmarks LEFT JOIN posts ON bookmarks.post_id = posts.id LEFT JOIN locations ON posts.location_id = locations.id WHERE users.id = %(id)s;"
         result = connectToMySQL(cls.db).query_db(query, data)
 
+        # add bookmarked posts to bookmarks array
         for row in result:
             bookmark = {
                 "title": row['title'],
@@ -57,10 +58,20 @@ class User:
             }
             user.bookmarks.append(bookmark)
         
-
+        return user
 
 
     #.. add methods
+    @classmethod
+    def add_user(cls, data):
+        query = "INSERT INTO users (username, first_name, last_name, email, password) VALUES (%(name)s, %(first_name)s, %(last_name)s, %(email)s, %(password)s);"
+        return connectToMySQL(cls.db).query_db(query, data)
+    
+    @classmethod
+    def add_bookmark(cls,data):
+        query = "INSERT INTO favorites (user_id, post_id) VALUES (%(user_id)s, %(post_id)s);"
+        return connectToMySQL(cls.db).query_db(query, data)
+
 
 
     #.. validation methods
