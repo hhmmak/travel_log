@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import PostList from './components/PostList';
-
 import Container from 'react-bootstrap/Container';
+
+import PostList from './components/PostList';
 import Header from './components/Header';
 import UserLogin from './components/UserLogin';
 import UserRegister from './components/UserRegister';
-
-import './App.css';
 import PostDetail from './components/PostDetail';
 import PostForm from './components/PostForm';
+import UserProfile from './components/UserProfile';
+
+import './App.css';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/register' element={<UserRegister />} />
           <Route path='/post/:id' element={<PostDetail />} />
           <Route path='/post/create' element={<PostForm />} />
+          <Route path='/user/:id' element={<UserProfile />} />
         </Routes>
       </BrowserRouter>
     </Container>
