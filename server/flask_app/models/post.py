@@ -26,7 +26,7 @@ class Post:
         posts = []
         for row in results:
             posts.append(cls(row))
-        return
+        return posts
 
     
     @classmethod
@@ -44,7 +44,7 @@ class Post:
 
     #.. update methods
     @classmethod
-    def update_car(cls, data):
+    def update_post(cls, data):
         query = "UPDATE posts SET title = %(title)s, content = %(content)s, itinerary = %(itinerary)s, location_id = %(location_id)s, date_from = %(date_from)s, date_to = %(date_to)s, duration = %(duration)s WHERE id = %(id)s;"
         connectToMySQL(cls.db_name).query_db(query, data)
         return cls
