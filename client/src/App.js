@@ -9,26 +9,25 @@ import UserLogin from './components/UserLogin';
 import UserRegister from './components/UserRegister';
 
 import './App.css';
+import PostDetail from './components/PostDetail';
+import PostForm from './components/PostForm';
 
 function App() {
 
-  // const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(false); //TODO remove from Header and add to Login
   const [headerLink, setHeaderLink] = useState([["Log In", "/login"], ["Create Account", "/register"]]);
 
-  // if (login) {
-  //   setHeaderLink([["Log In", ""], ["Create Account", ""]])
-  // } else {
-  //   setHeaderLink([["Profile", ""], ["Log Out", ""]])
-  // }
 
   return (
     <Container>
     <BrowserRouter>
-        <Header headerLink={headerLink} />
+        <Header headerLink={headerLink} login={login} setLogin ={setLogin} setHeaderLink={setHeaderLink}/>
         <Routes>
           <Route path='/' element={<PostList />} />
           <Route path='/login' element={<UserLogin />} />
           <Route path='/register' element={<UserRegister />} />
+          <Route path='/post/:id' element={<PostDetail />} />
+          <Route path='/post/create' element={<PostForm />} />
         </Routes>
       </BrowserRouter>
     </Container>
