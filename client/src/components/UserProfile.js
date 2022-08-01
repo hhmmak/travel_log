@@ -5,7 +5,9 @@ import Table from 'react-bootstrap/Table';
 const UserProfile = (props) => {
   return (
     <div>
-      <h2>Hi, user!</h2>
+      <div className='my-5'>
+        <h2>Hi, user!</h2>
+      </div>
       <Row>
         <Col>
           <h3>Your Logs</h3>
@@ -25,16 +27,30 @@ const UserProfile = (props) => {
                 <th>date from - date to</th>
                 <th>View | Edit | Delete</th>
               </tr>
+              <tr>
+                <th>Trip to New York</th>
+                <th>New York, U.S.A.</th>
+                <th>date from - date to</th>
+                <th>View | Edit | Delete</th>
+              </tr>
+              <tr>
+                <th>Trip to New York</th>
+                <th>New York, U.S.A.</th>
+                <th>date from - date to</th>
+                <th>View | Edit | Delete</th>
+              </tr>
             </tbody>
           </Table>
         </Col>
-        <Col>
-          <h3>Bookmarks</h3>
-          <div>
-            <p>Trip 1</p>
-            <p>Trip 1</p>
-            <p>Trip 1</p>
-            <p>Trip 1</p>
+        <Col sm={4}>
+          <div className='position-sticky'>
+            <h3>Bookmarks</h3>
+            <ol className='list-unstyled mb-0'>
+              <li>Trip 1, Los Angeles ( 2 days )</li>
+              <li>Trip 1, Los Angeles ( 2 days )</li>
+              <li>Trip 1, Los Angeles ( 2 days )</li>
+              <li>Trip 1, Los Angeles ( 2 days )</li>
+            </ol>
           </div>
         </Col>
       </Row>
