@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const UserLogin = (props) => {
   return (
-    <div className='vh-100 d-flex align-items-center'>
+    <div className='vh-75 d-flex align-items-center'>
       <div className='col-lg-7 col-10 mx-auto'>
         <h2 className='mb-5'>Log In</h2>
         <Form className='mb-5'>
