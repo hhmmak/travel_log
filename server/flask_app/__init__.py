@@ -1,5 +1,5 @@
+from flask import Flask
 import os
 
-from flask import Flask
 app = Flask(__name__)
-app.secret_key = os.environ.APP_KEY
+app.secret_key = os.environ.get("APP_KEY")
