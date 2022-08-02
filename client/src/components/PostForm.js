@@ -13,13 +13,12 @@ const PostForm = (props) => {
 
   const [post, setPost] = useState({
     title: "",
+    content: "",
+    itinerary: "",
     destination: "",
     country: "",
     dateFrom: "",
-    dateTo: "",
-    itinerary: "",
-    content: "",
-    userId: userId
+    dateTo: ""
   })
 
   const onChangeHandler = (e) => {
@@ -29,7 +28,7 @@ const PostForm = (props) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log(post)
-    axios.post("http://localhost:5000/api/posts", post)
+    axios.post("http://localhost:5000/api/posts", {...post, user_id: userId})
       .then(res => navigate('/'))
       .catch(err => console.log(err))
   }
