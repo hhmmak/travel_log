@@ -19,6 +19,7 @@ function App() {
   const [headerLink, setHeaderLink] = useState([["Log In", "/login"], ["Create Account", "/register"]]);
 
 
+  //TODO change userID in props of UserProfile
   return (
     <Container>
     <BrowserRouter>
@@ -28,8 +29,8 @@ function App() {
           <Route path='/login' element={<UserLogin />} />
           <Route path='/register' element={<UserRegister />} />
           <Route path='/post/:id' element={<PostDetail />} />
-          <Route path='/post/create' element={<PostForm />} />
-          <Route path='/user/:id' element={<UserProfile />} />
+          <Route path='/post/new' element={<PostForm />} />
+          <Route path='/user/:id' element={<UserProfile />}  userId={1}/>
         </Routes>
       </BrowserRouter>
     </Container>
