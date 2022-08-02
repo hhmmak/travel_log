@@ -13,7 +13,7 @@ const Header = (props) => {
   if (login) {
     setHeaderLink([["Log In", "/login"], ["Create Account", "/register"]])
   } else {
-    setHeaderLink([["Profile", "/user/1"], ["Log Out", ""]])
+    setHeaderLink([["Write New Post", '/post/new'], ["Profile", "/user/1"], ["Log Out", ""]])
   }
   
   }, [login])
