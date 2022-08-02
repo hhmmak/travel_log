@@ -29,8 +29,8 @@ function App() {
           <Route path='/login' element={<UserLogin />} />
           <Route path='/register' element={<UserRegister />} />
           <Route path='/post/:id' element={<PostDetail />} />
-          <Route path='/post/new' element={<PostForm />} />
-          <Route path='/user/:id' element={<UserProfile />}  userId={1}/>
+          <Route path='/post/new' element={<PostForm  userId={1} />}/>
+          <Route path='/user/:id' element={<UserProfile />} />
         </Routes>
       </BrowserRouter>
     </Container>
