@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
@@ -25,7 +27,7 @@ const UserProfile = (props) => {
                 <th>Trip to New York</th>
                 <th>New York, U.S.A.</th>
                 <th>date from - date to</th>
-                <th>View | Edit | Delete</th>
+                <th><Link to={'/post/1'}>View</Link>| Edit | Delete</th>
               </tr>
               <tr>
                 <th>Trip to New York</th>
@@ -43,7 +45,7 @@ const UserProfile = (props) => {
           </Table>
         </Col>
         <Col sm={4}>
-          <div className='position-sticky'>
+          <div>
             <h3>Bookmarks</h3>
             <ol className='list-unstyled mb-0'>
               <li>Trip 1, Los Angeles ( 2 days )</li>
