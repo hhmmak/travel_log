@@ -2,7 +2,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 
 class User:
 
-    db_name = 'travel_log_schema'
+    db_name = 'travel_schema'
 
     def __init__(self, data):
         self.id = data['id']
