@@ -20,12 +20,26 @@ class Post:
 
     #.. get methods
     @classmethod
-    def get_all_posts(cls, data):
-        query = "SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id LEFT JOIN locations ON posts.location_id = locations.id LEFT JOIN countries ON locations.country_id = countries.id"
-        results = connectToMySQL(cls.db_name).query_db(query, data)
+    def get_all_posts(cls):
+        query = "SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id"
+        results = connectToMySQL(cls.db_name).query_db(query)
         posts = []
         for row in results:
-            posts.append(cls(row))
+            post = {
+                "user_id": row['user_id'],
+                "username": row['username'],
+                "id": row['posts.id'],
+                "title": row['title'],
+                "content": row['content'],
+                "itinerary": row['itinerary'],
+                "destination": row['destination'],
+                "duration": row['duration'],
+                "country": row['country'],
+                "date_from": row['date_from'],
+                "date_to": row['date_to'],
+                "posts.created_at": row['posts.created_at']
+            }
+            posts.append(post)
         return posts
 
     
@@ -44,7 +58,7 @@ class Post:
             "title": results[0]['title'],
             "content": results[0]['content'],
             "itinerary": results[0]['itinerary'],
-            "location": results[0]['location'],
+            "destination": results[0]['destination'],
             "duration": results[0]['duration'],
             "country": results[0]['country'],
             "date_from": results[0]['date_from'],
@@ -63,7 +77,8 @@ class Post:
     #.. update methods
     @classmethod
     def update_post(cls, data):
-        query = "UPDATE posts SET title = %(title)s, content = %(content)s, itinerary = %(itinerary)s, location_id = %(location_id)s, date_from = %(date_from)s, date_to = %(date_to)s, duration = %(duration)s WHERE id = %(id)s;"
+
+        query = "UPDATE posts SET title = %(title)s, content = %(content)s, itinerary = %(itinerary)s, destination = %(destination)s, country = %(country)s, date_from = %(date_from)s, date_to = %(date_to)s, duration = %(duration)s WHERE id = %(id)s;"
         connectToMySQL(cls.db_name).query_db(query, data)
         return cls
 
