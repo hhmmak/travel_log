@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import Button from 'react-bootstrap/Button';
@@ -12,6 +12,7 @@ import {ReactComponent as Bookmark} from './icons/bookmark.svg';
 
 const PostDetail = (props) => {
 
+  const navigate = useNavigate();
   const {id} = useParams();
   const[post, setPost] = useState({});
 
@@ -21,17 +22,22 @@ const PostDetail = (props) => {
       .catch(err => console.log(err));
   }, [id])
 
+  const deleteHandler = () => {
+    axios.delete(`http://localhost:5000/api/posts/${id}`)
+      .then(res => navigate('/'))
+      .catch(err => console.log(err))
+  }
 
   return ( 
-    <div>
+    <div className='my-3'>
       <Row>
         <Col>
           <ButtonGroup>
-            <Button variant='outline-dark'>Edit</Button>
-            <Button variant='outline-dark'>Delete</Button>
+            <Button variant='outline-dark' onClick={() => navigate(`/post/edit/${post.id}`)}>Edit</Button>
+            <Button variant='outline-dark' onClick={deleteHandler}>Delete</Button>
           </ButtonGroup>
         </Col>
-        <Col>
+        <Col className='d-flex flex-row-reverse'>
           <Bookmark width={"3rem"}/>
         </Col>
       </Row>
