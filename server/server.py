@@ -1,5 +1,5 @@
 from flask_app import app
-from flask_app.controllers import posts
+from flask_app.controllers import posts, users
 from flask_cors import CORS
 
 
