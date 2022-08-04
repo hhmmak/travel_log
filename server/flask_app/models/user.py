@@ -20,43 +20,67 @@ class User:
     @classmethod
     def get_user_by_email(cls, data):
         query = "SELECT * FROM users WHERE email = %(email)s;"
-        user = connectToMySQL(cls.db).query_db(query, data)
-        return cls(user[0])
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        user = {
+            "id": results[0]['id'],
+            "username": results[0]['username'],
+            "email": results[0]['email'],
+            "password": results[0]['password'],
+        }
+        return user
     
+    @classmethod
     def get_user_by_id(cls, data):
+        print("------------- data in model: ", data)
         query = "SELECT * FROM users WHERE id = %(id)s;"
-        user = connectToMySQL(cls.db).query_db(query, data)
-        return cls(user[0])
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        user = {
+            "username": results[0]['username'],
+            "first_name": results[0]['first_name'],
+            "last_name": results[0]['last_name'],
+            "email": results[0]['email'],
+        }
+        return user
 
+    @classmethod
     def get_user_with_posts_bookmarks(cls,data):
         # obtain user with posts
-        query = "SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id LEFT JOIN locations ON posts.location_id = locations.id LEFT JOIN countries ON locations.country_id = countries.id WHERE users.id = %(id)s;"
-        result = connectToMySQL(cls.db).query_db(query, data)
-        user = cls(result[0])
+        query = "SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id WHERE users.id = %(id)s;"
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+
+        user = {
+            "username": results[0]['username'],
+            "first_name": results[0]['first_name'],
+            "last_name": results[0]['last_name'],
+            "email": results[0]['email'],
+            "posts": [],
+            "bookmarks": []
+        }
 
         # add post to posts array
-        for row in result:
+        for row in results:
             post = {
                 "title": row['title'],
                 "date_from": row['date_from'],
                 "date_to": row['date_to'],
                 "duration": row['duration'],
-                "destination": f"{row['location'], row['country']}"
+                "destination": f"{row['destination']}, {row['country']}"
             }
-            user.posts.append(post)
+            user['posts'].append(post)
 
         #obtain bookmarks with users.id
-        query = "SELECT * FROM bookmarks LEFT JOIN posts ON bookmarks.post_id = posts.id LEFT JOIN locations ON posts.location_id = locations.id WHERE users.id = %(id)s;"
-        result = connectToMySQL(cls.db).query_db(query, data)
+        query = "SELECT * FROM bookmarks LEFT JOIN posts ON bookmarks.post_id = posts.id WHERE users.id = %(id)s;"
+        result = connectToMySQL(cls.db_name).query_db(query, data)
 
         # add bookmarked posts to bookmarks array
-        for row in result:
-            bookmark = {
-                "title": row['title'],
-                "duration": row['duration'],
-                "location": row['location']
-            }
-            user.bookmarks.append(bookmark)
+        if result:
+            for row in result:
+                bookmark = {
+                    "title": row['title'],
+                    "duration": row['duration'],
+                    "destination": row['destination']
+                }
+                user['bookmarks'].append(bookmark)
         
         return user
 
@@ -64,22 +88,8 @@ class User:
     #.. add methods
     @classmethod
     def add_user(cls, data):
-        query = "INSERT INTO users (username, first_name, last_name, email, password) VALUES (%(name)s, %(first_name)s, %(last_name)s, %(email)s, %(password)s);"
-        return connectToMySQL(cls.db).query_db(query, data)
-    
-    @classmethod
-    def add_bookmark(cls, data):
-        query = "INSERT INTO favorites (user_id, post_id) VALUES (%(user_id)s, %(post_id)s);"
-        return connectToMySQL(cls.db).query_db(query, data)
-    
-
-    #.. delete methods
-    @classmethod
-    def delete_bookmark(cls, data):
-        query = "DELETE FROM bookmarks WHERE user_id = %(user_id)s AND post_id = %(post_id)s;"
-        return cls
-
-
+        query = "INSERT INTO users (username, first_name, last_name, email, password) VALUES (%(username)s, %(first_name)s, %(last_name)s, %(email)s, %(password)s);"
+        return connectToMySQL(cls.db_name).query_db(query, data)
 
     #.. validation methods
 
