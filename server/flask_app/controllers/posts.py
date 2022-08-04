@@ -1,4 +1,4 @@
-from flask import jsonify, request, json
+from flask import jsonify, request
 from flask_app import app
 from flask_app.models import post
 from datetime import datetime
@@ -6,16 +6,16 @@ from datetime import datetime
 #.. GET routes
 @app.route('/api/posts', methods=['GET'])
 def post_all():
-    posts = post.Post.get_all_posts()
-    return jsonify(posts)
+    posts_info = post.Post.get_all_posts()
+    return jsonify(posts_info)
 
 @app.route('/api/posts/<int:id>', methods=['GET'])
 def post_detail(id):
     data = {
         "id": id
     }
-    post = post.Post.get_post(data)
-    return jsonify(post)
+    post_info = post.Post.get_post(data)
+    return jsonify(post_info)
 
 #.. POST routes
 @app.route('/api/posts', methods=['POST'])
