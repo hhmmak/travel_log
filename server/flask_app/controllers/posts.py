@@ -3,6 +3,8 @@ from flask_app import app
 from flask_app.models import post
 from datetime import datetime
 
+DATE_FORMAT = '%Y-%m-%d'
+
 #.. GET routes
 @app.route('/api/posts', methods=['GET'])
 def post_all():
@@ -22,7 +24,7 @@ def post_detail(id):
 def post_create():
     dataJSON = request.get_json()
     print("=============================================   dataJSON: ", dataJSON)
-    duration = datetime.strptime(dataJSON['dateTo'], '%Y-%m-%d')-datetime.strptime(dataJSON['dateFrom'], '%Y-%m-%d')
+    duration = datetime.strptime(dataJSON['dateTo'], DATE_FORMAT)-datetime.strptime(dataJSON['dateFrom'], DATE_FORMAT)
     data = {
         "title": dataJSON['title'],
         "content": dataJSON['content'],

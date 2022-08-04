@@ -3,6 +3,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 class User:
 
     db_name = 'travel_schema'
+    DATE_FORMAT = '%Y-%m-%d'
 
     def __init__(self, data):
         self.id = data['id']
@@ -36,8 +37,8 @@ class User:
         results = connectToMySQL(cls.db_name).query_db(query, data)
         user = {
             "username": results[0]['username'],
-            "first_name": results[0]['first_name'],
-            "last_name": results[0]['last_name'],
+            "firstName": results[0]['first_name'],
+            "lastName": results[0]['last_name'],
             "email": results[0]['email'],
         }
         return user
@@ -47,11 +48,10 @@ class User:
         # obtain user with posts
         query = "SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id WHERE users.id = %(id)s;"
         results = connectToMySQL(cls.db_name).query_db(query, data)
-
         user = {
             "username": results[0]['username'],
-            "first_name": results[0]['first_name'],
-            "last_name": results[0]['last_name'],
+            "firstName": results[0]['first_name'],
+            "lastName": results[0]['last_name'],
             "email": results[0]['email'],
             "posts": [],
             "bookmarks": []
@@ -60,28 +60,32 @@ class User:
         # add post to posts array
         for row in results:
             post = {
+                "id": row['posts.id'],
                 "title": row['title'],
-                "date_from": row['date_from'],
-                "date_to": row['date_to'],
+                "dateFrom": row['date_from'].strftime(cls.DATE_FORMAT),
+                "dateTo": row['date_to'].strftime(cls.DATE_FORMAT),
                 "duration": row['duration'],
                 "destination": f"{row['destination']}, {row['country']}"
             }
             user['posts'].append(post)
 
         #obtain bookmarks with users.id
-        query = "SELECT * FROM bookmarks LEFT JOIN posts ON bookmarks.post_id = posts.id WHERE users.id = %(id)s;"
+        query = "SELECT * FROM bookmarks LEFT JOIN posts ON bookmarks.post_id = posts.id WHERE bookmarks.user_id = %(id)s;"
         result = connectToMySQL(cls.db_name).query_db(query, data)
-
+        print("=============bookmark result: ", result)
         # add bookmarked posts to bookmarks array
         if result:
+            print("=========== have bookmark")
             for row in result:
                 bookmark = {
+                    "id": row['posts.id'],
                     "title": row['title'],
                     "duration": row['duration'],
                     "destination": row['destination']
                 }
                 user['bookmarks'].append(bookmark)
         
+        print("user: ", user)
         return user
 
 

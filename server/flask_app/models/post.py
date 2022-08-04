@@ -3,6 +3,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 class Post:
 
     db_name = 'travel_schema'
+    DATE_FORMAT = '%Y-%m-%d'
 
     def __init__(self, data):
         self.id = data['id']
@@ -21,23 +22,23 @@ class Post:
     #.. get methods
     @classmethod
     def get_all_posts(cls):
-        query = "SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id"
+        query = "SELECT * FROM posts LEFT JOIN users ON users.id = posts.user_id ORDER BY posts.created_at DESC;"
         results = connectToMySQL(cls.db_name).query_db(query)
         posts = []
         for row in results:
             post = {
                 "user_id": row['user_id'],
                 "username": row['username'],
-                "id": row['posts.id'],
+                "id": row['id'],
                 "title": row['title'],
                 "content": row['content'],
                 "itinerary": row['itinerary'],
                 "destination": row['destination'],
                 "duration": row['duration'],
                 "country": row['country'],
-                "date_from": row['date_from'],
-                "date_to": row['date_to'],
-                "posts.created_at": row['posts.created_at']
+                "dateFrom": row['date_from'].strftime(cls.DATE_FORMAT),
+                "dateTo": row['date_to'].strftime(cls.DATE_FORMAT),
+                "createdAt": row['created_at'].strftime(cls.DATE_FORMAT)
             }
             posts.append(post)
         return posts
@@ -61,9 +62,9 @@ class Post:
             "destination": results[0]['destination'],
             "duration": results[0]['duration'],
             "country": results[0]['country'],
-            "date_from": results[0]['date_from'],
-            "date_to": results[0]['date_to'],
-            "posts.created_at": results[0]['posts.created_at']
+            "dateFrom": results[0]['date_from'].strftime(cls.DATE_FORMAT),
+            "dateTo": results[0]['date_to'].strftime(cls.DATE_FORMAT),
+            "createdAt": results[0]['posts.created_at'].strftime(cls.DATE_FORMAT)
         }
         return post
 
