@@ -23,17 +23,23 @@ def post_detail(id):
 @app.route('/api/posts', methods=['POST'])
 def post_create():
     dataJSON = request.get_json()
-    print("=============================================   dataJSON: ", dataJSON)
-    duration = datetime.strptime(dataJSON['dateTo'], DATE_FORMAT)-datetime.strptime(dataJSON['dateFrom'], DATE_FORMAT)
+    print("========================   dataJSON: ", dataJSON)
+
+    # validation
+    validation = post.Post.validate_post(dataJSON)
+    if not validation['is_valid']:
+        return validation['error'], 400
+
+    # continue if validation passed
     data = {
-        "title": dataJSON['title'],
+        "title": validation['title'] if 'title' in validation else dataJSON['title'],
         "content": dataJSON['content'],
         "itinerary": dataJSON['itinerary'],
         "destination": dataJSON['destination'],
         "country": dataJSON['country'],
         "date_from": dataJSON['dateFrom'],
         "date_to": dataJSON['dateTo'],
-        "duration": duration.days + 1,
+        "duration": validation['duration'].days,
         "user_id": dataJSON['user_id']
     }
     post.Post.add_post(data)
@@ -44,21 +50,26 @@ def post_create():
 @app.route('/api/posts/<int:id>', methods=['PUT'])
 def post_edit(id):
     dataJSON = request.get_json()
-    print("=============================================   dataJSON: ", dataJSON)
-    duration = datetime.strptime(dataJSON['dateTo'], '%Y-%m-%d')-datetime.strptime(dataJSON['dateFrom'], '%Y-%m-%d')
+    # print("========================   dataJSON: ", dataJSON)
+
+        # validation
+    validation = post.Post.validate_post(dataJSON)
+    if not validation['is_valid']:
+        return validation['error'], 400
+    
     data = {
         "id": id,
-        "title": dataJSON['title'],
+        "title": validation['title'] if 'title' in validation else dataJSON['title'],
         "content": dataJSON['content'],
         "itinerary": dataJSON['itinerary'],
         "destination": dataJSON['destination'],
         "country": dataJSON['country'],
         "date_from": dataJSON['dateFrom'],
         "date_to": dataJSON['dateTo'],
-        "duration": duration.days + 1,
+        "duration": validation['duration'].days,
     }
+    # print("---------data: ", data, "----------------")
     post.Post.update_post(data)
-    print("---------data: ", data, "----------------")
     return jsonify({"message": "post updated", "id": id, "dataJSON": dataJSON})
 
 #.. DELETE routes

@@ -10,6 +10,7 @@ const PostUpdate = ({userId}) => {
   const navigate = useNavigate();
   const {id} = useParams();
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState({})
   const [post, setPost] = useState({
     title: "",
     content: "",
@@ -38,7 +39,10 @@ const PostUpdate = ({userId}) => {
     console.log(post)
     axios.put(`http://localhost:5000/api/posts/${id}`, {...post, user_id: userId} )
       .then(res => navigate('/'))
-      .catch(err => console.log(err))
+      .catch(err => {
+        setError(err.response.data)
+        console.log(err)
+      })
   }
 
   return (
@@ -52,22 +56,37 @@ const PostUpdate = ({userId}) => {
         <Form.Group className='mb-3' controlId='destination'>
           <Form.Label>Destination</Form.Label>
           <Form.Control type='text' name='destination' onChange={onChangeHandler} value={post.destination}/>
+          {error.destination &&
+            <Form.Text className='text-danger'>{error.destination}</Form.Text>
+          }
         </Form.Group>
         <Form.Group className='mb-3' controlId='country'>
           <Form.Label>Country</Form.Label>
           <Form.Control type='text' name='country' onChange={onChangeHandler} value={post.country}/>
+          {error.country &&
+            <Form.Text className='text-danger'>{error.country}</Form.Text>
+          }
         </Form.Group>
         <Form.Group className='mb-3' controlId='dateFrom'>
           <Form.Label>From</Form.Label>
           <Form.Control type='date' name='dateFrom' onChange={onChangeHandler} value={post.dateFrom}/>
+          {error.dateFrom &&
+            <Form.Text className='text-danger'>{error.dateFrom}</Form.Text>
+          }
         </Form.Group>
         <Form.Group className='mb-3' controlId='dateTo'>
           <Form.Label>To</Form.Label>
           <Form.Control type='date' name='dateTo' onChange={onChangeHandler} value={post.dateTo}/>
+          {error.dateTo &&
+            <Form.Text className='text-danger'>{error.dateTo}</Form.Text>
+          }
         </Form.Group>
         <Form.Group className='mb-3' controlId='itinerary'>
           <Form.Label>Itinerary</Form.Label>
           <Form.Control as="textarea" rows={5} name='itinerary' onChange={onChangeHandler} value={post.itinerary}/>
+          {error.itinerary &&
+            <Form.Text className='text-danger'>{error.itinerary}</Form.Text>
+          }
         </Form.Group>
         <Form.Group className='mb-3' controlId='content'>
           <Form.Label>Log</Form.Label>

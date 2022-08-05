@@ -11,6 +11,7 @@ const PostForm = (props) => {
   const navigate = useNavigate();
   const {userId} = props;
 
+  const [error, setError] = useState({})
   const [post, setPost] = useState({
     title: "",
     content: "",
@@ -27,14 +28,17 @@ const PostForm = (props) => {
   
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(post)
+
     axios.post("http://localhost:5000/api/posts", {...post, user_id: userId})
       .then(res => navigate('/'))
-      .catch(err => console.log(err))
+      .catch(err => {
+        setError(err.response.data)
+        console.log(err)
+      })
   }
 
   return (
-    <div>
+    <div className='my-3'>
       <Form className='mb-5' onSubmit={onSubmitHandler}>
         <Form.Group className='mb-3' controlId='title'>
           <Form.Label>Title</Form.Label>
@@ -43,22 +47,37 @@ const PostForm = (props) => {
         <Form.Group className='mb-3' controlId='destination'>
           <Form.Label>Destination</Form.Label>
           <Form.Control type='text' name='destination' onChange={onChangeHandler}/>
+          {error.destination &&
+            <Form.Text className='text-danger'>{error.destination}</Form.Text>
+          }
         </Form.Group>
         <Form.Group className='mb-3' controlId='country'>
           <Form.Label>Country</Form.Label>
           <Form.Control type='text' name='country' onChange={onChangeHandler}/>
+          {error.country &&
+            <Form.Text className='text-danger'>{error.country}</Form.Text>
+          }
         </Form.Group>
         <Form.Group className='mb-3' controlId='dateFrom'>
           <Form.Label>From</Form.Label>
           <Form.Control type='date' name='dateFrom' onChange={onChangeHandler}/>
+          {error.dateFrom &&
+            <Form.Text className='text-danger'>{error.dateFrom}</Form.Text>
+          }
         </Form.Group>
         <Form.Group className='mb-3' controlId='dateTo'>
           <Form.Label>To</Form.Label>
           <Form.Control type='date' name='dateTo' onChange={onChangeHandler}/>
+          {error.dateTo &&
+            <Form.Text className='text-danger'>{error.dateTo}</Form.Text>
+          }
         </Form.Group>
         <Form.Group className='mb-3' controlId='itinerary'>
           <Form.Label>Itinerary</Form.Label>
           <Form.Control as="textarea" rows={5} name='itinerary' onChange={onChangeHandler}/>
+          {error.itinerary &&
+            <Form.Text className='text-danger'>{error.itinerary}</Form.Text>
+          }
         </Form.Group>
         <Form.Group className='mb-3' controlId='content'>
           <Form.Label>Log</Form.Label>

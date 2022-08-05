@@ -1,9 +1,11 @@
 from flask_app.config.mysqlconnection import connectToMySQL
+from datetime import datetime, timedelta
+
+DATE_FORMAT = '%Y-%m-%d'
 
 class Post:
 
     db_name = 'travel_schema'
-    DATE_FORMAT = '%Y-%m-%d'
 
     def __init__(self, data):
         self.id = data['id']
@@ -36,9 +38,9 @@ class Post:
                 "destination": row['destination'],
                 "duration": row['duration'],
                 "country": row['country'],
-                "dateFrom": row['date_from'].strftime(cls.DATE_FORMAT),
-                "dateTo": row['date_to'].strftime(cls.DATE_FORMAT),
-                "createdAt": row['created_at'].strftime(cls.DATE_FORMAT)
+                "dateFrom": row['date_from'].strftime(DATE_FORMAT),
+                "dateTo": row['date_to'].strftime(DATE_FORMAT),
+                "createdAt": row['created_at'].strftime(DATE_FORMAT)
             }
             posts.append(post)
         return posts
@@ -62,9 +64,9 @@ class Post:
             "destination": results[0]['destination'],
             "duration": results[0]['duration'],
             "country": results[0]['country'],
-            "dateFrom": results[0]['date_from'].strftime(cls.DATE_FORMAT),
-            "dateTo": results[0]['date_to'].strftime(cls.DATE_FORMAT),
-            "createdAt": results[0]['posts.created_at'].strftime(cls.DATE_FORMAT)
+            "dateFrom": results[0]['date_from'].strftime(DATE_FORMAT),
+            "dateTo": results[0]['date_to'].strftime(DATE_FORMAT),
+            "createdAt": results[0]['posts.created_at'].strftime(DATE_FORMAT)
         }
         return post
 
@@ -92,4 +94,36 @@ class Post:
 
 
     #.. validation methods
-
+    @staticmethod
+    def validate_post(data):
+        validation = {
+            "is_valid": True,
+            "error": dict()
+        }
+        #title (not required)
+        #content (not required)
+        #itinerary
+        if len(data['itinerary']) <= 0:
+            validation['is_valid'] = False
+            validation['error']['itinerary'] = "Itinerary is required"
+        #destination
+        if len(data['destination']) <= 0:
+            validation['is_valid'] = False
+            validation['error']['destination'] = "Destination is required"
+        else: 
+            validation['title'] = f"Trip to {data['destination']}"
+        #country
+        if len(data['country']) <= 0:
+            validation['is_valid'] = False
+            validation['error']['country'] = "Country is required"
+        #dateFrom && dateTo
+        if len(data['dateFrom']) < 10 or len(data['dateTo']) < 10:
+            validation['is_valid'] = False
+            validation['error']['dateFrom'] = "Travel dates are required"
+        else:
+            validation['duration'] = datetime.strptime(data['dateTo'], DATE_FORMAT)-datetime.strptime(data['dateFrom'], DATE_FORMAT) + timedelta(days=1)
+            if validation['duration'] < timedelta(days=1):
+                validation['is_valid'] = False
+                validation['error']['dateTo'] = 'End date should not be earlier than start date'
+        
+        return validation
