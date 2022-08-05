@@ -10,6 +10,7 @@ import UserRegister from './components/UserRegister';
 import PostDetail from './components/PostDetail';
 import PostForm from './components/PostForm';
 import UserProfile from './components/UserProfile';
+import PostUpdate from './components/PostUpdate';
 
 import './App.css';
 
@@ -26,11 +27,12 @@ function App() {
         <Header headerLink={headerLink} login={login} setLogin ={setLogin} setHeaderLink={setHeaderLink}/>
         <Routes>
           <Route path='/' element={<PostList />} />
-          <Route path='/login' element={<UserLogin />} />
-          <Route path='/register' element={<UserRegister />} />
+          <Route path='/login' element={<UserLogin />} setLogin={setLogin} />
+          <Route path='/register' element={<UserRegister />} setLogin={setLogin} />
           <Route path='/post/:id' element={<PostDetail />} />
-          <Route path='/post/new' element={<PostForm  userId={1} />}/>
+          <Route path='/post/new' element={<PostForm userId={2} />} />
           <Route path='/user/:id' element={<UserProfile />} />
+          <Route path='/post/edit/:id' element={<PostUpdate userId={1} />} />
         </Routes>
       </BrowserRouter>
     </Container>
