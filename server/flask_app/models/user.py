@@ -1,9 +1,12 @@
 from flask_app.config.mysqlconnection import connectToMySQL
+import re
+
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+DATE_FORMAT = '%Y-%m-%d'
 
 class User:
 
     db_name = 'travel_schema'
-    DATE_FORMAT = '%Y-%m-%d'
 
     def __init__(self, data):
         self.id = data['id']
@@ -62,8 +65,8 @@ class User:
             post = {
                 "id": row['posts.id'],
                 "title": row['title'],
-                "dateFrom": row['date_from'].strftime(cls.DATE_FORMAT),
-                "dateTo": row['date_to'].strftime(cls.DATE_FORMAT),
+                "dateFrom": row['date_from'].strftime(DATE_FORMAT),
+                "dateTo": row['date_to'].strftime(DATE_FORMAT),
                 "duration": row['duration'],
                 "destination": f"{row['destination']}, {row['country']}"
             }
@@ -96,4 +99,37 @@ class User:
         return connectToMySQL(cls.db_name).query_db(query, data)
 
     #.. validation methods
+    @staticmethod
+    def validate_create_account(data):
+        validation = {
+            "is_valid": True,
+            "error": dict()
+        }
+        #username
+        if 'username' not in data:
+            validation['is_valid'] = False
+            validation['error']['username'] = "Username is required"
+        #first name
+        if 'firstName' not in data:
+            validation['is_valid'] = False
+            validation['error']['firstName'] = "First name is required"
+        # #last name
+        if 'lastName' not in data:
+            validation['is_valid'] = False
+            validation['error']['lastName'] = "Last name is required"
+        # #email
+        if 'email' not in data:
+            validation['is_valid'] = False
+            validation['error']['email'] = "Email is required"
+        elif not EMAIL_REGEX.match(data['email']):
+            validation['is_valid'] = False
+            validation['error']['email'] = "Email format not valid"
+        # #password
+        if 'password' not in data or len(data['password']) < 6:
+            validation['is_valid'] = False
+            validation['error']['password'] = "Password must have 6 characters"
+        elif 'confirmPassword' not in data or data['password'] != data['confirmPassword']:
+            validation['is_valid'] = False
+            validation['error']['confirmPassword'] = "Passwords do not match"
 
+        return validation

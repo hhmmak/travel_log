@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, make_response, abort
 from flask_bcrypt import Bcrypt
 from flask_app import app
 from flask_app.models import user
@@ -42,7 +42,16 @@ def user_login():
 @app.route('/api/users', methods=['POST'])
 def user_create():
     dataJSON = request.get_json()
-    # print("=============================================   dataJSON: ", dataJSON)
+    # print("=====================   dataJSON: ", dataJSON)
+
+    # validation
+    validation = user.User.validate_create_account(dataJSON)
+    print("========== validation = ", validation, " ==================")
+    if not validation['is_valid']:
+        print("========== validation['error'] = ", validation['error'], " ==================")
+        return jsonify(validation['error']), 400
+    
+    #continue if validation passed
     pw_hash = bcrypt.generate_password_hash(dataJSON['password'])
     data = {
         "username": dataJSON['username'],
