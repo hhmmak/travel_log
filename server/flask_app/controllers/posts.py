@@ -1,12 +1,14 @@
 from flask import jsonify, request
 from flask_app import app
 from flask_app.models import post
-from datetime import datetime
 
-DATE_FORMAT = '%Y-%m-%d'
+from flask_app.decorators import jwt_required
+
 
 #.. GET routes
+
 @app.route('/api/posts', methods=['GET'])
+@jwt_required
 def post_all():
     posts_info = post.Post.get_all_posts()
     return jsonify(posts_info)
@@ -20,7 +22,9 @@ def post_detail(id):
     return jsonify(post_info)
 
 #.. POST routes
+
 @app.route('/api/posts', methods=['POST'])
+@jwt_required
 def post_create():
     dataJSON = request.get_json()
     print("========================   dataJSON: ", dataJSON)
