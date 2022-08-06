@@ -6,9 +6,7 @@ from flask_app.decorators import jwt_required
 
 
 #.. GET routes
-
 @app.route('/api/posts', methods=['GET'])
-@jwt_required
 def post_all():
     posts_info = post.Post.get_all_posts()
     return jsonify(posts_info)
