@@ -8,11 +8,8 @@ class Bookmark:
     def get_bookmarks_by_user(cls, data):
         query = "SELECT * FROM bookmarks WHERE bookmarks.user_id = %(user_id)s;"
         results = connectToMySQL(cls.db_name).query_db(query, data)
-        print("=============bookmark result: ", results)
         bookmarks = []
-        # add bookmarked posts to bookmarks array
         if results:
-            print("=========== have bookmark")
             for row in results:
                 bookmarks.append(row['post_id'])
         return bookmarks
@@ -28,4 +25,4 @@ class Bookmark:
     @classmethod
     def delete_bookmark(cls, data):
         query = "DELETE FROM bookmarks WHERE user_id = %(user_id)s AND post_id = %(post_id)s;"
-        return cls
+        return connectToMySQL(cls.db_name).query_db(query, data)
