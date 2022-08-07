@@ -21,7 +21,7 @@ function App() {
 
 
   return (
-    <div className='bg-light'>
+    <div className='bg-light vh-100'>
       <Container>
       <BrowserRouter>
           <Header login={login} setLogin ={setLogin} userId={userId} setUserId={setUserId}/>
