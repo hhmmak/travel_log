@@ -16,23 +16,22 @@ import './App.css';
 
 function App() {
 
-  const [login, setLogin] = useState(false); //TODO remove from Header and add to Login
-  const [headerLink, setHeaderLink] = useState([["Log In", "/login"], ["Create Account", "/register"]]);
+  const [login, setLogin] = useState(false);
+  const [userId, setUserId] = useState();
 
 
-  //TODO change userID in props of UserProfile
   return (
     <Container>
     <BrowserRouter>
-        <Header headerLink={headerLink} login={login} setLogin ={setLogin} setHeaderLink={setHeaderLink}/>
+        <Header login={login} setLogin ={setLogin} userId={userId} setUserId={setUserId}/>
         <Routes>
-          <Route path='/' element={<PostList />} />
-          <Route path='/login' element={<UserLogin />} setLogin={setLogin} />
-          <Route path='/register' element={<UserRegister />} setLogin={setLogin} />
-          <Route path='/post/:id' element={<PostDetail />} />
-          <Route path='/post/new' element={<PostForm userId={2} />} />
-          <Route path='/user/:id' element={<UserProfile />} />
-          <Route path='/post/edit/:id' element={<PostUpdate userId={1} />} />
+          <Route path='/' element={<PostList userId={userId} />} />
+          <Route path='/login' element={<UserLogin setLogin={setLogin} setUserId={setUserId}/>} />
+          <Route path='/register' element={<UserRegister setLogin={setLogin} setUserId={setUserId} />} />
+          <Route path='/post/:id' element={<PostDetail userId={userId} />} />
+          <Route path='/post/new' element={<PostForm userId={userId} />} />
+          <Route path='/user' element={<UserProfile userId={userId} />} />
+          <Route path='/post/edit/:id' element={<PostUpdate userId={userId} />} />
         </Routes>
       </BrowserRouter>
     </Container>
