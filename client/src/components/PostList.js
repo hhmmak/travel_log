@@ -9,20 +9,51 @@ import Card from 'react-bootstrap/Card'
 import './css/PostList.css'
 import {ReactComponent as Bookmark} from './icons/bookmark.svg'
 
-const PostList = (props) => {
+const PostList = ({userId}) => {
 
-  const[postList, setPostList] = useState([])
+  const[postList, setPostList] = useState([]);
+  const[bookmarks, setBookmarks] = useState([]);
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/posts")
-      .then(res => setPostList(res.data))
+      .then(res => {
+        setPostList(res.data)
+        if (!isNaN(userId)) {
+          const token = localStorage.getItem('token')
+          axios.post(`http://localhost:5000/api/bookmarks/list?token=${token}`, {userId: userId})
+            .then(res => {
+              setBookmarks(res.data);
+            })
+            .catch(err => console.log(err))
+        }
+      })
       .catch(err => console.log(err))
-  },[])
 
-  const changeBookmark = (e) => {
-    console.log(e);
-    e.target.value = !e.target.value
-    e.target.style.fill = e.target.value? "#a0a0a0": "#ffffff";
+  },[userId])
+  
+  const changeBookmark = (e, postId) => {
+    if (bookmarks.includes(postId)){
+      // set to not bookmared
+      const token = localStorage.getItem('token')
+      axios.delete(`http://localhost:5000/api/bookmarks?token=${token}`,{data :{"userId": userId, "postId": postId}})
+        .then(res => {
+          e.target.style.fill = "#ffffff";
+          let bookmarkList = bookmarks.filter(id => id !== postId);
+          setBookmarks(bookmarkList);
+        })
+        .catch(err => console.log(err))
+    } else {
+      // set to bookmarked
+      const token = localStorage.getItem('token')
+      axios.post(`http://localhost:5000/api/bookmarks?token=${token}`,{"userId": userId, "postId": postId})
+        .then(res => {
+          e.target.style.fill = "#a0a0a0"
+          bookmarks.push(postId);
+          setBookmarks(bookmarks);
+        })
+        .catch(err => console.log(err))
+    }
+  
   }
 
 
@@ -38,7 +69,14 @@ const PostList = (props) => {
             <Card.Body>
               <Row>
                 <Col><Card.Title className='fs-6'>{post.title}</Card.Title></Col>
-                <Col xs={{span:2, offset:2}}><Bookmark onClick={changeBookmark} value={false}/></Col>
+                { (post.userId !== userId && !isNaN(userId)) &&
+                  <Col xs={{span:2, offset:2}}>
+                    {bookmarks.includes(post.id)
+                    ? <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#a0a0a0"}/>
+                    : <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#ffffff"}/>
+                    }
+                  </Col>
+                }
               </Row>
               <Card.Subtitle className='text-muted'>{post.duration} days</Card.Subtitle>
               <Card.Text className='my-3 card-post-content'>{post.content}</Card.Text>
