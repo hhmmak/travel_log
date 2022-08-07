@@ -4,10 +4,23 @@ class Bookmark:
 
     db_name = 'travel_schema'
 
+    @classmethod
+    def get_bookmarks_by_user(cls, data):
+        query = "SELECT * FROM bookmarks WHERE bookmarks.user_id = %(user_id)s;"
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        print("=============bookmark result: ", results)
+        bookmarks = []
+        # add bookmarked posts to bookmarks array
+        if results:
+            print("=========== have bookmark")
+            for row in results:
+                bookmarks.append(row['post_id'])
+        return bookmarks
+    
     #.. add methods
     @classmethod
     def add_bookmark(cls, data):
-        query = "INSERT INTO favorites (user_id, post_id) VALUES (%(user_id)s, %(post_id)s);"
+        query = "INSERT INTO bookmarks (user_id, post_id) VALUES (%(user_id)s, %(post_id)s);"
         return connectToMySQL(cls.db_name).query_db(query, data)
     
 
