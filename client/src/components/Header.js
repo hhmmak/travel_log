@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,16 +8,40 @@ import Nav from 'react-bootstrap/Nav';
 
 const Header = (props) => {
   
-  const {headerLink, setLogin, login, setHeaderLink} = props;
+  const navigate = useNavigate();
+  const {setLogin, login, userId, setUserId} = props;
+  const [headerLink, setHeaderLink] = useState([["Log In", "/login"], ["Create Account", "/register"]]);
 
-  useEffect(() => { 
-  if (login) {
-    setHeaderLink([["Log In", "/login"], ["Create Account", "/register"]])
-  } else {
-    setHeaderLink([["Write New Post", '/post/new'], ["Profile", "/user/1"], ["Log Out", ""]])
-  }
+
+  useEffect(() => {
+
+    if (localStorage.getItem('token') !== null) {
+      const token = localStorage.getItem('token')
+      axios.get(`http://localhost:5000/api/users?token=${token}`)
+        .then( res => {
+          setLogin(true)
+          setUserId(res.data.userId)
+        })
+        .catch(err => {
+          console.log(err);
+          setLogin(false);
+        });
+    }
+    
+    if (login) {
+      setHeaderLink([["Write New Post", '/post/new'], ["Profile", `/user`]])
+    } else {
+      setHeaderLink([["Log In", "/login"], ["Create Account", "/register"]])
+    }
   
   }, [login])
+
+  const onLogOut = () => {
+    setLogin(false);
+    setUserId(NaN)
+    localStorage.clear();
+    navigate('/');
+  }
   
   
   //TODO remove "change" button
@@ -31,7 +56,9 @@ const Header = (props) => {
           { headerLink.map( (link, index) =>
           <Nav.Link as={Link} to={link[1]} key={index}>{link[0]}</Nav.Link>
           )}
-          <button onClick={() => setLogin(!login)} className="btn btn-outline-dark btn-sm">Change</button>
+          { login &&
+            <button onClick={onLogOut} className="btn btn-outline-dark btn-sm">Log out</button>
+          }
           </Nav>
         </Navbar.Collapse>
       </div>
