@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col'
 import {ReactComponent as Bookmark} from './icons/bookmark.svg';
 
 
-const PostDetail = (props) => {
+const PostDetail = ({userId}) => {
 
   const navigate = useNavigate();
   const {id} = useParams();
@@ -31,14 +31,15 @@ const PostDetail = (props) => {
   return ( 
     <div className='my-3'>
       <Row>
-        <Col>
-          <ButtonGroup>
-            <Button variant='outline-dark' onClick={() => navigate(`/post/edit/${post.id}`)}>Edit</Button>
-            <Button variant='outline-dark' onClick={deleteHandler}>Delete</Button>
-          </ButtonGroup>
-        </Col>
         <Col className='d-flex flex-row-reverse'>
+        { userId === post.userId ? 
+          <ButtonGroup>
+            <Button variant='secondary' onClick={() => navigate(`/post/edit/${post.id}`)}>Edit</Button>
+            <Button variant='secondary' onClick={deleteHandler}>Delete</Button>
+          </ButtonGroup>
+        :
           <Bookmark width={"3rem"}/>
+        }
         </Col>
       </Row>
       <h2>{post.title}</h2>
