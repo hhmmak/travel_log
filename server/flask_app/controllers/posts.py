@@ -50,6 +50,7 @@ def post_create():
 
 #.. PUT routes
 @app.route('/api/posts/<int:id>', methods=['PUT'])
+@jwt_required
 def post_edit(id):
     dataJSON = request.get_json()
     # print("========================   dataJSON: ", dataJSON)
