@@ -1,25 +1,35 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
-const UserProfile = (props) => {
+const UserProfile = ({userId}) => {
 
-  const {id} = useParams();
+  const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/users/posts/${id}`)
+    axios.get(`http://localhost:5000/api/users/posts/${userId}`)
       .then(res => {
         setUser(res.data);
         setLoaded(true)
       })
       .catch(err => console.log(err));
   }, []);
+
+  const deleteHandler = (id) => {
+    axios.delete(`http://localhost:5000/api/posts/${id}`)
+      .then(res => {
+        setUser({...user, posts: user.posts.filter(post => post.id !== id)}
+      )})
+      .catch(err => console.log(err))
+  }
 
   return (
     <div>
@@ -47,15 +57,15 @@ const UserProfile = (props) => {
                     <th>{post.title}</th>
                     <th>{post.destination}</th>
                     <th>{post.dateFrom} - {post.dateTo}</th>
-                    <th><Link to={`/post/${post.id}`}>View</Link>| Edit | Delete</th>
+                    <th>
+                      <ButtonGroup>
+                        <Button variant='secondary' onClick={ () => navigate(`/post/${post.id}`)}>View</Button>
+                        <Button variant='secondary' onClick={ () => navigate(`/post/edit/${post.id}`)}>Edit</Button>
+                        <Button variant='secondary' onClick={ () => deleteHandler(post.id)}>Delete</Button>
+                      </ButtonGroup>
+                    </th>
                   </tr>
                 )}
-                <tr>
-                  <th>Trip to New York</th>
-                  <th>New York, U.S.A.</th>
-                  <th>date from - date to</th>
-                  <th>View | Edit | Delete</th>
-                </tr>
               </tbody>
             </Table>
           </Col>
