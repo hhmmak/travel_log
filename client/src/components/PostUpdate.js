@@ -9,6 +9,7 @@ const PostUpdate = ({userId}) => {
 
   const navigate = useNavigate();
   const {id} = useParams();
+
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState({})
   const [post, setPost] = useState({
@@ -36,8 +37,9 @@ const PostUpdate = ({userId}) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(post)
-    axios.put(`http://localhost:5000/api/posts/${id}`, {...post, user_id: userId} )
+    const token = localStorage.getItem('token');
+
+    axios.put(`http://localhost:5000/api/posts/${id}?token=${token}`, {...post, user_id: userId} )
       .then(res => navigate('/'))
       .catch(err => {
         setError(err.response.data)

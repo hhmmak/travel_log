@@ -28,8 +28,9 @@ const PostForm = (props) => {
   
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
 
-    axios.post("http://localhost:5000/api/posts", {...post, user_id: userId})
+    axios.post(`http://localhost:5000/api/posts?token=${token}`, {...post, user_id: userId})
       .then(res => navigate('/'))
       .catch(err => {
         setError(err.response.data)
@@ -40,6 +41,7 @@ const PostForm = (props) => {
   return (
     <div className='my-3'>
       <Form className='mb-5' onSubmit={onSubmitHandler}>
+        <Form.Text>userId = {userId}</Form.Text>
         <Form.Group className='mb-3' controlId='title'>
           <Form.Label>Title</Form.Label>
           <Form.Control type='text' name='title' onChange={onChangeHandler}/>
