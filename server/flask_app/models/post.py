@@ -29,7 +29,7 @@ class Post:
         posts = []
         for row in results:
             post = {
-                "user_id": row['user_id'],
+                "userId": row['user_id'],
                 "username": row['username'],
                 "id": row['id'],
                 "title": row['title'],
@@ -55,7 +55,7 @@ class Post:
         results = connectToMySQL(cls.db_name).query_db(query, data)
         print("=======results:", results)
         post = {
-            "user_id": results[0]['user_id'],
+            "userId": results[0]['user_id'],
             "username": results[0]['username'],
             "id": results[0]['posts.id'],
             "title": results[0]['title'],
