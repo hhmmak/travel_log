@@ -8,6 +8,7 @@ import Card from 'react-bootstrap/Card'
 
 import './css/PostList.css'
 import {ReactComponent as Bookmark} from './icons/bookmark.svg'
+import Introduction from './Introduction'
 
 const PostList = ({userId}) => {
 
@@ -59,6 +60,7 @@ const PostList = ({userId}) => {
 
   return (
     <div className='my-3'>
+      <Introduction />
       <Row className='g-3'>
       { postList.map( (post, index) => 
         <Col md={6} lg={4} key={index}>
@@ -79,7 +81,11 @@ const PostList = ({userId}) => {
                 }
               </Row>
               <Card.Subtitle className='text-muted'>{post.duration} days</Card.Subtitle>
-              <Card.Text className='my-3 card-post-content'>{post.content}</Card.Text>
+              <Card.Text className='my-3 card-post-content'>
+              { post.itinerary.split('\n').map( (paragraph, index) =>
+                <span key={index}>{paragraph}<br /></span>
+              )}
+              </Card.Text>
               <Link to={`/post/${post.id}`}>more ...</Link>
             </Card.Body>
             <Card.Footer>
