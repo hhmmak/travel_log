@@ -46,7 +46,7 @@ const Header = (props) => {
   
   //TODO remove "change" button
   return (
-    <Navbar expand="md">
+    <Navbar expand="md" className='pt-3'>
     <Container>
       <Navbar.Brand as={Link} to={'/'} className={'fs-2 fw-bolder'}>Travel Log</Navbar.Brand>
       <div className="justify-content-end">

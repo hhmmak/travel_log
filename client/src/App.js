@@ -21,20 +21,22 @@ function App() {
 
 
   return (
-    <Container>
-    <BrowserRouter>
-        <Header login={login} setLogin ={setLogin} userId={userId} setUserId={setUserId}/>
-        <Routes>
-          <Route path='/' element={<PostList userId={userId} />} />
-          <Route path='/login' element={<UserLogin setLogin={setLogin} setUserId={setUserId}/>} />
-          <Route path='/register' element={<UserRegister setLogin={setLogin} setUserId={setUserId} />} />
-          <Route path='/post/:id' element={<PostDetail userId={userId} />} />
-          <Route path='/post/new' element={<PostForm userId={userId} />} />
-          <Route path='/user' element={<UserProfile userId={userId} />} />
-          <Route path='/post/edit/:id' element={<PostUpdate userId={userId} />} />
-        </Routes>
-      </BrowserRouter>
-    </Container>
+    <div className='bg-light'>
+      <Container>
+      <BrowserRouter>
+          <Header login={login} setLogin ={setLogin} userId={userId} setUserId={setUserId}/>
+          <Routes>
+            <Route path='/' element={<PostList userId={userId} />} />
+            <Route path='/login' element={<UserLogin setLogin={setLogin} setUserId={setUserId}/>} />
+            <Route path='/register' element={<UserRegister setLogin={setLogin} setUserId={setUserId} />} />
+            <Route path='/post/:id' element={<PostDetail userId={userId} />} />
+            <Route path='/post/new' element={<PostForm userId={userId} />} />
+            <Route path='/user' element={<UserProfile userId={userId} />} />
+            <Route path='/post/edit/:id' element={<PostUpdate userId={userId} />} />
+          </Routes>
+        </BrowserRouter>
+      </Container>
+    </div>
   );
 }
 
