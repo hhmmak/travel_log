@@ -6,6 +6,7 @@ from flask_app.models import user
 #authentication related
 from flask_bcrypt import Bcrypt
 import jwt
+from jwt.exceptions import ExpiredSignatureError
 import os
 import datetime
 
@@ -31,11 +32,32 @@ def user_account_by_id(id_num):
     user_info = user.User.get_user_by_id(data)
     return jsonify(user_info)
 
+@app.route('/api/users', methods=['GET'])
+def user_login_verification():
+    jwt_key = os.environ.get("TOKEN_KEY")
+    token = request.args.get('token')
+    if not token:
+        return jsonify({'message' : 'require valid token'}), 401
+
+    try:
+        decoded_jwt = jwt.decode(token, jwt_key, algorithms=["HS256"])
+        print("------------- decoded_jwt: ", decoded_jwt)
+    except ExpiredSignatureError as error:
+        return jsonify({ 'message' : f'Unable to decode the token, error: {error}'}), 401
+    return jsonify({'userId': decoded_jwt['userId']})
+
+
 #.. POST routes
 @app.route('/login', methods=['POST'])
 def user_login():
     dataJSON = request.get_json()
     # print("=============================================   dataJSON: ", dataJSON)
+
+    # validation login form input presence
+    validation = user.User.validate_login_input(dataJSON)
+    if not validation['is_valid']:
+        return make_response(validation['error'], 400)
+
     data = {
         "email": dataJSON['email'],
     }
@@ -44,12 +66,13 @@ def user_login():
 
     # login not success
     if not user_info or not bcrypt.check_password_hash(user_info['password'], dataJSON['password']):
-        return make_response('could not verify', 401, {'Authentication': 'Login required'})
+        return make_response('Login invalid', 401, {'Authentication': 'Login required'})
 
     # login success, return 
     payload = {
         "email": user_info['email'],
-        "username": ['username'],
+        "username": user_info['username'],
+        "userId": user_info['id'],
         "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1)
     }
     jwt_key = os.environ.get("TOKEN_KEY")
@@ -63,7 +86,7 @@ def user_create():
 
     # validation
     validation = user.User.validate_create_account(dataJSON)
-    print("========== validation = ", validation, " ==================")
+    # print("========== validation = ", validation, " ==================")
     if not validation['is_valid']:
         print("========== validation['error'] = ", validation['error'], " ==================")
         return jsonify(validation['error']), 400
