@@ -61,16 +61,18 @@ class User:
         }
 
         # add post to posts array
-        for row in results:
-            post = {
-                "id": row['posts.id'],
-                "title": row['title'],
-                "dateFrom": row['date_from'].strftime(DATE_FORMAT),
-                "dateTo": row['date_to'].strftime(DATE_FORMAT),
-                "duration": row['duration'],
-                "destination": f"{row['destination']}, {row['country']}"
-            }
-            user['posts'].append(post)
+        if results[0]['posts.id']:
+            print("=========== have post")
+            for row in results:
+                post = {
+                    "id": row['posts.id'],
+                    "title": row['title'],
+                    "dateFrom": row['date_from'].strftime(DATE_FORMAT),
+                    "dateTo": row['date_to'].strftime(DATE_FORMAT),
+                    "duration": row['duration'],
+                    "destination": f"{row['destination']}, {row['country']}"
+                }
+                user['posts'].append(post)
 
         #obtain bookmarks with users.id
         query = "SELECT * FROM bookmarks LEFT JOIN posts ON bookmarks.post_id = posts.id WHERE bookmarks.user_id = %(id)s;"
@@ -131,5 +133,20 @@ class User:
         elif 'confirmPassword' not in data or data['password'] != data['confirmPassword']:
             validation['is_valid'] = False
             validation['error']['confirmPassword'] = "Passwords do not match"
+
+    
+
+        return validation
+
+    @staticmethod
+    def validate_login_input(data):
+        validation = {
+            "is_valid": True,
+            "error": None
+        }
+
+        if 'email' not in data or 'password' not in data:
+            validation['is_valid'] = False
+            validation['error'] = "Login Invalid"
 
         return validation
