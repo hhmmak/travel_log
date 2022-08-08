@@ -86,7 +86,7 @@ const PostForm = (props) => {
           <Form.Control as="textarea" rows={5} name='content' onChange={onChangeHandler}/>
         </Form.Group>
         <div className='d-grid d-md-block'>
-          <Button variant="outline-dark" type="submit" className='col-md-5'>Create</Button>
+          <Button variant="light border border-secondary" type="submit" className='col-md-5'>Create</Button>
         </div>
       </Form>
     </div>

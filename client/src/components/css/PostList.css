@@ -2,3 +2,9 @@
   height: 9rem;
   overflow: hidden;
 }
+
+.card-post-body:hover {
+  background-color: #4e4e4e;
+  color: #f0f0f0;
+  transition: 0.2s;
+}

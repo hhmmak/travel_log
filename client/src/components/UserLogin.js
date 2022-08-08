@@ -7,6 +7,8 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
+import './css/UserLogin.css'
+
 const UserLogin = ({setLogin, setUserId}) => {
   
   const navigate = useNavigate();
@@ -33,7 +35,7 @@ const UserLogin = ({setLogin, setUserId}) => {
     setUser({...user, [e.target.name]: e.target.value})
   }
   return (
-    <div className='vh-75 d-flex align-items-center'>
+    <div className='d-flex align-items-center login-container'>
       <div className='col-lg-7 col-10 mx-auto'>
         <h2 className='mb-5'>Log In</h2>
         {error &&
@@ -49,7 +51,7 @@ const UserLogin = ({setLogin, setUserId}) => {
             <Form.Control type='password' name='password' onChange={ onChangeHandler } />
           </Form.Group>
           <div className='d-grid d-md-block'>
-            <Button variant="outline-dark" type="submit" className='col-md-5'>Log In</Button>
+            <Button variant="light border border-secondary" type="submit" className='col-md-5'>Log In</Button>
           </div>
         </Form>
         <div className='d-flex justify-content-end'>

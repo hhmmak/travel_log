@@ -6,6 +6,8 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
+import './css/Header.css'
+
 const Header = (props) => {
   
   const navigate = useNavigate();
@@ -48,13 +50,13 @@ const Header = (props) => {
   return (
     <Navbar expand="md" className='pt-3'>
     <Container>
-      <Navbar.Brand as={Link} to={'/'} className={'fs-2 fw-bolder'}>Travel Log</Navbar.Brand>
+      <Navbar.Brand as={Link} to={'/'} className={'fs-2 fw-bolder header-text'}>Travel Log</Navbar.Brand>
       <div className="justify-content-end">
         <Navbar.Toggle aria-controls='travelLog-nav'/>
         <Navbar.Collapse id="travelLog-nav">
           <Nav className='me-auto'>
           { headerLink.map( (link, index) =>
-          <Nav.Link as={Link} to={link[1]} key={index}>{link[0]}</Nav.Link>
+          <Nav.Link as={Link} to={link[1]} key={index} className={"header-link"}>{link[0]}</Nav.Link>
           )}
           { login &&
             <button onClick={onLogOut} className="btn btn-outline-dark btn-sm">Log out</button>
