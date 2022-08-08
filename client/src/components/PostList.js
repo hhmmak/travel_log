@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 import Row from 'react-bootstrap/Row'
@@ -14,6 +14,7 @@ const PostList = ({userId}) => {
 
   const[postList, setPostList] = useState([]);
   const[bookmarks, setBookmarks] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/posts")
@@ -65,10 +66,10 @@ const PostList = ({userId}) => {
       { postList.map( (post, index) => 
         <Col md={6} lg={4} key={index}>
           <Card>
-            <Card.Header>
+            <Card.Header className='bg-white'>
               {post.destination}, {post.country}
             </Card.Header>
-            <Card.Body>
+            <Card.Body className="card-post-body">
               <Row>
                 <Col><Card.Title className='fs-6'>{post.title}</Card.Title></Col>
                 { (post.userId !== userId && !isNaN(userId)) &&
@@ -81,14 +82,14 @@ const PostList = ({userId}) => {
                 }
               </Row>
               <Card.Subtitle className='text-muted'>{post.duration} days</Card.Subtitle>
-              <Card.Text className='my-3 card-post-content'>
+              <Card.Text className='my-3 card-post-content' onClick={() => navigate(`/post/${post.id}`)}>
               { post.itinerary.split('\n').map( (paragraph, index) =>
                 <span key={index}>{paragraph}<br /></span>
               )}
               </Card.Text>
-              <Link to={`/post/${post.id}`}>more ...</Link>
+              <div>more ...</div>
             </Card.Body>
-            <Card.Footer>
+            <Card.Footer className='bg-white'>
               <div className='d-flex justify-content-between'>
                 <div>Created by {post.username}</div>
                 <div className='text-right'>on {post.createdAt}</div>
