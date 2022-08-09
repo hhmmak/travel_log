@@ -41,7 +41,6 @@ const PostForm = (props) => {
   return (
     <div className='my-3'>
       <Form className='mb-5' onSubmit={onSubmitHandler}>
-        <Form.Text>userId = {userId}</Form.Text>
         <Form.Group className='mb-3' controlId='title'>
           <Form.Label>Title</Form.Label>
           <Form.Control type='text' name='title' onChange={onChangeHandler}/>

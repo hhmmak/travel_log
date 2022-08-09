@@ -44,8 +44,6 @@ const UserProfile = ({userId}) => {
       <div>
         <div className='my-5'>
           <h2>Hi, {user.firstName}!</h2>
-          <p>{JSON.stringify(user)}</p>
-          <div>userId: {userId}</div>
         </div>
         <Row>
           <Col md={8}>

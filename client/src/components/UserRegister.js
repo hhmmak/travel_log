@@ -34,9 +34,6 @@ const UserRegister = (props) => {
       <div className='col-lg-7 col-10 mx-auto'>
         <h2 className='mb-3'>Create Account</h2>
         <p className='d-flex justify-content-end text-danger fs-6 fw-light'>*All fields required</p>
-        {error &&
-          JSON.stringify(error)
-        }
         <Form className='mb-5' onSubmit={ onSubmitHandler }>
           <Form.Group className='mb-3' controlId='username'>
             <Form.Label>Username</Form.Label>
