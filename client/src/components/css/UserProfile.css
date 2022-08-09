@@ -1,0 +1,15 @@
+.bookmark-list {
+  background-repeat: no-repeat;
+  background-size: 30%;
+  background-position: 90% 30%;
+  background-image: url('../icons/paperplane.svg');
+}
+
+.bookmark-detail {
+  color: #b0b0b0;
+  font-size: smaller;
+}
+
+.link-hover:hover {
+  color: #72a3dc;
+}
