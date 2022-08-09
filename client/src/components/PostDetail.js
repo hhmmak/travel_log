@@ -8,7 +8,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 import {ReactComponent as Bookmark} from './icons/bookmark.svg';
-
+import './css/PostDetail.css';
 
 const PostDetail = ({userId}) => {
 
@@ -22,7 +22,7 @@ const PostDetail = ({userId}) => {
       .then( res => setPost(res.data))
       .catch(err => console.log(err));
     
-    if (!isNaN(userId)) {
+    if (userId) {
       const token = localStorage.getItem('token')
       axios.post(`http://localhost:5000/api/bookmarks/list?token=${token}`, {userId: userId})
         .then(res => {
@@ -44,7 +44,7 @@ const PostDetail = ({userId}) => {
       const token = localStorage.getItem('token')
       axios.delete(`http://localhost:5000/api/bookmarks?token=${token}`,{data :{"userId": userId, "postId": postId}})
         .then(res => {
-          e.target.style.fill = "#ffffff";
+          e.target.style.fill = "#efefef";
           let bookmarkList = bookmarks.filter(id => id !== postId);
           setBookmarks(bookmarkList);
         })
@@ -54,7 +54,7 @@ const PostDetail = ({userId}) => {
       const token = localStorage.getItem('token')
       axios.post(`http://localhost:5000/api/bookmarks?token=${token}`,{"userId": userId, "postId": postId})
         .then(res => {
-          e.target.style.fill = "#a0a0a0"
+          e.target.style.fill = "#72a3dc"
           bookmarks.push(postId);
           setBookmarks(bookmarks);
         })
@@ -85,8 +85,8 @@ const PostDetail = ({userId}) => {
           { (post.userId !== userId && !isNaN(userId)) &&
             <>
             {bookmarks.includes(post.id)
-            ? <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#a0a0a0"} width={"3rem"}/>
-            : <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#ffffff"} width={"3rem"}/>
+            ? <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#72a3dc"} width={"3rem"}/>
+            : <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#efefef"} width={"3rem"}/>
             }
             </>
           }
@@ -99,7 +99,7 @@ const PostDetail = ({userId}) => {
         <Col sm={8}>
             <p>{post.content}</p>
         </Col>
-        <Col className='p-3 mb-5 rounded-3 bg-light text-dark'>
+        <Col className='p-3 mb-5 rounded-3 bg-light text-dark detail-list-container'>
           <dl>
             <Row className='mb-5'>
               <dt className='mt-3'>Destination</dt>

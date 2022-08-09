@@ -39,7 +39,7 @@ const PostList = ({userId}) => {
       const token = localStorage.getItem('token')
       axios.delete(`http://localhost:5000/api/bookmarks?token=${token}`,{data :{"userId": userId, "postId": postId}})
         .then(res => {
-          e.target.style.fill = "#ffffff";
+          e.target.style.fill = "#efefef";
           let bookmarkList = bookmarks.filter(id => id !== postId);
           setBookmarks(bookmarkList);
         })
@@ -49,7 +49,7 @@ const PostList = ({userId}) => {
       const token = localStorage.getItem('token')
       axios.post(`http://localhost:5000/api/bookmarks?token=${token}`,{"userId": userId, "postId": postId})
         .then(res => {
-          e.target.style.fill = "#a0a0a0"
+          e.target.style.fill = "#72a3dc";
           bookmarks.push(postId);
           setBookmarks(bookmarks);
         })
@@ -66,17 +66,17 @@ const PostList = ({userId}) => {
       { postList.map( (post, index) => 
         <Col md={6} lg={4} key={index}>
           <Card>
-            <Card.Header className='bg-white'>
+            <Card.Header className='bg-white card-edge-background'>
               {post.destination}, {post.country}
             </Card.Header>
-            <Card.Body className="card-post-body"  onClick={() => navigate(`/post/${post.id}`)}>
+            <Card.Body className="card-post-body" onClick={() => navigate(`/post/${post.id}`)}>
               <Row>
                 <Col><Card.Title className='fs-6'>{post.title}</Card.Title></Col>
                 { (post.userId !== userId && !isNaN(userId)) &&
                   <Col xs={{span:2, offset:2}}>
-                    {bookmarks.includes(post.id)
-                    ? <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#a0a0a0"}/>
-                    : <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#ffffff"}/>
+                    { bookmarks.includes(post.id)
+                    ? <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#72a3dc"} />
+                    : <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#efefef"} />
                     }
                   </Col>
                 }
@@ -89,7 +89,7 @@ const PostList = ({userId}) => {
               </Card.Text>
               <div className='text-end'>...</div>
             </Card.Body>
-            <Card.Footer className='bg-white'>
+            <Card.Footer className='bg-white card-edge-background'>
               <div className='d-flex justify-content-between'>
                 <div>Created by {post.username}</div>
                 <div className='text-right'>on {post.createdAt}</div>
