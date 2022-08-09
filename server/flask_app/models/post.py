@@ -110,7 +110,7 @@ class Post:
         if len(data['destination']) <= 0:
             validation['is_valid'] = False
             validation['error']['destination'] = "Destination is required"
-        else: 
+        elif len(data['title']) <= 0: 
             validation['title'] = f"Trip to {data['destination']}"
         #country
         if len(data['country']) <= 0:
