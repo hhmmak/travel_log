@@ -69,9 +69,9 @@ const PostList = ({userId}) => {
             <Card.Header className='bg-white card-edge-background'>
               {post.destination}, {post.country}
             </Card.Header>
-            <Card.Body className="card-post-body" onClick={() => navigate(`/post/${post.id}`)}>
+            <Card.Body className="card-post-body">
               <Row>
-                <Col><Card.Title className='fs-6'>{post.title}</Card.Title></Col>
+                <Col><Card.Title className='fs-6' onClick={() => navigate(`/post/${post.id}`)}>{post.title}</Card.Title></Col>
                 { (post.userId !== userId && !isNaN(userId)) &&
                   <Col xs={{span:2, offset:2}}>
                     { bookmarks.includes(post.id)
@@ -81,13 +81,13 @@ const PostList = ({userId}) => {
                   </Col>
                 }
               </Row>
-              <Card.Subtitle className='text-muted'>{post.duration} days</Card.Subtitle>
-              <Card.Text className='my-3 card-post-content'>
+              <Card.Subtitle className='text-muted' onClick={() => navigate(`/post/${post.id}`)}>{post.duration} days</Card.Subtitle>
+              <Card.Text className='my-3 card-post-content' onClick={() => navigate(`/post/${post.id}`)}>
               { post.itinerary.split('\n').map( (paragraph, index) =>
                 <span key={index}>{paragraph}<br /></span>
               )}
               </Card.Text>
-              <div className='text-end'>...</div>
+              <div className='text-end' onClick={() => navigate(`/post/${post.id}`)}>...</div>
             </Card.Body>
             <Card.Footer className='bg-white card-edge-background'>
               <div className='d-flex justify-content-between'>
