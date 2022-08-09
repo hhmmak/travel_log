@@ -73,7 +73,7 @@ const PostList = ({userId}) => {
               <Row>
                 <Col><Card.Title className='fs-6' onClick={() => navigate(`/post/${post.id}`)}>{post.title}</Card.Title></Col>
                 { (post.userId !== userId && !isNaN(userId)) &&
-                  <Col xs={{span:2, offset:2}}>
+                  <Col xs={2}>
                     { bookmarks.includes(post.id)
                     ? <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#72a3dc"} />
                     : <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#efefef"} />
