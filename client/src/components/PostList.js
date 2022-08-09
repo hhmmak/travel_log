@@ -69,7 +69,7 @@ const PostList = ({userId}) => {
             <Card.Header className='bg-white'>
               {post.destination}, {post.country}
             </Card.Header>
-            <Card.Body className="card-post-body">
+            <Card.Body className="card-post-body"  onClick={() => navigate(`/post/${post.id}`)}>
               <Row>
                 <Col><Card.Title className='fs-6'>{post.title}</Card.Title></Col>
                 { (post.userId !== userId && !isNaN(userId)) &&
@@ -82,12 +82,12 @@ const PostList = ({userId}) => {
                 }
               </Row>
               <Card.Subtitle className='text-muted'>{post.duration} days</Card.Subtitle>
-              <Card.Text className='my-3 card-post-content' onClick={() => navigate(`/post/${post.id}`)}>
+              <Card.Text className='my-3 card-post-content'>
               { post.itinerary.split('\n').map( (paragraph, index) =>
                 <span key={index}>{paragraph}<br /></span>
               )}
               </Card.Text>
-              <div>more ...</div>
+              <div className='text-end'>...</div>
             </Card.Body>
             <Card.Footer className='bg-white'>
               <div className='d-flex justify-content-between'>
