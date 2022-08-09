@@ -68,27 +68,30 @@ const PostDetail = ({userId}) => {
       <Row>
       { userId &&
         <Col className='d-flex flex-row-reverse'>
-        { userId === post.userId ? 
+        { userId === post.userId &&
           <ButtonGroup>
             <Button variant='secondary' onClick={() => navigate(`/post/edit/${post.id}`)}>Edit</Button>
             <Button variant='secondary' onClick={deleteHandler}>Delete</Button>
           </ButtonGroup>
-        :
-          <Col xs={{span:2, offset:2}}>
-          { (post.userId !== userId && !isNaN(userId)) &&
-            <>
-            {bookmarks.includes(post.id)
-            ? <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#a0a0a0"}/>
-            : <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#ffffff"}/>
-            }
-            </>
-          }
-          </Col>
         }
         </Col>
       }
       </Row>
-      <h2 className='my-5'>{post.title}</h2>
+      <Row className='align-items-center'>
+        <Col>
+          <h2 className='my-5'>{post.title}</h2>
+        </Col>
+        <Col xs={{span:1, offset:1}}>
+          { (post.userId !== userId && !isNaN(userId)) &&
+            <>
+            {bookmarks.includes(post.id)
+            ? <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#a0a0a0"} width={"3rem"}/>
+            : <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#ffffff"} width={"3rem"}/>
+            }
+            </>
+          }
+        </Col>
+      </Row>
       <div className='p-3 mb-5 rounded-3 bg-white'>
         <p>{post.itinerary}</p>
       </div>
