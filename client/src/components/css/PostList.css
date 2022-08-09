@@ -8,3 +8,11 @@
   color: #f0f0f0;
   transition: 0.2s;
 }
+
+.card-edge-background {
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: bottom;
+  background-attachment: fixed;
+  background-image: url('../icons/paperplane.svg');
+}
