@@ -36,7 +36,7 @@ const UserLogin = ({setLogin, setUserId}) => {
   }
   return (
     <div className='d-flex align-items-center login-container'>
-      <div className='col-lg-7 col-10 mx-auto'>
+      <div className='col-lg-7 col-10 mx-auto login-background'>
         <h2 className='mb-5'>Log In</h2>
         {error &&
           <p className='text-danger'>{error}</p>
@@ -51,7 +51,7 @@ const UserLogin = ({setLogin, setUserId}) => {
             <Form.Control type='password' name='password' onChange={ onChangeHandler } />
           </Form.Group>
           <div className='d-grid d-md-block'>
-            <Button variant="light border border-secondary" type="submit" className='col-md-5'>Log In</Button>
+            <Button variant="outline-dark" type="submit" className='col-md-5'>Log In</Button>
           </div>
         </Form>
         <div className='d-flex justify-content-end'>

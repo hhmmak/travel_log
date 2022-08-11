@@ -1,9 +1,12 @@
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Button from 'react-bootstrap/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+
+import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
+
+import './css/UserRegister.css'
 
 const UserRegister = (props) => {
 
@@ -30,8 +33,8 @@ const UserRegister = (props) => {
 
 
   return (
-    <div className='vh-75 d-flex align-items-center'>
-      <div className='col-lg-7 col-10 mx-auto'>
+    <div className='d-flex align-items-center my-5'>
+      <div className='col-lg-7 col-10 mx-auto register-background'>
         <h2 className='mb-3'>Create Account</h2>
         <p className='d-flex justify-content-end text-danger fs-6 fw-light'>*All fields required</p>
         <Form className='mb-5' onSubmit={ onSubmitHandler }>
