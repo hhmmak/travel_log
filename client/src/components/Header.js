@@ -47,7 +47,6 @@ const Header = (props) => {
   }
   
   
-  //TODO remove "change" button
   return (
     <Navbar expand="md" className='pt-3'>
     <Container>
