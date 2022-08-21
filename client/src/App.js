@@ -8,11 +8,11 @@ import Header from './components/Header';
 import UserLogin from './components/UserLogin';
 import UserRegister from './components/UserRegister';
 import PostDetail from './components/PostDetail';
-import PostForm from './components/PostForm';
 import UserProfile from './components/UserProfile';
 import PostUpdate from './components/PostUpdate';
 
 import './App.css';
+import PostAdd from './components/PostAdd';
 
 function App() {
 
@@ -30,7 +30,7 @@ function App() {
             <Route path='/login' element={<UserLogin setLogin={setLogin} setUserId={setUserId}/>} />
             <Route path='/register' element={<UserRegister setLogin={setLogin} setUserId={setUserId} />} />
             <Route path='/post/:id' element={<PostDetail userId={userId} />} />
-            <Route path='/post/new' element={<PostForm userId={userId} />} />
+            <Route path='/post/new' element={<PostAdd userId={userId} />} />
             <Route path='/user' element={<UserProfile userId={userId} />} />
             <Route path='/post/edit/:id' element={<PostUpdate userId={userId} />} />
           </Routes>
