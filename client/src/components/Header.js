@@ -41,7 +41,7 @@ const Header = (props) => {
 
   const onLogOut = () => {
     setLogin(false);
-    setUserId(NaN)
+    setUserId(null);
     localStorage.clear();
     navigate('/');
   }
