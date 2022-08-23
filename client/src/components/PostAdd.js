@@ -2,14 +2,21 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import PostForm from './PostForm';
 
 
 const PostAdd = (props) => {
 
   const navigate = useNavigate();
   const {userId} = props;
+
+  const todayDate = () => {
+    let today = new Date();
+    let todayDay = "0" + today.getDate();
+    let todayMonth = "0" + (today.getMonth() + 1);
+    return (`${today.getFullYear()}-${todayMonth.slice(-2)}-${todayDay.slice(-2)}`)
+  
+  };
 
   const [error, setError] = useState({})
   const [post, setPost] = useState({
@@ -18,77 +25,23 @@ const PostAdd = (props) => {
     itinerary: "",
     destination: "",
     country: "",
-    dateFrom: "",
-    dateTo: ""
+    dateFrom: todayDate(),
+    dateTo: todayDate()
   })
-
-  const onChangeHandler = (e) => {
-    setPost({...post, [e.target.name]: e.target.value });
-  }
   
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+  const onPostHandler = (newPost) => {
     const token = localStorage.getItem('token');
 
-    axios.post(`http://localhost:5000/api/posts?token=${token}`, {...post, user_id: userId})
+    axios.post(`http://localhost:5000/api/posts?token=${token}`, {...newPost, user_id: userId})
       .then(res => navigate('/'))
       .catch(err => {
         setError(err.response.data)
         console.log(err)
-      })
+      });
   }
 
   return (
-    <div className='my-3'>
-      <Form className='mb-5' onSubmit={onSubmitHandler}>
-        <Form.Group className='mb-3' controlId='title'>
-          <Form.Label>Title</Form.Label>
-          <Form.Control type='text' name='title' onChange={onChangeHandler}/>
-        </Form.Group>
-        <Form.Group className='mb-3' controlId='destination'>
-          <Form.Label>Destination</Form.Label>
-          <Form.Control type='text' name='destination' onChange={onChangeHandler}/>
-          {error.destination &&
-            <Form.Text className='text-danger'>{error.destination}</Form.Text>
-          }
-        </Form.Group>
-        <Form.Group className='mb-3' controlId='country'>
-          <Form.Label>Country</Form.Label>
-          <Form.Control type='text' name='country' onChange={onChangeHandler}/>
-          {error.country &&
-            <Form.Text className='text-danger'>{error.country}</Form.Text>
-          }
-        </Form.Group>
-        <Form.Group className='mb-3' controlId='dateFrom'>
-          <Form.Label>From</Form.Label>
-          <Form.Control type='date' name='dateFrom' onChange={onChangeHandler}/>
-          {error.dateFrom &&
-            <Form.Text className='text-danger'>{error.dateFrom}</Form.Text>
-          }
-        </Form.Group>
-        <Form.Group className='mb-3' controlId='dateTo'>
-          <Form.Label>To</Form.Label>
-          <Form.Control type='date' name='dateTo' onChange={onChangeHandler}/>
-          {error.dateTo &&
-            <Form.Text className='text-danger'>{error.dateTo}</Form.Text>
-          }
-        </Form.Group>
-        <Form.Group className='mb-3' controlId='itinerary'>
-          <Form.Label>Itinerary</Form.Label>
-          <Form.Control as="textarea" rows={5} name='itinerary' onChange={onChangeHandler}/>
-          {error.itinerary &&
-            <Form.Text className='text-danger'>{error.itinerary}</Form.Text>
-          }
-        </Form.Group>
-        <Form.Group className='mb-3' controlId='content'>
-          <Form.Label>Log</Form.Label>
-          <Form.Control as="textarea" rows={5} name='content' onChange={onChangeHandler}/>
-        </Form.Group>
-        <div className='d-grid d-md-block'>
-          <Button variant="light border border-secondary" type="submit" className='col-md-5'>Create</Button>
-        </div>
-      </Form>
-    </div>
+    <PostForm error={error} post={post} setPost={setPost} submitAction={onPostHandler} />
   )
 }
 export default PostAdd;
