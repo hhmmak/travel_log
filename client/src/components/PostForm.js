@@ -9,18 +9,8 @@ import Button from 'react-bootstrap/Button';
 const PostForm = (props) => {
 
   // const navigate = useNavigate();
-  const {userId, error, post, setPost, submitAction} = props;
+  const {error, post, setPost, submitAction} = props;
 
-  // const [error, setError] = useState({})
-  // const [post, setPost] = useState({
-  //   title: "",
-  //   content: "",
-  //   itinerary: "",
-  //   destination: "",
-  //   country: "",
-  //   dateFrom: "",
-  //   dateTo: ""
-  // })
 
   const onChangeHandler = (e) => {
     setPost({...post, [e.target.name]: e.target.value });
@@ -28,6 +18,7 @@ const PostForm = (props) => {
   
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    submitAction(post);
     // const token = localStorage.getItem('token');
 
     // axios.post(`http://localhost:5000/api/posts?token=${token}`, {...post, user_id: userId})
