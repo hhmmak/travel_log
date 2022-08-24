@@ -1,6 +1,6 @@
 html, body {
   height: 100%;
-  background-color: #ddeae9 !important;
+  background-color: #32485d !important;
 }
 
 body {
@@ -10,6 +10,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('plane_horizon.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 code {
