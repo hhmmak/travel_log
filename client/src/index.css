@@ -1,6 +1,5 @@
 html, body {
   height: 100%;
-  background-color: #32485d !important;
 }
 
 body {
@@ -14,6 +13,7 @@ body {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  background-color: #32485d;
 }
 
 code {
