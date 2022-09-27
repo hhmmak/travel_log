@@ -49,7 +49,7 @@ const PostList = ({userId}) => {
       const token = localStorage.getItem('token')
       axios.post(`http://localhost:5000/api/bookmarks?token=${token}`,{"userId": userId, "postId": postId})
         .then(res => {
-          e.target.style.fill = "#72a3dc";
+          e.target.style.fill = "#eebc64";
           bookmarks.push(postId);
           setBookmarks(bookmarks);
         })
@@ -75,7 +75,7 @@ const PostList = ({userId}) => {
                 { (post.userId !== userId && !isNaN(userId)) &&
                   <Col xs={2}>
                     { bookmarks.includes(post.id)
-                    ? <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#72a3dc"} />
+                    ? <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#eebc64"} />
                     : <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#efefef"} />
                     }
                   </Col>
