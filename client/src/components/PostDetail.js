@@ -96,11 +96,11 @@ const PostDetail = ({userId}) => {
         <p>{post.itinerary}</p>
       </div>
       <Row className='g-5'>
-        <Col sm={8}>
+        <Col sm={8} className='mb-5 mx-3 rounded-3 p-3 detail-content-container'>
             <p>{post.content}</p>
         </Col>
         <Col className='p-3 mb-5 rounded-3 bg-light text-dark detail-list-container'>
-          <dl>
+          <dl className='detail-list-content'>
             <Row className='mb-5'>
               <dt className='mt-3'>Destination</dt>
               <dd className='ms-2'>{post.destination}</dd>
