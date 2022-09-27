@@ -53,7 +53,7 @@ class Post:
         # without location/country table
         query = "SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id WHERE posts.id = %(id)s;"
         results = connectToMySQL(cls.db_name).query_db(query, data)
-        print("=======results:", results)
+        # print("=======results:", results)
         post = {
             "userId": results[0]['user_id'],
             "username": results[0]['username'],

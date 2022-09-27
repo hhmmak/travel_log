@@ -35,7 +35,7 @@ class User:
     
     @classmethod
     def get_user_by_id(cls, data):
-        print("------------- data in model: ", data)
+        # print("------------- data in model: ", data)
         query = "SELECT * FROM users WHERE id = %(id)s;"
         results = connectToMySQL(cls.db_name).query_db(query, data)
         user = {

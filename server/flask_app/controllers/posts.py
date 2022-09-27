@@ -25,7 +25,7 @@ def post_detail(id):
 @jwt_required
 def post_create():
     dataJSON = request.get_json()
-    print("========================   dataJSON: ", dataJSON)
+    # print("========================   dataJSON: ", dataJSON)
 
     # validation
     validation = post.Post.validate_post(dataJSON)
@@ -45,7 +45,7 @@ def post_create():
         "user_id": dataJSON['user_id']
     }
     post.Post.add_post(data)
-    print("--------- data: ", data, "----------------")
+    # print("--------- data: ", data, "----------------")
     return jsonify({"message": "post created"})
 
 #.. PUT routes
