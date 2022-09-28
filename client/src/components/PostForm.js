@@ -1,5 +1,5 @@
-// import { useEffect, useState } from 'react';
-// import axios from 'axios';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
@@ -13,13 +13,13 @@ const PostForm = (props) => {
 
   // const navigate = useNavigate();
   const {error, post, setPost, submitAction} = props;
-  // const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get(`https://restcountries.com/v3.1/all`)
-  //     .then(res => setCountries(res.data))
-  //     .catch(err => console.log(err))
-  // }, [])
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/countries`)
+      .then(res => setCountries(res.data))
+      .catch(err => console.log(err))
+  }, [])
   
 
 
@@ -58,24 +58,17 @@ const PostForm = (props) => {
             </Form.Group>
             <Form.Group className='mb-3' controlId='country'>
               <Form.Label>Country</Form.Label>
-              <Form.Control type='text' name='country' onChange={onChangeHandler} value={post.country}/>
+              <Form.Select aria-label='Select a country' name='country' onChange={onChangeHandler} value={post.country}>
+                <option>Select one country</option>
+                {countries.map( (country, index) =>
+                <option value={country.country} key={index}>{country.country}</option>
+                )}
+              </Form.Select>
               {error.country &&
                 <Form.Text className='text-danger'>{error.country}</Form.Text>
               }
             </Form.Group>
           </Col>
-          {/* <Form.Group className='mb-3' controlId='countryList'>
-            <Form.Label>Country List</Form.Label>
-            <Form.Select aria-label='Select a country'>
-              <option>Select one country</option>
-              {countries.map( (country, index) =>
-                <option value={country.name.common} key={index}>{country.name.common}</option>
-              )}
-            </Form.Select>
-            {error.countryList &&
-              <Form.Text className='text-danger'>{error.countryList}</Form.Text>
-            }
-          </Form.Group> */}
           <Col>
             <Form.Group className='mb-3' controlId='dateFrom'>
               <Form.Label>From</Form.Label>
