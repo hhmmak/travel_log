@@ -1,15 +1,26 @@
-// import { useState } from 'react';
+// import { useEffect, useState } from 'react';
 // import axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
+import './css/PostForm.css';
 
 const PostForm = (props) => {
 
   // const navigate = useNavigate();
   const {error, post, setPost, submitAction} = props;
+  // const [countries, setCountries] = useState([]);
+
+  // useEffect(() => {
+  //   axios.get(`https://restcountries.com/v3.1/all`)
+  //     .then(res => setCountries(res.data))
+  //     .catch(err => console.log(err))
+  // }, [])
+  
 
 
   const onChangeHandler = (e) => {
@@ -31,39 +42,57 @@ const PostForm = (props) => {
 
   return (
     <div>
-      <Form className='mb-5' onSubmit={onSubmitHandler}>
+      <Form className='mb-5 p-5 rounded-3 post-form-container' onSubmit={onSubmitHandler}>
         <Form.Group className='mb-3' controlId='title'>
           <Form.Label>Title</Form.Label>
           <Form.Control type='text' name='title' onChange={onChangeHandler} value={post.title}/>
         </Form.Group>
-        <Form.Group className='mb-3' controlId='destination'>
-          <Form.Label>Destination</Form.Label>
-          <Form.Control type='text' name='destination' onChange={onChangeHandler} value={post.destination}/>
-          {error.destination &&
-            <Form.Text className='text-danger'>{error.destination}</Form.Text>
-          }
-        </Form.Group>
-        <Form.Group className='mb-3' controlId='country'>
-          <Form.Label>Country</Form.Label>
-          <Form.Control type='text' name='country' onChange={onChangeHandler} value={post.country}/>
-          {error.country &&
-            <Form.Text className='text-danger'>{error.country}</Form.Text>
-          }
-        </Form.Group>
-        <Form.Group className='mb-3' controlId='dateFrom'>
-          <Form.Label>From</Form.Label>
-          <Form.Control type='date' name='dateFrom' onChange={onChangeHandler} value={post.dateFrom}/>
-          {error.dateFrom &&
-            <Form.Text className='text-danger'>{error.dateFrom}</Form.Text>
-          }
-        </Form.Group>
-        <Form.Group className='mb-3' controlId='dateTo'>
-          <Form.Label>To</Form.Label>
-          <Form.Control type='date' name='dateTo' onChange={onChangeHandler} value={post.dateTo}/>
-          {error.dateTo &&
-            <Form.Text className='text-danger'>{error.dateTo}</Form.Text>
-          }
-        </Form.Group>
+        <Row className='g-5'>
+          <Col>
+            <Form.Group className='mb-3' controlId='destination'>
+              <Form.Label>Destination</Form.Label>
+              <Form.Control type='text' name='destination' onChange={onChangeHandler} value={post.destination}/>
+              {error.destination &&
+                <Form.Text className='text-danger'>{error.destination}</Form.Text>
+              }
+            </Form.Group>
+            <Form.Group className='mb-3' controlId='country'>
+              <Form.Label>Country</Form.Label>
+              <Form.Control type='text' name='country' onChange={onChangeHandler} value={post.country}/>
+              {error.country &&
+                <Form.Text className='text-danger'>{error.country}</Form.Text>
+              }
+            </Form.Group>
+          </Col>
+          {/* <Form.Group className='mb-3' controlId='countryList'>
+            <Form.Label>Country List</Form.Label>
+            <Form.Select aria-label='Select a country'>
+              <option>Select one country</option>
+              {countries.map( (country, index) =>
+                <option value={country.name.common} key={index}>{country.name.common}</option>
+              )}
+            </Form.Select>
+            {error.countryList &&
+              <Form.Text className='text-danger'>{error.countryList}</Form.Text>
+            }
+          </Form.Group> */}
+          <Col>
+            <Form.Group className='mb-3' controlId='dateFrom'>
+              <Form.Label>From</Form.Label>
+              <Form.Control type='date' name='dateFrom' onChange={onChangeHandler} value={post.dateFrom}/>
+              {error.dateFrom &&
+                <Form.Text className='text-danger'>{error.dateFrom}</Form.Text>
+              }
+            </Form.Group>
+            <Form.Group className='mb-3' controlId='dateTo'>
+              <Form.Label>To</Form.Label>
+              <Form.Control type='date' name='dateTo' onChange={onChangeHandler} value={post.dateTo}/>
+              {error.dateTo &&
+                <Form.Text className='text-danger'>{error.dateTo}</Form.Text>
+              }
+            </Form.Group>
+          </Col>
+        </Row>
         <Form.Group className='mb-3' controlId='itinerary'>
           <Form.Label>Itinerary</Form.Label>
           <Form.Control as="textarea" rows={5} name='itinerary' onChange={onChangeHandler} value={post.itinerary}/>
