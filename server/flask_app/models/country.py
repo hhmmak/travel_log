@@ -11,12 +11,17 @@ class Country:
         self.updated_at = data['updated_at']
 
     #.. get methods
+    @classmethod
     def get_all_countries(cls):
         query = "SELECT * FROM countries;"
         results = connectToMySQL(cls.db_name).query_db(query)
         countries = []
-        for country in results:
-            countries.append(cls(country))
+        for row in results:
+            country = {
+                'id': row['id'],
+                'country': row['country']
+            }
+            countries.append(country)
         return countries
 
 
