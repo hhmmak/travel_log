@@ -24,9 +24,3 @@ class Country:
             countries.append(country)
         return countries
 
-
-    #.. add methods
-
-
-    #.. validation methods
-
