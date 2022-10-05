@@ -7,19 +7,19 @@ class Post:
 
     db_name = 'travel_schema'
 
-    def __init__(self, data):
-        self.id = data['id']
-        self.title = data['title']
-        self.content = data['content']
-        self.itinerary = data['itinerary']
-        self.destination = f"{data['location']}, {data['country']}"
-        self.user_id = data['user_id']
-        self.user_username = data['username']
-        self.date_from = data['date_from']
-        self.date_to = data['date_to']
-        self.duration = data['duration']
-        self.created_at = data['created_at']
-        self.updated_at = data['updated_at']
+    # def __init__(self, data):
+    #     self.id = data['id']
+    #     self.title = data['title']
+    #     self.content = data['content']
+    #     self.itinerary = data['itinerary']
+    #     self.destination = f"{data['location']}, {data['country']}"
+    #     self.user_id = data['user_id']
+    #     self.user_username = data['username']
+    #     self.date_from = data['date_from']
+    #     self.date_to = data['date_to']
+    #     self.duration = data['duration']
+    #     self.created_at = data['created_at']
+    #     self.updated_at = data['updated_at']
 
     #.. get methods
     @classmethod
