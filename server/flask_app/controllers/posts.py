@@ -37,7 +37,7 @@ def post_create():
         # "title": dataJSON['title'],   # api testing purpose
         "content": dataJSON['content'],
         "itinerary": dataJSON['itinerary'],
-        "destination": dataJSON['destination'],
+        "destination": validation['location'] if 'location' in validation else dataJSON['location'],
         "country": dataJSON['country'],
         "date_from": dataJSON['dateFrom'],
         "date_to": dataJSON['dateTo'],
@@ -51,16 +51,12 @@ def post_create():
 
 # TODO post_create() =>
     # obtain raw data including country, city, location data from form
-    # check if city/location exists from dataJSON = only country
-        # if exists, check if city/location exists from table
-            # if exists, check if destination exists
-                # if exists, obtain destination_id
-                # if not, add into destination table; NULL for empty city/location; obtain destination_id
-            # if not, add into table
-                # add into destination table; NULL for empty city/location; obtain destination_id
-        # if not, check if destination = country exists
+    # check if city/location exists from table
+        # if exists, check if destination exists
             # if exists, obtain destination_id
-            # if not, add into destination table w/ destination = country; obtain destination_id
+            # if not, add into destination table; NULL for empty city/location; obtain destination_id
+        # if not, add into table
+            # add into destination table; NULL for empty city/location; obtain destination_id
     # create data from dataJSON, validaiton and destination_id
 # TODO complete
     
@@ -82,7 +78,7 @@ def post_edit(id):
         "title": validation['title'] if 'title' in validation else dataJSON['title'],
         "content": dataJSON['content'],
         "itinerary": dataJSON['itinerary'],
-        "destination": dataJSON['destination'],
+        "destination": validation['location'] if 'location' in validation else dataJSON['location'],
         "country": dataJSON['country'],
         "date_from": dataJSON['dateFrom'],
         "date_to": dataJSON['dateTo'],
