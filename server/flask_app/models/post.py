@@ -35,7 +35,7 @@ class Post:
                 "title": row['title'],
                 "content": row['content'],
                 "itinerary": row['itinerary'],
-                "destination": row['destination'],
+                "location": row['destination'],
                 "duration": row['duration'],
                 "country": row['country'],
                 "dateFrom": row['date_from'].strftime(DATE_FORMAT),
@@ -61,7 +61,7 @@ class Post:
             "title": results[0]['title'],
             "content": results[0]['content'],
             "itinerary": results[0]['itinerary'],
-            "destination": results[0]['destination'],
+            "location": results[0]['destination'],
             "duration": results[0]['duration'],
             "country": results[0]['country'],
             "dateFrom": results[0]['date_from'].strftime(DATE_FORMAT),
@@ -77,7 +77,7 @@ class Post:
         # with location/country table
         # query = "INSERT INTO posts (title, content, itinerary, destination_id, user_id, date_from, date_to, duration) VALUES (%(title)s, %(content)s, %(itinerary)s, %(destination_id)s, %(user_id)s, %(date_from)s, %(date_to)s, %(duration)s);""
         # without location/country table
-        query = "INSERT INTO posts (title, content, itinerary, destination, country, user_id, date_from, date_to, duration) VALUES (%(title)s, %(content)s, %(itinerary)s, %(destination)s, %(country)s, %(user_id)s, %(date_from)s, %(date_to)s, %(duration)s);"
+        query = "INSERT INTO posts (title, content, itinerary, destination, country, user_id, date_from, date_to, duration) VALUES (%(title)s, %(content)s, %(itinerary)s, %(location)s, %(country)s, %(user_id)s, %(date_from)s, %(date_to)s, %(duration)s);"
         return connectToMySQL(cls.db_name).query_db(query, data)
 
     #.. update methods
@@ -111,16 +111,15 @@ class Post:
         if len(data['itinerary']) <= 0:
             validation['is_valid'] = False
             validation['error']['itinerary'] = "Itinerary is required"
-        #destination
-        if len(data['destination']) <= 0:
-            validation['is_valid'] = False
-            validation['error']['destination'] = "Destination is required"
-        elif len(data['title']) <= 0: 
-            validation['title'] = f"Trip to {data['destination']}"
         #country
         if len(data['country']) <= 0:
             validation['is_valid'] = False
             validation['error']['country'] = "Country is required"
+        elif len(data['location']) <= 0: 
+            validation['location'] = data['country']
+        #destination
+        if len(data['title']) <= 0: 
+            validation['title'] = f"Trip to {validation['location'] if 'location' in validation else data['location']}"
         #dateFrom && dateTo
         if len(data['dateFrom']) < 10 or len(data['dateTo']) < 10:
             validation['is_valid'] = False
