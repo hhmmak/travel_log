@@ -18,7 +18,7 @@ class Country:
         countries = []
         for row in results:
             country = {
-                'id': row['id'],
+                'countryId': row['id'],
                 'country': row['name']
             }
             countries.append(country)
