@@ -49,11 +49,18 @@ const PostForm = (props) => {
         </Form.Group>
         <Row className='g-5'>
           <Col>
-            <Form.Group className='mb-3' controlId='destination'>
+            <Form.Group className='mb-3' controlId='location'>
               <Form.Label>Destination</Form.Label>
-              <Form.Control type='text' name='destination' onChange={onChangeHandler} value={post.destination}/>
-              {error.destination &&
-                <Form.Text className='text-danger'>{error.destination}</Form.Text>
+              <Form.Control type='text' name='location' onChange={onChangeHandler} value={post.location}/>
+              {error.location &&
+                <Form.Text className='text-danger'>{error.location}</Form.Text>
+              }
+            </Form.Group>
+            <Form.Group className='mb-3' controlId='city'>
+              <Form.Label>City</Form.Label>
+              <Form.Control type='text' name='city' onChange={onChangeHandler} value={post.city}/>
+              {error.city &&
+                <Form.Text className='text-danger'>{error.city}</Form.Text>
               }
             </Form.Group>
             <Form.Group className='mb-3' controlId='country'>
@@ -98,7 +105,7 @@ const PostForm = (props) => {
           <Form.Control as="textarea" rows={5} name='content' onChange={onChangeHandler} value={post.content}/>
         </Form.Group>
         <div className='d-grid d-md-block'>
-          <Button variant="outline-dark" type="submit" className='col-md-5'>Update</Button>
+          <Button variant="outline-dark" type="submit" className='col-md-5'>Post</Button>
         </div>
       </Form>
     </div>
