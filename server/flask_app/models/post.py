@@ -22,6 +22,8 @@ class Post:
     #     self.updated_at = data['updated_at']
 
     #.. get methods
+    #TODO change new get_all_post and get_post for destination_id, change query??
+
     @classmethod
     def get_all_posts(cls):
         query = "SELECT * FROM posts LEFT JOIN users ON users.id = posts.user_id ORDER BY posts.created_at DESC;"
@@ -45,7 +47,6 @@ class Post:
             posts.append(post)
         return posts
 
-    
     @classmethod
     def get_post(cls, data):
         # with location/country table
