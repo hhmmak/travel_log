@@ -38,7 +38,7 @@ class Country:
         query = "SELECT * FROM countries WHERE name = %(name)s;"
         results = connectToMySQL(cls.db_name).query_db(query, data)
         country = {
-            "id": results[0]['id'],
+            "countryId": results[0]['id'],
             "countryAbbr": results[0]['abbr']
         }
         return country
