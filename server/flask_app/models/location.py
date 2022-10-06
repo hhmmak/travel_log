@@ -10,7 +10,7 @@ class Location:
         query = "SELECT * FROM locations WHERE name = %(name)s;"
         results = connectToMySQL(cls.db_name).query_db(query,data)
         location = {
-            "location": results[0]['name']
+            "id": results[0]['id']
         }
         return location
 
