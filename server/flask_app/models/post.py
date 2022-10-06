@@ -74,13 +74,18 @@ class Post:
     #.. add methods
     @classmethod
     def add_post (cls,data):
-        query = "INSERT INTO posts (title, content, itinerary, destination, country, user_id, date_from, date_to, duration) VALUES (%(title)s, %(content)s, %(itinerary)s, %(destination)s, %(country)s, %(user_id)s, %(date_from)s, %(date_to)s, %(duration)s);"
+        # with location/country table
+        # query = "INSERT INTO posts (title, content, itinerary, destination_id, user_id, date_from, date_to, duration) VALUES (%(title)s, %(content)s, %(itinerary)s, %(destination_id)s, %(user_id)s, %(date_from)s, %(date_to)s, %(duration)s);""
+        # without location/country table
+        query = "INSERT INTO posts (title, content, itinerary, destination_id, user_id, date_from, date_to, duration) VALUES (%(title)s, %(content)s, %(itinerary)s, %(destination_id)s, %(user_id)s, %(date_from)s, %(date_to)s, %(duration)s);"
         return connectToMySQL(cls.db_name).query_db(query, data)
 
     #.. update methods
     @classmethod
     def update_post(cls, data):
-
+        # with location/country table
+        # query = "UPDATE posts SET title = %(title)s, content = %(content)s, itinerary = %(itinerary)s, destination = %(destination)s, country = %(country)s, date_from = %(date_from)s, date_to = %(date_to)s, duration = %(duration)s WHERE id = %(id)s;""
+        # without location/country table
         query = "UPDATE posts SET title = %(title)s, content = %(content)s, itinerary = %(itinerary)s, destination = %(destination)s, country = %(country)s, date_from = %(date_from)s, date_to = %(date_to)s, duration = %(duration)s WHERE id = %(id)s;"
         connectToMySQL(cls.db_name).query_db(query, data)
         return cls
