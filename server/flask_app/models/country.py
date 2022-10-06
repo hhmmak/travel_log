@@ -19,8 +19,27 @@ class Country:
         for row in results:
             country = {
                 'id': row['id'],
-                'country': row['country']
+                'country': row['name']
             }
             countries.append(country)
         return countries
+
+    @classmethod
+    def get_country_by_id(cls,data):
+        query = "SELECT * FROM countries WHERE id = %(id)s;"
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        country = {
+            "name": results[0]['name'],
+            "abbr": results[0]['abbr']
+        }
+        return country
+
+    def get_country_by_name(cls,data):
+        query = "SELECT * FROM countries WHERE name = %(name)s;"
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        country = {
+            "id": results[0]['id'],
+            "abbr": results[0]['abbr']
+        }
+        return country
 
