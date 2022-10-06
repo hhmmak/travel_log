@@ -22,7 +22,7 @@ class Country:
                     LEFT JOIN cities ON destinations.city_id = cities.id \
                     LEFT JOIN countries ON destinations.country_id = countries.id \
                     WHERE destinations.id = %(id)s";
-        results = connectToMySQL(cls.db_name).query_db(query)
+        results = connectToMySQL(cls.db_name).query_db(query, data)
         destination = {
             "locationId": results[0]['location_id'],
             "location": results[0]['locations.name'],
@@ -33,3 +33,9 @@ class Country:
             "countryAbbr": results[0]['countries.abbr']
         }
         return destination
+
+    #.. add methods
+    @classmethod
+    def add_destination(cls, data):
+        query = "INSERT INTO destinations (location_id, city_id, country_id) VALUES (%(location_id)s, %(city_id)s, %(country_id)s);"
+        return connectToMySQL(cls.db_name).query_db(query, data)  # return destination id
