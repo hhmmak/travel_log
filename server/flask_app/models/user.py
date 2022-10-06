@@ -6,7 +6,7 @@ DATE_FORMAT = '%Y-%m-%d'
 
 class User:
 
-    db_name = 'travel_schema'
+    db_name = 'travel_log_schema'
 
     def __init__(self, data):
         self.id = data['id']
