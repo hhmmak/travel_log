@@ -14,10 +14,8 @@ class Location:
         }
         return location
 
-
     #.. add methods
     @classmethod
     def add_location(cls,data):
         query = "INSERT INTO locations (name) VALUE (%(location)s);"
-        result = connectToMySQL(cls.db_name).query_db(query,data)
-        return result
+        return connectToMySQL(cls.db_name).query_db(query,data)     # return location id
