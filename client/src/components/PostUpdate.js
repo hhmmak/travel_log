@@ -16,7 +16,7 @@ const PostUpdate = ({userId}) => {
     title: "",
     content: "",
     itinerary: "",
-    destination: "",
+    location: "",
     country: "",
     dateFrom: "",
     dateTo: ""

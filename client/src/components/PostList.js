@@ -67,7 +67,7 @@ const PostList = ({userId}) => {
         <Col md={6} lg={4} key={index}>
           <Card>
             <Card.Header className='bg-white card-edge-background'>
-              {post.destination}, {post.country}
+              {post.location}, {post.country}
             </Card.Header>
             <Card.Body className="card-post-body">
               <Row>
