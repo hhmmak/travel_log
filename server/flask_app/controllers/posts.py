@@ -50,7 +50,25 @@ def post_create():
     return jsonify({"message": "post created", "id": result})
 
 # TODO post_create() =>
-    # obtain raw data including country, city, location data from form
+    dataJSON = request.get_json()
+        # print("========================   dataJSON: ", dataJSON)
+
+    # validation
+    validation = post.Post.validate_post(dataJSON)
+    if not validation['is_valid']:
+        return validation['error'], 400
+    
+    if 'location' in dataJSON:
+        id = location.Location.get_location_by_name({"name" : dataJSON['location']})
+        if not id:
+            id = location.Location.add_location({"location" : dataJSON['location']})
+        #TODO continue with : if exists, check if destination exists
+    elif 'city' in dataJSON:
+        id = ity.City.get_city_by_name({"name" : dataJSON['city']})
+        if not id:
+            id = city.City.add_city({"city" : dataJSON['city']})
+        #TODO continue with : if exists, check if destination exists
+
     # check if city/location exists from table
         # if exists, check if destination exists
             # if exists, obtain destination_id
@@ -89,6 +107,17 @@ def post_edit(id):
     # print("---------data: ", data, "----------------")
     post.Post.update_post(data)
     return jsonify({"message": "post updated", "id": id, "dataJSON": dataJSON})
+
+# TODO post_edit() =>
+    # obtain raw data including country, city, location data from form
+    # check if city/location exists from table
+        # if exists, check if destination exists
+            # if exists, obtain destination_id
+            # if not, add into destination table; NULL for empty city/location; obtain destination_id
+        # if not, add into table
+            # add into destination table; NULL for empty city/location; obtain destination_id
+    # create data from dataJSON, validaiton and destination_id
+# TODO complete
 
 #.. DELETE routes
 @app.route('/api/posts/<int:id>', methods=['DELETE'])
