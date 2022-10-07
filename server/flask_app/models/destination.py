@@ -34,6 +34,14 @@ class Country:
         }
         return destination
 
+    @classmethod
+    def get_destination_by_location(cls, data):
+        pass
+
+    @classmethod
+    def get_destination_by_city(cls, data):
+        pass
+
     #.. add methods
     @classmethod
     def add_destination(cls, data):
