@@ -5,7 +5,8 @@ DATE_FORMAT = '%Y-%m-%d'
 
 class Post:
 
-    db_name = 'travel_schema'
+    # db_name = 'travel_schema'
+    db_name = 'travel_log_schema'
 
     # def __init__(self, data):
     #     self.id = data['id']
@@ -22,11 +23,17 @@ class Post:
     #     self.updated_at = data['updated_at']
 
     #.. get methods
-    #TODO change new get_all_post and get_post for destination_id, change query??
 
     @classmethod
     def get_all_posts(cls):
-        query = "SELECT * FROM posts LEFT JOIN users ON users.id = posts.user_id ORDER BY posts.created_at DESC;"
+        #TODO query after change
+        query = "SELECT * FROM posts \
+            LEFT JOIN users ON posts.user_id = users.id \
+            LEFT JOIN destinations ON posts.destination_id = destinations.id \
+                LEFT JOIN locations ON destinations.location_id = locations.id \
+                LEFT JOIN cities ON destinations.city_id = cities.id \
+                LEFT JOIN countries ON destinations.country_id = countries.id;"
+        # query = "SELECT * FROM posts LEFT JOIN users ON users.id = posts.user_id ORDER BY posts.created_at DESC;"
         results = connectToMySQL(cls.db_name).query_db(query)
         posts = []
         for row in results:
@@ -37,9 +44,13 @@ class Post:
                 "title": row['title'],
                 "content": row['content'],
                 "itinerary": row['itinerary'],
-                "location": row['destination'],
+                # "location": row['destination'],
+                # "country": row['country'],
+                #TODO uncomment after change
+                "location": row['name'],
+                "location": row['cities.name'],
+                "country": row['abbr'] if 'abbr' in row else row['country'],
                 "duration": row['duration'],
-                "country": row['country'],
                 "dateFrom": row['date_from'].strftime(DATE_FORMAT),
                 "dateTo": row['date_to'].strftime(DATE_FORMAT),
                 "createdAt": row['created_at'].strftime(DATE_FORMAT)
@@ -49,25 +60,34 @@ class Post:
 
     @classmethod
     def get_post(cls, data):
-        # with location/country table
-        # query = "SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id LEFT JOIN locations ON posts.location_id = locations.id LEFT JOIN countries ON locations.country_id = countries.id WHERE posts.id = %(id)s;"
-        # without location/country table
-        query = "SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id WHERE posts.id = %(id)s;"
+        #TODO query after change
+        query = "SELECT * FROM posts \
+            LEFT JOIN users ON posts.user_id = users.id \
+            LEFT JOIN destinations ON posts.destination_id = destinations.id \
+                LEFT JOIN locations ON destinations.location_id = locations.id \
+                LEFT JOIN cities ON destinations.city_id = cities.id \
+                LEFT JOIN countries ON destinations.country_id = countries.id \
+                WHERE posts.id = %(id)s;"
+        # query = "SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id WHERE posts.id = %(id)s;"
         results = connectToMySQL(cls.db_name).query_db(query, data)
-        # print("=======results:", results)
+        # print("=======\nresults:", results, "\n============")
         post = {
             "userId": results[0]['user_id'],
             "username": results[0]['username'],
-            "id": results[0]['posts.id'],
+            "id": results[0]['id'],
             "title": results[0]['title'],
             "content": results[0]['content'],
             "itinerary": results[0]['itinerary'],
-            "location": results[0]['destination'],
+            # "location": results[0]['destination'],
+            # "country": results[0]['country'],
+            #TODO uncomment after change
+            "location": results[0]['name'], #name in location table
+            "location": results[0]['cities.name'],
+            "country": results[0]['countries.name'],
             "duration": results[0]['duration'],
-            "country": results[0]['country'],
             "dateFrom": results[0]['date_from'].strftime(DATE_FORMAT),
             "dateTo": results[0]['date_to'].strftime(DATE_FORMAT),
-            "createdAt": results[0]['posts.created_at'].strftime(DATE_FORMAT)
+            "createdAt": results[0]['created_at'].strftime(DATE_FORMAT)
         }
         return post
 
