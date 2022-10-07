@@ -22,9 +22,9 @@ function App() {
 
   return (
     <div className='h-100 pb-5 app-container'>
-      <Container>
       <BrowserRouter>
-          <Header login={login} setLogin ={setLogin} userId={userId} setUserId={setUserId}/>
+        <Header login={login} setLogin ={setLogin} userId={userId} setUserId={setUserId}/>
+        <Container>
           <Routes>
             <Route path='/' element={<PostList userId={userId} />} />
             <Route path='/login' element={<UserLogin setLogin={setLogin} setUserId={setUserId}/>} />
@@ -34,8 +34,8 @@ function App() {
             <Route path='/user' element={<UserProfile userId={userId} />} />
             <Route path='/post/edit/:id' element={<PostUpdate userId={userId} />} />
           </Routes>
-        </BrowserRouter>
-      </Container>
+        </Container>
+      </BrowserRouter>
     </div>
   );
 }
