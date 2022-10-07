@@ -48,7 +48,7 @@ const Header = (props) => {
   
   
   return (
-    <Navbar expand="md" className='pt-3'>
+    <Navbar expand="md" className='m-0 pt-3 navbar-container'>
     <Container>
       <Link to={'/'} className={'fs-2 fw-bolder header-text'}>Travel Log</Link>
       <div className="justify-content-end">
