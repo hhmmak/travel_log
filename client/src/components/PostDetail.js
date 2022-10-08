@@ -103,7 +103,14 @@ const PostDetail = ({userId}) => {
           <dl className='detail-list-content'>
             <Row className='mb-5'>
               <dt className='mt-3'>Destination</dt>
-              <dd className='ms-2'>{post.location}</dd>
+              <dd className='ms-2'>
+                {post.location === "" 
+                  ? post.city 
+                  : post.city 
+                      ? `${post.location}, ${post.city}`
+                      : post.location
+                }
+              </dd>
               <dt className='mt-3'>Country</dt>
               <dd className='ms-2'>{post.country}</dd>
               <dt className='mt-3'>Duration</dt>
