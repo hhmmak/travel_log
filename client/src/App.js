@@ -21,7 +21,7 @@ function App() {
 
 
   return (
-    <div className='h-100 pb-5 app-container'>
+    <div className='pb-5'>
       <BrowserRouter>
         <Header login={login} setLogin ={setLogin} userId={userId} setUserId={setUserId}/>
         <Container>
