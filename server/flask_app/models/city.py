@@ -7,15 +7,14 @@ class City:
     #.. get methods
     @classmethod
     def get_city_by_name(cls,data):
-        query = "SELECT * FROM locations WHERE name = %(name)s;"
+        query = "SELECT * FROM cities WHERE name = %(city)s;"
         results = connectToMySQL(cls.db_name).query_db(query,data)
-        location = {
-            "cityId": results[0]['id']
-        }
-        return location
+        print("=======\n", results, "\n=======")
+        city_id =  results[0]['id'] if results else None
+        return city_id
 
     #.. add methods
     @classmethod
     def add_city(cls,data):
-        query = "INSERT INTO locations (name) VALUE (%(city)s);"
+        query = "INSERT INTO cities (name) VALUE (%(city)s);"
         return connectToMySQL(cls.db_name).query_db(query,data)     # return city id

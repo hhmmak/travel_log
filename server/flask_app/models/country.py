@@ -28,12 +28,10 @@ class Country:
         }
         return country
 
+    @classmethod
     def get_country_by_name(cls,data):
-        query = "SELECT * FROM countries WHERE name = %(name)s;"
+        query = "SELECT * FROM countries WHERE name = %(country)s;"
         results = connectToMySQL(cls.db_name).query_db(query, data)
-        country = {
-            "countryId": results[0]['id'],
-            "countryAbbr": results[0]['abbr']
-        }
-        return country
+        country_id =  results[0]['id']
+        return country_id
 

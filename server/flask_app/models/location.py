@@ -7,12 +7,10 @@ class Location:
     #.. get methods
     @classmethod
     def get_location_by_name(cls,data):
-        query = "SELECT * FROM locations WHERE name = %(name)s;"
+        query = "SELECT * FROM locations WHERE name = %(location)s;"
         results = connectToMySQL(cls.db_name).query_db(query,data)
-        location = {
-            "locationId": results[0]['id']
-        }
-        return location
+        location_id =  results[0]['id'] if results else None
+        return location_id
 
     #.. add methods
     @classmethod
