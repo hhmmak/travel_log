@@ -45,14 +45,6 @@ class Destination:
         destination_id =  results[0]['id'] if results else None
         return destination_id
 
-    @classmethod
-    def get_destination_by_city(cls, data):
-        query = "SELECT location_id, locations.name, city_id, cities.name, country_id, countries.name, countries.abbr FROM destinations \
-                    LEFT JOIN locations ON destinations.location_id = locations.id \
-                    LEFT JOIN cities ON destinations.city_id = cities.id \
-                    LEFT JOIN countries ON destinations.country_id = countries.id \
-                    WHERE cities.id = %(id)s";
-
     #.. add methods
     @classmethod
     def add_destination(cls, data):
