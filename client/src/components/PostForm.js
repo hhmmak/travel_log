@@ -43,7 +43,7 @@ const PostForm = (props) => {
   return (
     <div>
       <Form className='mb-5 p-5 rounded-3 post-form-container' onSubmit={onSubmitHandler}>
-        <Form.Group className='mb-3' controlId='title'>
+        <Form.Group className='mb-2' controlId='title'>
           <Form.Label>Title</Form.Label>
           <Form.Control type='text' name='title' onChange={onChangeHandler} value={post.title}/>
         </Form.Group>
@@ -52,9 +52,6 @@ const PostForm = (props) => {
             <Form.Group className='mb-3' controlId='location'>
               <Form.Label>Destination</Form.Label>
               <Form.Control type='text' name='location' onChange={onChangeHandler} value={post.location}/>
-              {error.location &&
-                <Form.Text className='text-danger'>{error.location}</Form.Text>
-              }
             </Form.Group>
             <Form.Group className='mb-3' controlId='city'>
               <Form.Label>City</Form.Label>
