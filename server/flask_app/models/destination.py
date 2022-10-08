@@ -10,7 +10,7 @@
 
 from flask_app.config.mysqlconnection import connectToMySQL
 
-class Country:
+class Destination:
 
     db_name = 'travel_log_schema'
 
@@ -35,12 +35,23 @@ class Country:
         return destination
 
     @classmethod
-    def get_destination_by_location(cls, data):
-        pass
+    def get_destination(cls, data):
+        query = "SELECT destinations.id, location_id, locations.name, city_id, cities.name, country_id, countries.name, countries.abbr FROM destinations \
+                    LEFT JOIN locations ON destinations.location_id = locations.id \
+                    LEFT JOIN cities ON destinations.city_id = cities.id \
+                    LEFT JOIN countries ON destinations.country_id = countries.id \
+                    WHERE locations.name = %(location)s AND cities.name = %(city)s AND countries.name = %(country)s";
+        results = connectToMySQL(cls.db_name).query_db(query, data)
+        destination_id =  results[0]['id'] if results else None
+        return destination_id
 
     @classmethod
     def get_destination_by_city(cls, data):
-        pass
+        query = "SELECT location_id, locations.name, city_id, cities.name, country_id, countries.name, countries.abbr FROM destinations \
+                    LEFT JOIN locations ON destinations.location_id = locations.id \
+                    LEFT JOIN cities ON destinations.city_id = cities.id \
+                    LEFT JOIN countries ON destinations.country_id = countries.id \
+                    WHERE cities.id = %(id)s";
 
     #.. add methods
     @classmethod
