@@ -32,7 +32,8 @@ class Post:
             LEFT JOIN destinations ON posts.destination_id = destinations.id \
                 LEFT JOIN locations ON destinations.location_id = locations.id \
                 LEFT JOIN cities ON destinations.city_id = cities.id \
-                LEFT JOIN countries ON destinations.country_id = countries.id;"
+                LEFT JOIN countries ON destinations.country_id = countries.id \
+                ORDER BY posts.created_at DESC;"
         # query = "SELECT * FROM posts LEFT JOIN users ON users.id = posts.user_id ORDER BY posts.created_at DESC;"
         results = connectToMySQL(cls.db_name).query_db(query)
         posts = []
@@ -48,8 +49,8 @@ class Post:
                 # "country": row['country'],
                 #TODO uncomment after change
                 "location": row['name'],
-                "location": row['cities.name'],
-                "country": row['abbr'] if 'abbr' in row else row['country'],
+                "city": row['cities.name'],
+                "country": row['countries.name'] if row['abbr'] is None else row['abbr'],
                 "duration": row['duration'],
                 "dateFrom": row['date_from'].strftime(DATE_FORMAT),
                 "dateTo": row['date_to'].strftime(DATE_FORMAT),
@@ -82,7 +83,7 @@ class Post:
             # "country": results[0]['country'],
             #TODO uncomment after change
             "location": results[0]['name'], #name in location table
-            "location": results[0]['cities.name'],
+            "city": results[0]['cities.name'],
             "country": results[0]['countries.name'],
             "duration": results[0]['duration'],
             "dateFrom": results[0]['date_from'].strftime(DATE_FORMAT),
@@ -96,18 +97,18 @@ class Post:
     @classmethod
     def add_post (cls,data):
         # with location/country table
-        # query = "INSERT INTO posts (title, content, itinerary, destination_id, user_id, date_from, date_to, duration) VALUES (%(title)s, %(content)s, %(itinerary)s, %(destination_id)s, %(user_id)s, %(date_from)s, %(date_to)s, %(duration)s);""
+        query = "INSERT INTO posts (title, content, itinerary, destination_id, user_id, date_from, date_to, duration) VALUES (%(title)s, %(content)s, %(itinerary)s, %(destination_id)s, %(user_id)s, %(date_from)s, %(date_to)s, %(duration)s);"
         # without location/country table
-        query = "INSERT INTO posts (title, content, itinerary, destination, country, user_id, date_from, date_to, duration) VALUES (%(title)s, %(content)s, %(itinerary)s, %(location)s, %(country)s, %(user_id)s, %(date_from)s, %(date_to)s, %(duration)s);"
+        # query = "INSERT INTO posts (title, content, itinerary, destination, country, user_id, date_from, date_to, duration) VALUES (%(title)s, %(content)s, %(itinerary)s, %(location)s, %(country)s, %(user_id)s, %(date_from)s, %(date_to)s, %(duration)s);"
         return connectToMySQL(cls.db_name).query_db(query, data)
 
     #.. update methods
     @classmethod
     def update_post(cls, data):
         # with location/country table
-        # query = "UPDATE posts SET title = %(title)s, content = %(content)s, itinerary = %(itinerary)s, destination_id = %(destination_id)s, date_from = %(date_from)s, date_to = %(date_to)s, duration = %(duration)s WHERE id = %(id)s;""
+        query = "UPDATE posts SET title = %(title)s, content = %(content)s, itinerary = %(itinerary)s, destination_id = %(destination_id)s, date_from = %(date_from)s, date_to = %(date_to)s, duration = %(duration)s WHERE id = %(id)s;"
         # without location/country table
-        query = "UPDATE posts SET title = %(title)s, content = %(content)s, itinerary = %(itinerary)s, destination = %(destination)s, country = %(country)s, date_from = %(date_from)s, date_to = %(date_to)s, duration = %(duration)s WHERE id = %(id)s;"
+        # query = "UPDATE posts SET title = %(title)s, content = %(content)s, itinerary = %(itinerary)s, destination = %(destination)s, country = %(country)s, date_from = %(date_from)s, date_to = %(date_to)s, duration = %(duration)s WHERE id = %(id)s;"
         connectToMySQL(cls.db_name).query_db(query, data)
         return cls
 
@@ -132,15 +133,20 @@ class Post:
         if len(data['itinerary']) <= 0:
             validation['is_valid'] = False
             validation['error']['itinerary'] = "Itinerary is required"
-        #country
+        #country/location
         if len(data['country']) <= 0:
             validation['is_valid'] = False
             validation['error']['country'] = "Country is required"
-        elif len(data['location']) <= 0: 
+        elif len(data['location']) <= 0 and len(data['city']) <= 0: 
             validation['location'] = data['country']
-        #destination
+        #title
         if len(data['title']) <= 0: 
-            validation['title'] = f"Trip to {validation['location'] if 'location' in validation else data['location']}"
+            if 'location' in validation:
+                validation['title'] = f"Trip to {validation['location']}"
+            elif len(data['location']) <= 0:
+                validation['title'] = f"Trip to {data['city']}"
+            else:
+                validation['title'] = f"Trip to {data['location']}"
         #dateFrom && dateTo
         if len(data['dateFrom']) < 10 or len(data['dateTo']) < 10:
             validation['is_valid'] = False
