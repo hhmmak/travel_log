@@ -24,6 +24,7 @@ const PostAdd = (props) => {
     content: "",
     itinerary: "",
     location: "",
+    city:"",
     country: "",
     dateFrom: todayDate(),
     dateTo: todayDate()
