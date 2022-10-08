@@ -2,7 +2,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 
 class Bookmark:
 
-    db_name = 'travel_schema'
+    db_name = 'travel_log_schema'
 
     @classmethod
     def get_bookmarks_by_user(cls, data):
