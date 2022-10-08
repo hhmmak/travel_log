@@ -66,7 +66,7 @@ const PostList = ({userId}) => {
       { postList.map( (post, index) => 
         <Col md={6} lg={4} key={index}>
           <Card>
-            <Card.Header className='bg-white card-edge-background'>
+            <Card.Header className='card-edge-background'>
               { post.location !== ""
                 ? `${post.location}, ${post.country}`
                 : `${post.city}, ${post.country}`
