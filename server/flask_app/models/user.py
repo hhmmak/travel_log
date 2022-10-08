@@ -6,19 +6,19 @@ DATE_FORMAT = '%Y-%m-%d'
 
 class User:
 
-    db_name = 'travel_schema'
+    db_name = 'travel_log_schema'
 
-    def __init__(self, data):
-        self.id = data['id']
-        self.username = data['username']
-        self.first_name = data ['first_name']
-        self.last_name = data ['last_name']
-        self.email = data ['email']
-        self.password = data ['password']
-        self.created_at = data['created_at']
-        self.updated_at = data['updated_at']
-        self.posts = []
-        self.bookmarks = []
+    # def __init__(self, data):
+    #     self.id = data['id']
+    #     self.username = data['username']
+    #     self.first_name = data ['first_name']
+    #     self.last_name = data ['last_name']
+    #     self.email = data ['email']
+    #     self.password = data ['password']
+    #     self.created_at = data['created_at']
+    #     self.updated_at = data['updated_at']
+    #     self.posts = []
+    #     self.bookmarks = []
 
     #.. get methods
     @classmethod
@@ -49,7 +49,13 @@ class User:
     @classmethod
     def get_user_with_posts_bookmarks(cls,data):
         # obtain user with posts
-        query = "SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id WHERE users.id = %(id)s;"
+        query = "SELECT * FROM users \
+            LEFT JOIN posts ON users.id = posts.user_id \
+            LEFT JOIN destinations ON posts.destination_id = destinations.id \
+                LEFT JOIN locations ON destinations.location_id = locations.id \
+                LEFT JOIN cities ON destinations.city_id = cities.id \
+                LEFT JOIN countries ON destinations.country_id = countries.id \
+            WHERE users.id = %(id)s;"
         results = connectToMySQL(cls.db_name).query_db(query, data)
         user = {
             "username": results[0]['username'],
@@ -62,7 +68,7 @@ class User:
 
         # add post to posts array
         if results[0]['posts.id']:
-            print("=========== have post")
+            # print("=========== have post")
             for row in results:
                 post = {
                     "id": row['posts.id'],
@@ -70,27 +76,30 @@ class User:
                     "dateFrom": row['date_from'].strftime(DATE_FORMAT),
                     "dateTo": row['date_to'].strftime(DATE_FORMAT),
                     "duration": row['duration'],
-                    "destination": f"{row['destination']}, {row['country']}"
+                    "destination": f"{row['name']}, {row['countries.name']}" if len(row['name']) > 0 else f"{row['cities.name']}, {row['countries.name']}"
                 }
                 user['posts'].append(post)
 
         #obtain bookmarks with users.id
-        query = "SELECT * FROM bookmarks LEFT JOIN posts ON bookmarks.post_id = posts.id WHERE bookmarks.user_id = %(id)s;"
+        query = "SELECT * FROM bookmarks \
+            LEFT JOIN posts ON bookmarks.post_id = posts.id \
+            LEFT JOIN destinations ON posts.destination_id = destinations.id \
+                LEFT JOIN locations ON destinations.location_id = locations.id \
+                LEFT JOIN cities ON destinations.city_id = cities.id \
+            WHERE bookmarks.user_id = %(id)s;"
         result = connectToMySQL(cls.db_name).query_db(query, data)
-        print("=============bookmark result: ", result)
+        # print("=============bookmark result: ", result)
         # add bookmarked posts to bookmarks array
         if result:
-            print("=========== have bookmark")
             for row in result:
                 bookmark = {
                     "id": row['posts.id'],
                     "title": row['title'],
                     "duration": row['duration'],
-                    "destination": row['destination']
+                    "destination": row['name'] if len(row['name']) > 0 else row['cities.name']
                 }
                 user['bookmarks'].append(bookmark)
         
-        print("user: ", user)
         return user
 
 

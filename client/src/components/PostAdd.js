@@ -23,7 +23,8 @@ const PostAdd = (props) => {
     title: "",
     content: "",
     itinerary: "",
-    destination: "",
+    location: "",
+    city:"",
     country: "",
     dateFrom: todayDate(),
     dateTo: todayDate()

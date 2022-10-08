@@ -1,5 +1,5 @@
-// import { useEffect, useState } from 'react';
-// import axios from 'axios';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
@@ -13,13 +13,13 @@ const PostForm = (props) => {
 
   // const navigate = useNavigate();
   const {error, post, setPost, submitAction} = props;
-  // const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get(`https://restcountries.com/v3.1/all`)
-  //     .then(res => setCountries(res.data))
-  //     .catch(err => console.log(err))
-  // }, [])
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/countries`)
+      .then(res => setCountries(res.data))
+      .catch(err => console.log(err))
+  }, [])
   
 
 
@@ -43,39 +43,36 @@ const PostForm = (props) => {
   return (
     <div>
       <Form className='mb-5 p-5 rounded-3 post-form-container' onSubmit={onSubmitHandler}>
-        <Form.Group className='mb-3' controlId='title'>
+        <Form.Group className='mb-2' controlId='title'>
           <Form.Label>Title</Form.Label>
           <Form.Control type='text' name='title' onChange={onChangeHandler} value={post.title}/>
         </Form.Group>
         <Row className='g-5'>
           <Col>
-            <Form.Group className='mb-3' controlId='destination'>
+            <Form.Group className='mb-3' controlId='location'>
               <Form.Label>Destination</Form.Label>
-              <Form.Control type='text' name='destination' onChange={onChangeHandler} value={post.destination}/>
-              {error.destination &&
-                <Form.Text className='text-danger'>{error.destination}</Form.Text>
+              <Form.Control type='text' name='location' onChange={onChangeHandler} value={post.location}/>
+            </Form.Group>
+            <Form.Group className='mb-3' controlId='city'>
+              <Form.Label>City</Form.Label>
+              <Form.Control type='text' name='city' onChange={onChangeHandler} value={post.city}/>
+              {error.city &&
+                <Form.Text className='text-danger'>{error.city}</Form.Text>
               }
             </Form.Group>
             <Form.Group className='mb-3' controlId='country'>
               <Form.Label>Country</Form.Label>
-              <Form.Control type='text' name='country' onChange={onChangeHandler} value={post.country}/>
+              <Form.Select aria-label='Select a country' name='country' onChange={onChangeHandler} value={post.country}>
+                <option>Select one country</option>
+                {countries.map( (country, index) =>
+                <option value={country.country} key={index}>{country.country}</option>
+                )}
+              </Form.Select>
               {error.country &&
                 <Form.Text className='text-danger'>{error.country}</Form.Text>
               }
             </Form.Group>
           </Col>
-          {/* <Form.Group className='mb-3' controlId='countryList'>
-            <Form.Label>Country List</Form.Label>
-            <Form.Select aria-label='Select a country'>
-              <option>Select one country</option>
-              {countries.map( (country, index) =>
-                <option value={country.name.common} key={index}>{country.name.common}</option>
-              )}
-            </Form.Select>
-            {error.countryList &&
-              <Form.Text className='text-danger'>{error.countryList}</Form.Text>
-            }
-          </Form.Group> */}
           <Col>
             <Form.Group className='mb-3' controlId='dateFrom'>
               <Form.Label>From</Form.Label>
@@ -105,7 +102,7 @@ const PostForm = (props) => {
           <Form.Control as="textarea" rows={5} name='content' onChange={onChangeHandler} value={post.content}/>
         </Form.Group>
         <div className='d-grid d-md-block'>
-          <Button variant="outline-dark" type="submit" className='col-md-5'>Update</Button>
+          <Button variant="outline-dark" type="submit" className='col-md-5'>Post</Button>
         </div>
       </Form>
     </div>
