@@ -24,7 +24,7 @@ function App() {
     <div className='pb-5'>
       <BrowserRouter>
         <Header login={login} setLogin ={setLogin} userId={userId} setUserId={setUserId}/>
-        <Container>
+        <Container className='my-5'>
           <Routes>
             <Route path='/' element={<PostList userId={userId} />} />
             <Route path='/login' element={<UserLogin setLogin={setLogin} setUserId={setUserId}/>} />
