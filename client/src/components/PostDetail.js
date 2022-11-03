@@ -36,15 +36,6 @@ const PostDetail = () => {
         })
         .catch(err => console.log(err));
     }
-
-    // if (userId) {
-    //   const token = localStorage.getItem('token')
-    //   axios.post(`http://localhost:5000/api/bookmarks/list?token=${token}`, {userId: userId})
-    //     .then(res => {
-    //       setBookmarks(res.data);
-    //     })
-    //     .catch(err => console.log(err))
-    // }
   }, [id])
     
 
@@ -55,7 +46,7 @@ const PostDetail = () => {
     axios.delete(`http://localhost:5000/api/posts/${id}`)
       .then(res => navigate('/'))
       .catch(err => console.log(err))
-  }
+  };
 
   const changeBookmark = (e, postId) => {
 
@@ -87,33 +78,7 @@ const PostDetail = () => {
     } else {
       setUserId(null);
     }
-
-
-
-
-    // if (bookmarks.includes(postId)){
-    //   // set to not bookmarked
-    //   const token = localStorage.getItem('token')
-    //   axios.delete(`http://localhost:5000/api/bookmarks?token=${token}`,{data :{"userId": userId, "postId": postId}})
-    //     .then(res => {
-    //       e.target.style.fill = "#efefef";
-    //       let bookmarkList = bookmarks.filter(id => id !== postId);
-    //       setBookmarks(bookmarkList);
-    //     })
-    //     .catch(err => console.log(err))
-    // } else {
-    //   // set to bookmarked
-    //   const token = localStorage.getItem('token')
-    //   axios.post(`http://localhost:5000/api/bookmarks?token=${token}`,{"userId": userId, "postId": postId})
-    //     .then(res => {
-    //       e.target.style.fill = "#eebc64"
-    //       bookmarks.push(postId);
-    //       setBookmarks(bookmarks);
-    //     })
-    //     .catch(err => console.log(err))
-    // }
-  
-  }
+  };
 
   return ( 
     <div className='my-3'>
