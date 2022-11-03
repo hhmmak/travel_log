@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PostForm from './PostForm';
 
 
-const PostUpdate = ({userId}) => {
+const PostUpdate = () => {
 
   const navigate = useNavigate();
   const {id} = useParams();
@@ -33,21 +33,21 @@ const PostUpdate = ({userId}) => {
   }, [id])
 
   const onPutHandler = (e) => {
-      const token = localStorage.getItem('token');
-      if (token !== null){
-        axios.get(`http://localhost:5000/api/users?token=${token}`)
-          .then(res => {
-            axios.put(`http://localhost:5000/api/posts/${id}?token=${token}`, {...post, user_id: userId} )
-            .then(res => navigate('/'))
-            .catch(err => {
-              setError(err.response.data)
-              console.log(err)
-            });
-          })
-          .catch(err => console.log(err));
-      } else {
-        navigate('/');
-      }
+    const token = localStorage.getItem('token');
+    if (token !== null){
+      axios.get(`http://localhost:5000/api/users?token=${token}`)
+        .then(res => {
+          axios.put(`http://localhost:5000/api/posts/${id}?token=${token}`, {...post, user_id: res.data.userId} )
+          .then(res => navigate('/'))
+          .catch(err => {
+            setError(err.response.data)
+            console.log(err)
+          });
+        })
+        .catch(err => console.log(err));
+    } else {
+      navigate('/');
+    }
   }
 
   return (
