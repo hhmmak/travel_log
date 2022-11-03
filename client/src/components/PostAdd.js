@@ -5,10 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import PostForm from './PostForm';
 
 
-const PostAdd = (props) => {
+const PostAdd = () => {
 
   const navigate = useNavigate();
-  const {userId} = props;
 
   const todayDate = () => {
     let today = new Date();
