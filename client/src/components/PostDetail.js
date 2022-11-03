@@ -16,7 +16,7 @@ const PostDetail = () => {
   const {id} = useParams();
   const[post, setPost] = useState({});
   const[bookmarks, setBookmarks] = useState([]);
-  const[userId, setUserId] = useState();
+  const[userId, setUserId] = useState(null);
 
   useEffect( () => {
     axios.get(`http://localhost:5000/api/posts/${id}`)
