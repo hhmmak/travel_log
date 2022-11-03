@@ -17,25 +17,39 @@ const UserProfile = ({userId}) => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-
-    if (localStorage.getItem('token') !== null) {
-      axios.get(`http://localhost:5000/api/users/posts/${userId}`)
-        .then(res => {
-          setUser(res.data);
-          setLoaded(true)
+    const token = localStorage.getItem('token');
+    if (token !== null){
+      axios.get(`http://localhost:5000/api/users?token=${token}`)
+      .then(res => {
+        axios.get(`http://localhost:5000/api/users/posts/${res.data.userId}`)
+          .then(res => {
+            setUser(res.data);
+            setLoaded(true)
+          })
+          .catch(err => console.log(err));
         })
         .catch(err => console.log(err));
     } else {
       navigate('/');
     }
-  }, [userId]);
+  }, []);
 
   const deleteHandler = (id) => {
-    axios.delete(`http://localhost:5000/api/posts/${id}`)
-      .then(res => {
-        setUser({...user, posts: user.posts.filter(post => post.id !== id)}
-      )})
-      .catch(err => console.log(err))
+
+    const token = localStorage.getItem('token');
+    if (token !== null){
+      axios.get(`http://localhost:5000/api/users?token=${token}`)
+        .then(res => {
+          axios.delete(`http://localhost:5000/api/posts/${id}`)
+            .then(res => {
+              setUser({...user, posts: user.posts.filter(post => post.id !== id)});
+              })
+            .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err));
+    } else {
+      navigate('/');
+    }
   }
 
   return (
