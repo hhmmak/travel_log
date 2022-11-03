@@ -43,9 +43,19 @@ const PostDetail = () => {
 
 
   const deleteHandler = () => {
-    axios.delete(`http://localhost:5000/api/posts/${id}`)
-      .then(res => navigate('/'))
-      .catch(err => console.log(err))
+
+    const token = localStorage.getItem('token');
+    if (token !== null){
+      axios.get(`http://localhost:5000/api/users?token=${token}`)
+        .then(res => {
+          axios.delete(`http://localhost:5000/api/posts/${id}`)
+            .then(res => navigate('/'))
+            .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err));
+    } else {
+      setUserId(null);
+    }
   };
 
   const changeBookmark = (e, postId) => {
