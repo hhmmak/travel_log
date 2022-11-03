@@ -12,7 +12,7 @@ import './css/Header.css'
 const Header = (props) => {
   
   const navigate = useNavigate();
-  const {setLogin, login, userId, setUserId} = props;
+  const {setLogin, login, setUserId} = props;
   const [headerLink, setHeaderLink] = useState([["Log In", "/login"], ["Create Account", "/register"]]);
 
 

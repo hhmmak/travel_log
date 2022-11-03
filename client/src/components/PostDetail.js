@@ -10,58 +10,85 @@ import Col from 'react-bootstrap/Col'
 import {ReactComponent as Bookmark} from './icons/bookmark.svg';
 import './css/PostDetail.css';
 
-const PostDetail = ({userId}) => {
+const PostDetail = () => {
 
   const navigate = useNavigate();
   const {id} = useParams();
   const[post, setPost] = useState({});
   const[bookmarks, setBookmarks] = useState([]);
+  const[userId, setUserId] = useState(null);
 
   useEffect( () => {
     axios.get(`http://localhost:5000/api/posts/${id}`)
       .then( res => setPost(res.data))
       .catch(err => console.log(err));
     
-    if (userId) {
-      const token = localStorage.getItem('token')
-      axios.post(`http://localhost:5000/api/bookmarks/list?token=${token}`, {userId: userId})
+    const token = localStorage.getItem('token');
+    if (token !== null){
+      axios.get(`http://localhost:5000/api/users?token=${token}`)
         .then(res => {
-          setBookmarks(res.data);
+          setUserId(res.data.userId)
+          axios.post(`http://localhost:5000/api/bookmarks/list?token=${token}`, {userId: res.data.userId})
+            .then(res => {
+              setBookmarks(res.data);
+            })
+            .catch(err => console.log(err))
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
     }
-  }, [id, userId])
+  }, [id])
+    
+
+
+
 
   const deleteHandler = () => {
-    axios.delete(`http://localhost:5000/api/posts/${id}`)
-      .then(res => navigate('/'))
-      .catch(err => console.log(err))
-  }
+
+    const token = localStorage.getItem('token');
+    if (token !== null){
+      axios.get(`http://localhost:5000/api/users?token=${token}`)
+        .then(res => {
+          axios.delete(`http://localhost:5000/api/posts/${id}`)
+            .then(res => navigate('/'))
+            .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err));
+    } else {
+      setUserId(null);
+    }
+  };
 
   const changeBookmark = (e, postId) => {
-    if (bookmarks.includes(postId)){
-      // set to not bookmared
-      const token = localStorage.getItem('token')
-      axios.delete(`http://localhost:5000/api/bookmarks?token=${token}`,{data :{"userId": userId, "postId": postId}})
+
+    const token = localStorage.getItem('token');
+    if (token !== null){
+      axios.get(`http://localhost:5000/api/users?token=${token}`)
         .then(res => {
-          e.target.style.fill = "#efefef";
-          let bookmarkList = bookmarks.filter(id => id !== postId);
-          setBookmarks(bookmarkList);
+          if (bookmarks.includes(postId)){
+            // set to not bookmarked
+            axios.delete(`http://localhost:5000/api/bookmarks?token=${token}`,{data :{"userId": res.data.userId, "postId": postId}})
+              .then(res => {
+                e.target.style.fill = "#efefef";
+                let bookmarkList = bookmarks.filter(id => id !== postId);
+                setBookmarks(bookmarkList);
+              })
+              .catch(err => console.log(err))
+          } else {
+            // set to bookmarked
+            axios.post(`http://localhost:5000/api/bookmarks?token=${token}`,{"userId": res.data.userId, "postId": postId})
+              .then(res => {
+                e.target.style.fill = "#eebc64"
+                bookmarks.push(postId);
+                setBookmarks(bookmarks);
+              })
+              .catch(err => console.log(err))
+          }
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
     } else {
-      // set to bookmarked
-      const token = localStorage.getItem('token')
-      axios.post(`http://localhost:5000/api/bookmarks?token=${token}`,{"userId": userId, "postId": postId})
-        .then(res => {
-          e.target.style.fill = "#eebc64"
-          bookmarks.push(postId);
-          setBookmarks(bookmarks);
-        })
-        .catch(err => console.log(err))
+      setUserId(null);
     }
-  
-  }
+  };
 
   return ( 
     <div className='my-3'>
@@ -82,7 +109,7 @@ const PostDetail = ({userId}) => {
           <h2 className='my-5'>{post.title}</h2>
         </Col>
         <Col xs={{span:1, offset:1}}>
-          { (post.userId !== userId && !isNaN(userId)) &&
+          { (post.userId !== userId && userId !== null) &&
             <>
             {bookmarks.includes(post.id)
             ? <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#eebc64"} width={"3rem"}/>

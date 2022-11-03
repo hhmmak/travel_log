@@ -5,10 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import PostForm from './PostForm';
 
 
-const PostAdd = (props) => {
+const PostAdd = () => {
 
   const navigate = useNavigate();
-  const {userId} = props;
 
   const todayDate = () => {
     let today = new Date();
@@ -32,13 +31,20 @@ const PostAdd = (props) => {
   
   const onPostHandler = (newPost) => {
     const token = localStorage.getItem('token');
-
-    axios.post(`http://localhost:5000/api/posts?token=${token}`, {...newPost, user_id: userId})
-      .then(res => navigate('/'))
-      .catch(err => {
-        setError(err.response.data)
-        console.log(err)
-      });
+    if (token !== null){
+      axios.get(`http://localhost:5000/api/users?token=${token}`)
+        .then(res => {
+          axios.post(`http://localhost:5000/api/posts?token=${token}`, {...newPost, user_id: res.data.userId})
+          .then(res => navigate('/'))
+          .catch(err => {
+            setError(err.response.data)
+            console.log(err)
+          });
+        })
+        .catch(err => console.log(err));
+    } else {
+      navigate('/');
+    }
   }
 
   return (

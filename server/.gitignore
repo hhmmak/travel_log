@@ -1,5 +1,6 @@
 #misc
 .DS_Store
+test_userInfo.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -23,13 +23,13 @@ function App() {
   return (
     <div className='pb-5'>
       <BrowserRouter>
-        <Header login={login} setLogin ={setLogin} userId={userId} setUserId={setUserId}/>
+        <Header login={login} setLogin ={setLogin} setUserId={setUserId}/>
         <Container className='my-5'>
           <Routes>
             <Route path='/' element={<PostList userId={userId} />} />
             <Route path='/login' element={<UserLogin setLogin={setLogin} setUserId={setUserId}/>} />
             <Route path='/register' element={<UserRegister setLogin={setLogin} setUserId={setUserId} />} />
-            <Route path='/post/:id' element={<PostDetail userId={userId} />} />
+            <Route path='/post/:id' element={<PostDetail />} />
             <Route path='/post/new' element={<PostAdd userId={userId} />} />
             <Route path='/user' element={<UserProfile userId={userId} />} />
             <Route path='/post/edit/:id' element={<PostUpdate userId={userId} />} />
