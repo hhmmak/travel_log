@@ -32,13 +32,20 @@ const PostAdd = (props) => {
   
   const onPostHandler = (newPost) => {
     const token = localStorage.getItem('token');
-
-    axios.post(`http://localhost:5000/api/posts?token=${token}`, {...newPost, user_id: userId})
-      .then(res => navigate('/'))
-      .catch(err => {
-        setError(err.response.data)
-        console.log(err)
-      });
+    if (token !== null){
+      axios.get(`http://localhost:5000/api/users?token=${token}`)
+        .then(res => {
+          axios.post(`http://localhost:5000/api/posts?token=${token}`, {...newPost, user_id: res.data.userId})
+          .then(res => navigate('/'))
+          .catch(err => {
+            setError(err.response.data)
+            console.log(err)
+          });
+        })
+        .catch(err => console.log(err));
+    } else {
+      navigate('/');
+    }
   }
 
   return (
