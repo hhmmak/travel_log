@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
+import DeleteButton from './DeleteButton';
+
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Row from 'react-bootstrap/Row'
@@ -39,52 +41,33 @@ const PostDetail = () => {
   }, [id])
     
 
-
-
-
-  const deleteHandler = () => {
-
-    const token = localStorage.getItem('token');
-    if (token !== null){
-      axios.get(`http://localhost:5000/api/users?token=${token}`)
-        .then(res => {
-          axios.delete(`http://localhost:5000/api/posts/${id}`)
-            .then(res => navigate('/'))
-            .catch(err => console.log(err))
-        })
-        .catch(err => console.log(err));
-    } else {
-      setUserId(null);
-    }
-  };
-
   const changeBookmark = (e, postId) => {
-
+    
     const token = localStorage.getItem('token');
     if (token !== null){
       axios.get(`http://localhost:5000/api/users?token=${token}`)
-        .then(res => {
-          if (bookmarks.includes(postId)){
-            // set to not bookmarked
-            axios.delete(`http://localhost:5000/api/bookmarks?token=${token}`,{data :{"userId": res.data.userId, "postId": postId}})
-              .then(res => {
-                e.target.style.fill = "#efefef";
-                let bookmarkList = bookmarks.filter(id => id !== postId);
-                setBookmarks(bookmarkList);
-              })
-              .catch(err => console.log(err))
-          } else {
-            // set to bookmarked
-            axios.post(`http://localhost:5000/api/bookmarks?token=${token}`,{"userId": res.data.userId, "postId": postId})
-              .then(res => {
-                e.target.style.fill = "#eebc64"
-                bookmarks.push(postId);
-                setBookmarks(bookmarks);
-              })
-              .catch(err => console.log(err))
-          }
-        })
-        .catch(err => console.log(err));
+      .then(res => {
+        if (bookmarks.includes(postId)){
+          // set to not bookmarked
+          axios.delete(`http://localhost:5000/api/bookmarks?token=${token}`,{data :{"userId": res.data.userId, "postId": postId}})
+          .then(res => {
+            e.target.style.fill = "#efefef";
+            let bookmarkList = bookmarks.filter(id => id !== postId);
+            setBookmarks(bookmarkList);
+          })
+          .catch(err => console.log(err))
+        } else {
+          // set to bookmarked
+          axios.post(`http://localhost:5000/api/bookmarks?token=${token}`,{"userId": res.data.userId, "postId": postId})
+          .then(res => {
+            e.target.style.fill = "#eebc64"
+            bookmarks.push(postId);
+            setBookmarks(bookmarks);
+          })
+          .catch(err => console.log(err))
+        }
+      })
+      .catch(err => console.log(err));
     } else {
       setUserId(null);
     }
@@ -98,7 +81,7 @@ const PostDetail = () => {
         { userId === post.userId &&
           <ButtonGroup>
             <Button variant='secondary' onClick={() => navigate(`/post/edit/${post.id}`)}>Edit</Button>
-            <Button variant='secondary' onClick={deleteHandler}>Delete</Button>
+            <DeleteButton variant='secondary' postId={post.id} afterDelete={() => navigate('/')} notLoggedIn={() => setUserId(null)}/>
           </ButtonGroup>
         }
         </Col>

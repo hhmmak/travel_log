@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
+import DeleteButton from './DeleteButton';
+
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
@@ -34,22 +36,8 @@ const UserProfile = ({userId}) => {
     }
   }, []);
 
-  const deleteHandler = (id) => {
-
-    const token = localStorage.getItem('token');
-    if (token !== null){
-      axios.get(`http://localhost:5000/api/users?token=${token}`)
-        .then(res => {
-          axios.delete(`http://localhost:5000/api/posts/${id}`)
-            .then(res => {
-              setUser({...user, posts: user.posts.filter(post => post.id !== id)});
-              })
-            .catch(err => console.log(err))
-        })
-        .catch(err => console.log(err));
-    } else {
-      navigate('/');
-    }
+  const removePost = (id) => {
+    setUser({...user, posts: user.posts.filter(post => post.id !== id)});
   }
 
   return (
@@ -82,7 +70,7 @@ const UserProfile = ({userId}) => {
                     <td>
                       <ButtonGroup>
                         <Button variant='secondary' onClick={ () => navigate(`/post/edit/${post.id}`)}>Edit</Button>
-                        <Button variant='secondary' onClick={ () => deleteHandler(post.id)}>Delete</Button>
+                        <DeleteButton variant='secondary' postId={post.id} afterDelete={() => removePost(post.id)} notLiggedIn={() => navigate('/')}/>
                       </ButtonGroup>
                     </td>
                   </tr>
