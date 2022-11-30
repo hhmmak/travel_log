@@ -30,14 +30,6 @@ const PostForm = (props) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     submitAction(post);
-    // const token = localStorage.getItem('token');
-
-    // axios.post(`http://localhost:5000/api/posts?token=${token}`, {...post, user_id: userId})
-    //   .then(res => navigate('/'))
-    //   .catch(err => {
-    //     setError(err.response.data)
-    //     console.log(err)
-    //   })
   }
 
   return (
