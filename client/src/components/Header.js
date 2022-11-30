@@ -12,7 +12,7 @@ import './css/Header.css'
 const Header = (props) => {
   
   const navigate = useNavigate();
-  const {setLogin, login, setUserId} = props;
+  const {setLogin, login} = props;
   const [headerLink, setHeaderLink] = useState([["Log In", "/login"], ["Create Account", "/register"]]);
 
 
@@ -22,8 +22,7 @@ const Header = (props) => {
       const token = localStorage.getItem('token')
       axios.get(`http://localhost:5000/api/users?token=${token}`)
         .then( res => {
-          setLogin(true)
-          setUserId(res.data.userId)
+          setLogin(true);
         })
         .catch(err => {
           console.log(err);
@@ -37,11 +36,10 @@ const Header = (props) => {
       setHeaderLink([["Log In", "/login"], ["Create Account", "/register"]])
     }
   
-  }, [login])
+  }, [login, setLogin])
 
   const onLogOut = () => {
     setLogin(false);
-    setUserId(null);
     localStorage.clear();
     navigate('/');
   }
