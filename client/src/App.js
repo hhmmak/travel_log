@@ -15,22 +15,20 @@ import PostAdd from './components/PostAdd';
 function App() {
 
   const [login, setLogin] = useState(false);
-  const [userId, setUserId] = useState();
-
 
   return (
     <div className='pb-5'>
       <BrowserRouter>
-        <Header login={login} setLogin ={setLogin} setUserId={setUserId}/>
+        <Header login={login} setLogin ={setLogin}/>
         <Container className='my-5'>
           <Routes>
-            <Route path='/' element={<PostList userId={userId} />} />
-            <Route path='/login' element={<UserLogin setLogin={setLogin} setUserId={setUserId}/>} />
-            <Route path='/register' element={<UserRegister setLogin={setLogin} setUserId={setUserId} />} />
+            <Route path='/' element={<PostList />} />
+            <Route path='/login' element={<UserLogin setLogin={setLogin}/>} />
+            <Route path='/register' element={<UserRegister />} />
             <Route path='/post/:id' element={<PostDetail />} />
-            <Route path='/post/new' element={<PostAdd userId={userId} />} />
-            <Route path='/user' element={<UserProfile userId={userId} />} />
-            <Route path='/post/edit/:id' element={<PostUpdate userId={userId} />} />
+            <Route path='/post/new' element={<PostAdd />} />
+            <Route path='/user' element={<UserProfile />} />
+            <Route path='/post/edit/:id' element={<PostUpdate />} />
           </Routes>
         </Container>
       </BrowserRouter>
