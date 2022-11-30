@@ -10,8 +10,6 @@ import UserRegister from './components/UserRegister';
 import PostDetail from './components/PostDetail';
 import UserProfile from './components/UserProfile';
 import PostUpdate from './components/PostUpdate';
-
-import './App.css';
 import PostAdd from './components/PostAdd';
 
 function App() {
