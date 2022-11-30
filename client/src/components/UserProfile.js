@@ -12,7 +12,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
 import './css/UserProfile.css';
 
-const UserProfile = ({userId}) => {
+const UserProfile = () => {
 
   const navigate = useNavigate();
   const [user, setUser] = useState({});

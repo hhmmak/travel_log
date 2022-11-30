@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 import './css/UserLogin.css'
 
-const UserLogin = ({setLogin, setUserId}) => {
+const UserLogin = ({setLogin}) => {
   
   const navigate = useNavigate();
   const [user, setUser] = useState({});
