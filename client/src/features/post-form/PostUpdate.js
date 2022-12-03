@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import PostForm from './PostForm';
+import PostForm from '../features/post-form/PostForm';
 
 
 const PostUpdate = () => {
