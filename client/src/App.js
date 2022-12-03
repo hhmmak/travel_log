@@ -6,11 +6,11 @@ import Container from 'react-bootstrap/Container';
 import PostList from './components/PostList';
 import Header from './components/Header';
 import UserLogin from './components/UserLogin';
-import UserRegister from './components/UserRegister';
+import UserRegister from './features/user-login-registration/UserRegister';
 import PostDetail from './components/PostDetail';
-import UserProfile from './components/UserProfile';
+import UserProfile from './features/user-login-registration/UserProfile';
 import PostUpdate from './components/PostUpdate';
-import PostAdd from './components/PostAdd';
+import PostAdd from './features/post-form/PostAdd';
 
 function App() {
 
