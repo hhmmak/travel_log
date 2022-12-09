@@ -1,13 +1,3 @@
-
-#.. MySQL queries
-
-# INSERT INTO destinations (location_id, city_id, country_id) VALUES (NULL,2,106);
-
-# SELECT destinations.id, location_id, locations.name, city_id, cities.name, country_id, countries.name, countries.abbr FROM destinations 
-# 	LEFT JOIN locations ON destinations.location_id = locations.id 
-#     LEFT JOIN cities ON destinations.city_id = cities.id 
-#     LEFT JOIN countries ON destinations.country_id = countries.id;
-
 from flask_app.config.mysqlconnection import connectToMySQL
 
 class Destination:
