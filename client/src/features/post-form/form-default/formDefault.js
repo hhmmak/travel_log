@@ -7,9 +7,9 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import './css/PostForm.css';
+import './FormDefault.css';
 
-const PostForm = (props) => {
+const FormDefault = (props) => {
 
   // const navigate = useNavigate();
   const {error, post, setPost, submitAction} = props;
@@ -100,4 +100,4 @@ const PostForm = (props) => {
     </div>
   )
 }
-export default PostForm;
+export default FormDefault;
