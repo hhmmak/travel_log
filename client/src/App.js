@@ -3,9 +3,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 
-import PostList from './components/PostList';
+import PostList from './features/post-display/post-list/PostList'
 import Header from './components/Header';
-import UserLogin from './components/user-login-registration/UserLogin';
+import UserLogin from './features/user-login-registration/UserLogin';
 import UserRegister from './features/user-login-registration/UserRegister';
 import PostDetail from './features/PostDetail';
 import UserProfile from './features/user-profile/UserProfile';
