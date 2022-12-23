@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import PostForm from '../features/post-form/PostForm';
+import FormDefault from './form-default/FormDefault';
 
 
 const PostUpdate = () => {
@@ -53,7 +53,7 @@ const PostUpdate = () => {
   return (
     <>
     { loaded &&
-      <PostForm error={error} post={post} setPost={setPost} submitAction={onPutHandler} />
+      <FormDefault error={error} post={post} setPost={setPost} submitAction={onPutHandler} />
     }
     </>
   )
