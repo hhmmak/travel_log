@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-import DeleteButton from './DeleteButton';
+import DeleteButton from '../../components/DeleteButton';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,7 +10,7 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
-import './css/UserProfile.css';
+import './UserProfile.css';
 
 const UserProfile = () => {
 
