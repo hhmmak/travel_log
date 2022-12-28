@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 
-import './css/UserRegister.css'
+import './UserRegister.css'
 
 const UserRegister = () => {
 
