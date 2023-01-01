@@ -9,8 +9,8 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-import {ReactComponent as Bookmark} from './icons/bookmark.svg';
-import './css/PostDetail.css';
+import {ReactComponent as Bookmark} from '../../../components/icons';
+import './PostDetail.css';
 
 const PostDetail = () => {
 
