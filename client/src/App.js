@@ -4,10 +4,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 
 import PostList from './features/post-display/post-list/PostList'
-import Header from './components/Header';
-import UserLogin from './features/user-login-registration/UserLogin';
-import UserRegister from './features/user-login-registration/UserRegister';
-import PostDetail from './features/PostDetail';
+import Header from './components/header/Header'
+import UserLogin from './features/user-login-registration/user-login/UserLogin';
+import UserRegister from './features/user-login-registration/user-registration/UserRegister';
+import PostDetail from './features/post-display/post-detail/PostDetail';
 import UserProfile from './features/user-profile/UserProfile';
 import PostUpdate from './features/post-form/PostUpdate';
 import PostAdd from './features/post-form/PostAdd';
