@@ -7,8 +7,8 @@ import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 
 import './PostList.css'
-import {ReactComponent as Bookmark} from '../../components/icons/bookmark.svg'
-import Introduction from '../../components/Introduction'
+import {ReactComponent as Bookmark} from '../../../components/icons/bookmark.svg';
+import Introduction from '../../../components/introduction/Introduction'
 
 const PostList = () => {
 
