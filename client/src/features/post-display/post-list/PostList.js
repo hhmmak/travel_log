@@ -7,8 +7,8 @@ import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 
 import './PostList.css'
-import {ReactComponent as Bookmark} from '../../../components/icons/bookmark.svg';
 import Introduction from '../../../components/introduction/Introduction'
+import BookmarkButton from '../../../components/bookmarkButton/BookmarkButton'
 
 const PostList = () => {
 
@@ -40,39 +40,6 @@ const PostList = () => {
       .catch(err => console.log(err))
 
   },[userId])
-  
-  const changeBookmark = (e, postId) => {
-
-    const token = localStorage.getItem('token');
-    if (token !== null){
-      axios.get(`http://localhost:5000/api/users?token=${token}`)
-        .then(res => {
-          if (bookmarks.includes(postId)){
-            // set to not bookmarked
-            axios.delete(`http://localhost:5000/api/bookmarks?token=${token}`,{data :{"userId": res.data.userId, "postId": postId}})
-              .then(res => {
-                e.target.style.fill = "#efefef";
-                let bookmarkList = bookmarks.filter(id => id !== postId);
-                setBookmarks(bookmarkList);
-              })
-              .catch(err => console.log(err))
-          } else {
-            // set to bookmarked
-            axios.post(`http://localhost:5000/api/bookmarks?token=${token}`,{"userId": res.data.userId, "postId": postId})
-              .then(res => {
-                e.target.style.fill = "#eebc64"
-                bookmarks.push(postId);
-                setBookmarks(bookmarks);
-              })
-              .catch(err => console.log(err))
-          }
-        })
-        .catch(err => console.log(err));
-    } else {
-      setUserId(null);
-    }
-  };
-
 
   return (
     <div className='my-3'>
@@ -92,10 +59,7 @@ const PostList = () => {
                 <Col><Card.Title className='fs-6' onClick={() => navigate(`/post/${post.id}`)}>{post.title}</Card.Title></Col>
                 { (post.userId !== userId && userId !== null) &&
                   <Col xs={2}>
-                    { bookmarks.includes(post.id)
-                    ? <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#eebc64"} />
-                    : <Bookmark onClick={(e) => changeBookmark(e, post.id)} fill={"#efefef"} />
-                    }
+                    <BookmarkButton bookmarks={bookmarks} setBookmarks={setBookmarks} setUserId={setUserId} postId={post.id}/>
                   </Col>
                 }
               </Row>
