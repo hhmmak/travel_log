@@ -3,7 +3,7 @@ import axios from 'axios';
 import {ReactComponent as Bookmark} from '../icons/bookmark.svg';
 
 
-const BookmarkButton = ({bookmarks, setBookmarks, setUserId, postId, width}) => {
+const BookmarkButton = ({bookmarks, setBookmarks, setUserId, postId, width="100%"}) => {
 
   const changeBookmark = (e, postId) => {
     
