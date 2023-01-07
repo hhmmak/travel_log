@@ -42,10 +42,7 @@ const BookmarkButton = ({bookmarks, setBookmarks, setUserId, postId, width}) => 
 
   return (
     <div>
-      {bookmarks.includes(postId)
-      ? <Bookmark onClick={(e) => changeBookmark(e, postId)} fill={"#eebc64"} width={width}/>
-      : <Bookmark onClick={(e) => changeBookmark(e, postId)} fill={"#efefef"} width={width}/>
-      }
+      <Bookmark onClick={(e) => changeBookmark(e, postId)} fill={bookmarks.includes(postId)? "#eebc64" : "#efefef"} width={width}/>
     </div>
   )
 }
