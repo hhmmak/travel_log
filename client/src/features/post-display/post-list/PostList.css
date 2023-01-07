@@ -14,6 +14,6 @@
   background-size: 70%;
   background-position: bottom;
   background-attachment: fixed;
-  background-image: url('../icons/paperplane_background.svg');
+  background-image: url('../../../components/icons/paperplane.svg');
   font-weight: bolder;
 }
