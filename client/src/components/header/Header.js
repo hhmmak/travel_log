@@ -19,13 +19,14 @@ const Header = (props) => {
   useEffect(() => {
 
     if (localStorage.getItem('token') !== null) {
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem('token');
       axios.get(`http://localhost:5000/api/users?token=${token}`)
         .then( res => {
           setLogin(true);
         })
         .catch(err => {
           console.log(err);
+          localStorage.removeItem('token');
           setLogin(false);
         });
     }
@@ -40,7 +41,7 @@ const Header = (props) => {
 
   const onLogOut = () => {
     setLogin(false);
-    localStorage.clear();
+    localStorage.removeItem('token');
     navigate('/');
   }
   
