@@ -1,6 +1,6 @@
-import './css/Introduction.css'
+import './Introduction.css'
 
-const Introduction = (props) => {
+const Introduction = () => {
   return (
     <div className="introduction-container d-flex flex-column my-3 p-5 rounded-4">
       <p className="fs-1 text-center my-2">Remember your vacation</p>

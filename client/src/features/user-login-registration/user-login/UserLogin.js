@@ -7,9 +7,9 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
-import './css/UserLogin.css'
+import './UserLogin.css'
 
-const UserLogin = ({setLogin, setUserId}) => {
+const UserLogin = ({setLogin}) => {
   
   const navigate = useNavigate();
   const [user, setUser] = useState({});

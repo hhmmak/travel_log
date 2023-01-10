@@ -7,9 +7,9 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-import './css/PostForm.css';
+import './FormDefault.css';
 
-const PostForm = (props) => {
+const FormDefault = (props) => {
 
   // const navigate = useNavigate();
   const {error, post, setPost, submitAction} = props;
@@ -30,14 +30,6 @@ const PostForm = (props) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     submitAction(post);
-    // const token = localStorage.getItem('token');
-
-    // axios.post(`http://localhost:5000/api/posts?token=${token}`, {...post, user_id: userId})
-    //   .then(res => navigate('/'))
-    //   .catch(err => {
-    //     setError(err.response.data)
-    //     console.log(err)
-    //   })
   }
 
   return (
@@ -108,4 +100,4 @@ const PostForm = (props) => {
     </div>
   )
 }
-export default PostForm;
+export default FormDefault;

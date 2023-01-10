@@ -6,9 +6,9 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 
-import './css/UserRegister.css'
+import './UserRegister.css'
 
-const UserRegister = (props) => {
+const UserRegister = () => {
 
   const navigate = useNavigate();
   const [user, setUser] = useState({});
@@ -22,7 +22,6 @@ const UserRegister = (props) => {
       .catch(err => {
         setError(err.response.data)
         console.log(err);
-      
       })
   }
 

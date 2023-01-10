@@ -7,26 +7,26 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 
-import './css/Header.css'
+import './Header.css'
 
 const Header = (props) => {
   
   const navigate = useNavigate();
-  const {setLogin, login, setUserId} = props;
+  const {setLogin, login} = props;
   const [headerLink, setHeaderLink] = useState([["Log In", "/login"], ["Create Account", "/register"]]);
 
 
   useEffect(() => {
 
     if (localStorage.getItem('token') !== null) {
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem('token');
       axios.get(`http://localhost:5000/api/users?token=${token}`)
         .then( res => {
-          setLogin(true)
-          setUserId(res.data.userId)
+          setLogin(true);
         })
         .catch(err => {
           console.log(err);
+          localStorage.removeItem('token');
           setLogin(false);
         });
     }
@@ -37,12 +37,11 @@ const Header = (props) => {
       setHeaderLink([["Log In", "/login"], ["Create Account", "/register"]])
     }
   
-  }, [login])
+  }, [login, setLogin])
 
   const onLogOut = () => {
     setLogin(false);
-    setUserId(null);
-    localStorage.clear();
+    localStorage.removeItem('token');
     navigate('/');
   }
   

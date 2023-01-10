@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import PostForm from './PostForm';
+import FormDefault from './form-default/FormDefault';
 
 
 const PostAdd = () => {
@@ -48,7 +48,7 @@ const PostAdd = () => {
   }
 
   return (
-    <PostForm error={error} post={post} setPost={setPost} submitAction={onPostHandler} />
+    <FormDefault error={error} post={post} setPost={setPost} submitAction={onPostHandler} />
   )
 }
 export default PostAdd;

@@ -2,7 +2,7 @@
   background-repeat: no-repeat;
   background-size: 30%;
   background-position: 90% 30%;
-  background-image: url('../icons/paperplane.svg');
+  background-image: url('../../components/icons/paperplane.svg');
 }
 
 .bookmark-detail {
