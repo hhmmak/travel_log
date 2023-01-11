@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+import useHeaderLink from '../../hooks/useHeaderLink';
 
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
@@ -13,7 +15,8 @@ const Header = (props) => {
   
   const navigate = useNavigate();
   const {setLogin, login} = props;
-  const [headerLink, setHeaderLink] = useState([["Log In", "/login"], ["Create Account", "/register"]]);
+  const [headerLink, {loginHeader, logoutHeader}] = useHeaderLink();
+  // const [headerLink, setHeaderLink] = useState([["Log In", "/login"], ["Create Account", "/register"]]);
 
 
   useEffect(() => {
@@ -31,10 +34,11 @@ const Header = (props) => {
         });
     }
     
+
     if (login) {
-      setHeaderLink([["Write New Post", '/post/new'], ["Profile", `/user`]])
+      loginHeader();
     } else {
-      setHeaderLink([["Create Account", "/register"], ["Log In", "/login"]])
+      logoutHeader();
     }
   
   }, [login, setLogin])
