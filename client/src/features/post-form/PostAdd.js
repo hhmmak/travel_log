@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import FormDefault from './form-default/FormDefault';
 
 
-const PostAdd = () => {
+const PostAdd = ({setLogin}) => {
 
   const navigate = useNavigate();
 
@@ -44,6 +44,7 @@ const PostAdd = () => {
         .catch(err => console.log(err));
     } else {
       navigate('/');
+      setLogin(false);
     }
   }
 
