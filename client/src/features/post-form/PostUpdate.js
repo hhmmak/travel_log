@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import FormDefault from './form-default/FormDefault';
 
 
-const PostUpdate = () => {
+const PostUpdate = ({setLogin}) => {
 
   const navigate = useNavigate();
   const {id} = useParams();
@@ -47,6 +47,7 @@ const PostUpdate = () => {
         .catch(err => console.log(err));
     } else {
       navigate('/');
+      setLogin(false);
     }
   }
 

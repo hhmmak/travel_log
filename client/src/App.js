@@ -26,9 +26,9 @@ function App() {
             <Route path='/login' element={<UserLogin setLogin={setLogin}/>} />
             <Route path='/register' element={<UserRegister />} />
             <Route path='/post/:id' element={<PostDetail />} />
-            <Route path='/post/new' element={<PostAdd />} />
+            <Route path='/post/new' element={<PostAdd setLogin={setLogin}/>} />
+            <Route path='/post/edit/:id' element={<PostUpdate setLogin={setLogin}/>} />
             <Route path='/user' element={<UserProfile />} />
-            <Route path='/post/edit/:id' element={<PostUpdate />} />
           </Routes>
         </Container>
       </BrowserRouter>
