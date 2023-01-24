@@ -54,7 +54,7 @@ const PostUpdate = ({setLogin}) => {
   return (
     <>
     { loaded &&
-      <FormDefault error={error} post={post} setPost={setPost} submitAction={onPutHandler} />
+      <FormDefault error={error} post={post} setPost={setPost} submitAction={onPutHandler} submitText={"Update"}/>
     }
     </>
   )
