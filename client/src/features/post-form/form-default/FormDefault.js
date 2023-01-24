@@ -12,7 +12,7 @@ import './FormDefault.css';
 const FormDefault = (props) => {
 
   // const navigate = useNavigate();
-  const {error, post, setPost, submitAction} = props;
+  const {error, post, setPost, submitAction, submitText} = props;
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
@@ -94,7 +94,7 @@ const FormDefault = (props) => {
           <Form.Control as="textarea" rows={5} name='content' onChange={onChangeHandler} value={post.content}/>
         </Form.Group>
         <div className='d-grid d-md-block'>
-          <Button variant="outline-dark" type="submit" className='col-md-5'>Post</Button>
+          <Button variant="outline-dark" type="submit" className='col-md-5'>{submitText}</Button>
         </div>
       </Form>
     </div>
