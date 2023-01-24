@@ -49,7 +49,7 @@ const PostAdd = ({setLogin}) => {
   }
 
   return (
-    <FormDefault error={error} post={post} setPost={setPost} submitAction={onPostHandler} />
+    <FormDefault error={error} post={post} setPost={setPost} submitAction={onPostHandler} submitText={"Post"}/>
   )
 }
 export default PostAdd;
