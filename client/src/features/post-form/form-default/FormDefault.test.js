@@ -1,7 +1,7 @@
 import FormDefault from './FormDefault';
 import axios from 'axios';
 
-import {render, screen, cleanup} from '@testing-library/react';
+import {render, screen, cleanup, waitFor} from '@testing-library/react';
 
 jest.mock('axios');
 
@@ -10,7 +10,7 @@ afterEach(() => {
   jest.restoreAllMocks();
 });
 
-test('should have submit button with "Post" as text', () => {
+test('should have submit button with "Post" as text', async () => {
 
   const error = {};
   const post = {};
@@ -20,13 +20,16 @@ test('should have submit button with "Post" as text', () => {
   axios.get.mockResolvedValue({});
 
   render(<FormDefault error={error} post={post} setPost={setPost} submitAction={submitAction} submitText={submitText}/>)
+  
   const submitButtonElement = screen.getByRole('button');
-  expect(submitButtonElement).toBeInTheDocument();
+  await waitFor(() => {  
+    expect(submitButtonElement).toBeInTheDocument();
+  })
   expect(submitButtonElement).toHaveTextContent('Post');
 
 });
 
-test('should display all form input field', () => {
+test('should display all form input field', async () => {
   const error = {};
   const post = {};
   const setPost = jest.fn();
@@ -34,14 +37,20 @@ test('should display all form input field', () => {
   const submitText = "Post";
   axios.get.mockResolvedValue([{country: "USA"}, {country: "Canada"}, {country: "Japan"}]);
 
-
   const textboxNameList = ["title", "location", "city", "itinerary", "content"]
 
   render(<FormDefault error={error} post={post} setPost={setPost} submitAction={submitAction} submitText={submitText}/>)
-  const inputTextElements = screen.getAllByRole('textbox');
-  expect(inputTextElements.map((ele => ele.name))).toEqual(textboxNameList);
+  
+  await waitFor(() => {  
+    const inputTextElements = screen.getAllByRole('textbox');
+    expect(inputTextElements.map((ele => ele.name))).toEqual(textboxNameList);
+  })
+
   const countryElement = screen.getByRole('combobox');
-  const countryListElement = screen.getAllByRole('option');
   expect(countryElement).toBeInTheDocument();
+
+  const countryListElement = screen.getAllByRole('option');
   expect(countryListElement[0]).toHaveTextContent("Select one country");
+
+
 })
