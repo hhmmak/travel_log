@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import {render, screen, cleanup} from '@testing-library/react';
 
-jest.mock('axios');
+jest.mock('axios'); //mock entire axios module, check PostDetail.test.js for individual function mock (spyOn)
 
 afterEach(() => {
   cleanup();

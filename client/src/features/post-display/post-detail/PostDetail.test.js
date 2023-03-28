@@ -17,6 +17,7 @@ afterEach(() => {
 
 test('useEffect axios should get post detail', async () => {
 
+    // mock individual function of axios, check FormDefault.test.js for entire module mock
     const spyAxios = jest.spyOn(axios, 'get').mockResolvedValue({
       id : '90',
       username: 'username-mock',
