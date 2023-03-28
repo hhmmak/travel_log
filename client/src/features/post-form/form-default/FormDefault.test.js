@@ -1,7 +1,7 @@
 import FormDefault from './FormDefault';
 import axios from 'axios';
 
-import {render, screen, cleanup, waitFor} from '@testing-library/react';
+import {render, screen, cleanup} from '@testing-library/react';
 
 jest.mock('axios');
 
@@ -21,10 +21,8 @@ test('should have submit button with "Post" as text', async () => {
 
   render(<FormDefault error={error} post={post} setPost={setPost} submitAction={submitAction} submitText={submitText}/>)
   
-  const submitButtonElement = screen.getByRole('button');
-  await waitFor(() => {  
-    expect(submitButtonElement).toBeInTheDocument();
-  })
+  const submitButtonElement = await screen.findByRole('button');
+  expect(submitButtonElement).toBeInTheDocument();
   expect(submitButtonElement).toHaveTextContent('Post');
 
 });
@@ -41,10 +39,8 @@ test('should display all form input field', async () => {
 
   render(<FormDefault error={error} post={post} setPost={setPost} submitAction={submitAction} submitText={submitText}/>)
   
-  await waitFor(() => {  
-    const inputTextElements = screen.getAllByRole('textbox');
-    expect(inputTextElements.map((ele => ele.name))).toEqual(textboxNameList);
-  })
+  const inputTextElements = await screen.findAllByRole('textbox');    // findBy = getBy with waitFor
+  expect(inputTextElements.map((ele => ele.name))).toEqual(textboxNameList);
 
   const countryElement = screen.getByRole('combobox');
   expect(countryElement).toBeInTheDocument();
