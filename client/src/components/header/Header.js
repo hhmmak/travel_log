@@ -41,7 +41,7 @@ const Header = (props) => {
       logoutHeader();
     }
   
-  }, [login, setLogin, loginHeader, logoutHeader])
+  }, [login])
 
   const onLogOut = () => {
     setLogin(false);
