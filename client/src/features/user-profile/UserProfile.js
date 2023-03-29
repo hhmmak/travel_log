@@ -2,13 +2,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-import DeleteButton from '../../components/DeleteButton';
+import UserPostButton from '../../components/UserPostButton';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
 import './UserProfile.css';
 
@@ -68,10 +66,7 @@ const UserProfile = () => {
                     <td>{post.dateFrom}</td>
                     <td>{post.dateTo}</td>
                     <td>
-                      <ButtonGroup>
-                        <Button variant='secondary' onClick={ () => navigate(`/post/edit/${post.id}`)}>Edit</Button>
-                        <DeleteButton variant='secondary' postId={post.id} afterDelete={() => removePost(post.id)} notLiggedIn={() => navigate('/')}/>
-                      </ButtonGroup>
+                      <UserPostButton post={post} deleteAction={() => removePost(post.id)} />
                     </td>
                   </tr>
                 )}

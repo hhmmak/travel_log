@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import DeleteButton from '../../../components/DeleteButton';
 import BookmarkButton from '../../../components/bookmarkButton/BookmarkButton';
+import UserPostButton from '../../../components/UserPostButton';
 
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
@@ -46,10 +44,9 @@ const PostDetail = () => {
       { userId &&
         <Col className='d-flex flex-row-reverse'>
         { userId === post.userId &&
-          <ButtonGroup>
-            <Button variant='secondary' onClick={() => navigate(`/post/edit/${post.id}`)}>Edit</Button>
-            <DeleteButton variant='secondary' postId={post.id} afterDelete={() => navigate('/')} notLoggedIn={() => setUserId(null)}/>
-          </ButtonGroup>
+          <div>
+            <UserPostButton post={post} deleteAction={() => navigate('/')} />
+          </div>
         }
         </Col>
       }
