@@ -34,7 +34,7 @@ const UserProfile = () => {
     } else {
       navigate('/');
     }
-  }, []);
+  }, [navigate]);
 
   const removePost = (id) => {
     setUser({...user, posts: user.posts.filter(post => post.id !== id)});
