@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-import UserPostButton from '../../components/UserPostButton';
+import UserPostButton from '../../components/buttons/UserPostButton';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import BookmarkButton from '../../../components/bookmarkButton/BookmarkButton';
-import UserPostButton from '../../../components/UserPostButton';
+import BookmarkButton from '../../../components/buttons/bookmarkButton/BookmarkButton';
+import UserPostButton from '../../../components/buttons/UserPostButton';
 
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'

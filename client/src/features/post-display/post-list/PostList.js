@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card'
 
 import './PostList.css'
 import Introduction from '../../../components/introduction/Introduction'
-import BookmarkButton from '../../../components/bookmarkButton/BookmarkButton'
+import BookmarkButton from '../../../components/buttons/bookmarkButton/BookmarkButton'
 
 const PostList = () => {
 

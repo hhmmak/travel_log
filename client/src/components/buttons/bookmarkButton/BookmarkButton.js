@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {ReactComponent as Bookmark} from '../icons/bookmark.svg';
+import {ReactComponent as Bookmark} from '../../icons/bookmark.svg';
 
 
 const BookmarkButton = ({bookmarks, setBookmarks, setUserId, postId, width="100%"}) => {
