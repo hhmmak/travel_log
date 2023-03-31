@@ -5,3 +5,7 @@
   background-position: 90% 30%;
   background-image: url('../icons/paperplane.svg'); */
 }
+
+.introduction-container p{
+  font-family: 'Permanent Marker', cursive;
+}
