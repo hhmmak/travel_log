@@ -40,24 +40,16 @@ const PostDetail = () => {
 
   return ( 
     <div className='my-3'>
-      <Row>
-      { userId &&
-        <Col className='d-flex flex-row-reverse'>
-        { userId === post.userId &&
-          <div>
-            <UserPostButton post={post} deleteAction={() => navigate('/')} />
-          </div>
-        }
-        </Col>
-      }
-      </Row>
       <Row className='align-items-center'>
         <Col>
           <h2 className='my-5'>{post.title}</h2>
         </Col>
         <Col xs={{span:1, offset:1}}>
-          { (post.userId !== userId && userId !== null) &&
-            <BookmarkButton bookmarks={bookmarks} setBookmarks={setBookmarks} setUserId={setUserId} postId={post.id} width={"3rem"} />
+          { userId === post.userId 
+          ? <UserPostButton post={post} deleteAction={() => navigate('/')} />
+          : userId !== null
+            ? <BookmarkButton bookmarks={bookmarks} setBookmarks={setBookmarks} setUserId={setUserId} postId={post.id} width={"3rem"} />
+            : null
           }
         </Col>
       </Row>
