@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -9,14 +9,25 @@ import Card from 'react-bootstrap/Card'
 import './PostList.css'
 import Introduction from '../../../components/introduction/Introduction'
 import BookmarkButton from '../../../components/buttons/bookmarkButton/BookmarkButton'
+import Pagination from '../../../components/buttons/Pagination'
+
+let PageSize = 6;
 
 const PostList = () => {
 
-  const[postList, setPostList] = useState([]);
-  const[bookmarks, setBookmarks] = useState([]);
-  const[userId, setUserId] = useState(null);
+  const [postList, setPostList] = useState([]);
+  const [bookmarks, setBookmarks] = useState([]);
+  const [userId, setUserId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const navigate = useNavigate();
+
+  const pagedPostList = useMemo(() => {
+    const firstPost = (currentPage - 1) * PageSize;
+    const lastPost = firstPost + PageSize;
+
+    return postList.slice(firstPost, lastPost);
+  }, [postList, currentPage])
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/posts")
@@ -45,7 +56,7 @@ const PostList = () => {
     <div className='my-3'>
       <Introduction />
       <Row className='g-3'>
-      { postList.map( (post, index) => 
+      { pagedPostList.map( (post, index) => 
         <Col md={6} lg={4} key={index}>
           <Card>
             <Card.Header className='card-edge-background'>
@@ -81,6 +92,7 @@ const PostList = () => {
         </Col>
       )}
       </Row>
+      <Pagination onPageChange={page => setCurrentPage(page)} totalCount={postList.length} siblingCount={0} currentPage={currentPage} pageSize={PageSize} />
     </div>
   )
 }
