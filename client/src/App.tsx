@@ -9,12 +9,12 @@ import UserLogin from './features/user-login-registration/user-login/UserLogin';
 import UserRegister from './features/user-login-registration/user-registration/UserRegister';
 import PostDetail from './features/post-display/post-detail/PostDetail';
 import UserProfile from './features/user-profile/UserProfile';
-import PostUpdate from './features/post-form/PostUpdate';
 import PostAdd from './features/post-form/PostAdd';
+import PostEdit from './features/post-form/PostEdit';
 
 function App() {
 
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState<boolean>(false);
 
   return (
     <div className='pb-5'>
@@ -27,7 +27,7 @@ function App() {
             <Route path='/register' element={<UserRegister />} />
             <Route path='/post/:id' element={<PostDetail />} />
             <Route path='/post/new' element={<PostAdd setLogin={setLogin}/>} />
-            <Route path='/post/edit/:id' element={<PostUpdate setLogin={setLogin}/>} />
+            <Route path='/post/edit/:id' element={<PostEdit setLogin={setLogin}/>} />
             <Route path='/user' element={<UserProfile />} />
           </Routes>
         </Container>

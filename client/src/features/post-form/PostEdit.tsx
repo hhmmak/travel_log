@@ -3,15 +3,20 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import FormDefault from './form-default/FormDefault';
+import { PostFormType } from '../../types/posts.types';
+
+type PostEditProps = {
+  setLogin: (login: boolean) => void
+}
 
 
-const PostUpdate = ({setLogin}) => {
+const PostEdit = ({setLogin}: PostEditProps) => {
 
   const navigate = useNavigate();
   const {id} = useParams();
 
   const [loaded, setLoaded] = useState(false);
-  const [error, setError] = useState({})
+  const [error, setError] = useState<Partial<PostFormType>>({})
   const [post, setPost] = useState({
     title: "",
     content: "",
@@ -32,12 +37,12 @@ const PostUpdate = ({setLogin}) => {
     .catch(err => console.log(err))
   }, [id])
 
-  const onPutHandler = (e) => {
+  const onPutHandler = (newPost: PostFormType) => {
     const token = localStorage.getItem('token');
     if (token !== null){
       axios.get(`http://localhost:5000/api/users?token=${token}`)
         .then(res => {
-          axios.put(`http://localhost:5000/api/posts/${id}?token=${token}`, {...post, user_id: res.data.userId} )
+          axios.put(`http://localhost:5000/api/posts/${id}?token=${token}`, {...newPost, user_id: res.data.userId} )
           .then(res => navigate('/'))
           .catch(err => {
             setError(err.response.data)
@@ -59,4 +64,4 @@ const PostUpdate = ({setLogin}) => {
     </>
   )
 }
-export default PostUpdate;
+export default PostEdit;

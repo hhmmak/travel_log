@@ -13,3 +13,14 @@ export type PostType = {
   userId: number
   username: string
 }
+
+export type PostFormType = Pick<PostType,
+  "city" |
+  "content" |
+  "country" |
+  "dateFrom" |
+  "dateTo" |
+  "itinerary" |
+  "location" |
+  "title"
+>

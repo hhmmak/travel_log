@@ -3,9 +3,13 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import FormDefault from './form-default/FormDefault';
+import { PostFormType } from '../../types/posts.types';
 
+type PostAddProps = {
+  setLogin: (login: boolean) => void
+}
 
-const PostAdd = ({setLogin}) => {
+const PostAdd = ({setLogin}: PostAddProps) => {
 
   const navigate = useNavigate();
 
@@ -17,8 +21,8 @@ const PostAdd = ({setLogin}) => {
   
   };
 
-  const [error, setError] = useState({})
-  const [post, setPost] = useState({
+  const [error, setError] = useState<Partial<PostFormType>>({})
+  const [post, setPost] = useState<PostFormType>({
     title: "",
     content: "",
     itinerary: "",
@@ -29,7 +33,7 @@ const PostAdd = ({setLogin}) => {
     dateTo: todayDate()
   })
   
-  const onPostHandler = (newPost) => {
+  const onPostHandler = (newPost: PostFormType) => {
     const token = localStorage.getItem('token');
     if (token !== null){
       axios.get(`http://localhost:5000/api/users?token=${token}`)

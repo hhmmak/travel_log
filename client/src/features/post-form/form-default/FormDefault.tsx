@@ -8,12 +8,21 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import './FormDefault.css';
+import { PostFormType } from '../../../types/posts.types';
 
-const FormDefault = (props) => {
+type FormDefaultProps = {
+  error: Partial<PostFormType>
+  post: PostFormType
+  setPost: (newPost: PostFormType) => void 
+  submitAction: (newPost: PostFormType) => void
+  submitText: string
+}
+
+const FormDefault = (props: FormDefaultProps) => {
 
   // const navigate = useNavigate();
   const {error, post, setPost, submitAction, submitText} = props;
-  const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState<Record<string, string>[]>([]);
 
   useEffect(() => {
     axios.get(`http://localhost:5000/api/countries`)
@@ -23,11 +32,11 @@ const FormDefault = (props) => {
   
 
 
-  const onChangeHandler = (e) => {
-    setPost({...post, [e.target.name]: e.target.value });
+  const onChangeHandler = (e: React.ChangeEvent<HTMLElement>) => {
+    setPost({...post, [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value });
   }
   
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
     submitAction(post);
   }
@@ -57,7 +66,7 @@ const FormDefault = (props) => {
               <Form.Select aria-label='Select a country' name='country' onChange={onChangeHandler} value={post.country}>
                 <option>Select one country</option>
                 {countries.map( (country, index) =>
-                <option value={country.country} key={index}>{country.country}</option>
+                  <option value={country.country} key={index}>{country.country}</option>
                 )}
               </Form.Select>
               {error.country &&
