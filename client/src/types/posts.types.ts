@@ -1,4 +1,5 @@
 export type PostType = {
+  destination: string
   city: string
   content: string
   country: string
@@ -22,5 +23,12 @@ export type PostFormType = Pick<PostType,
   "dateTo" |
   "itinerary" |
   "location" |
+  "title"
+>
+
+export type BookmarkType = Pick<PostType,
+  "destination" |
+  "duration" |
+  "id" |
   "title"
 >

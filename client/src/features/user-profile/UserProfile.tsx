@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-import UserPostButton from '../../components/buttons/UserPostButton';
-
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 
 import './UserProfile.css';
+import { UserType } from '../../types/users.types';
+import UserPostButton from '../../components/buttons/UserPostButton';
 
 const UserProfile = () => {
 
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<UserType | null>(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -23,6 +23,7 @@ const UserProfile = () => {
       .then(res => {
         axios.get(`http://localhost:5000/api/users/posts/${res.data.userId}`)
           .then(res => {
+            console.log(res.data)
             setUser(res.data);
             setLoaded(true)
           })
@@ -34,7 +35,11 @@ const UserProfile = () => {
     }
   }, [navigate]);
 
-  const removePost = (id) => {
+  if (user === null){
+    return <div>404 Forbidden</div>
+  }
+
+  const removePost = (id: number) => {
     setUser({...user, posts: user.posts.filter(post => post.id !== id)});
   }
 
@@ -66,7 +71,7 @@ const UserProfile = () => {
                     <td>{post.dateFrom}</td>
                     <td>{post.dateTo}</td>
                     <td>
-                      <UserPostButton post={post} deleteAction={() => removePost(post.id)} />
+                      <UserPostButton postId={post.id} deleteAction={() => removePost(post.id)} />
                     </td>
                   </tr>
                 )}
