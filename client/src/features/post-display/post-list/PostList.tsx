@@ -8,17 +8,19 @@ import Card from 'react-bootstrap/Card'
 
 import './PostList.css'
 import Introduction from '../../../components/introduction/Introduction'
-import BookmarkButton from '../../../components/buttons/bookmarkButton/BookmarkButton'
+import BookmarkButton from '../../../components/buttons/BookmarkButton'
 import Pagination from '../../../components/buttons/Pagination'
+
+import { PostType } from '../../../types/posts.types'
 
 let PageSize = 6;
 
 const PostList = () => {
 
-  const [postList, setPostList] = useState([]);
-  const [bookmarks, setBookmarks] = useState([]);
-  const [userId, setUserId] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [postList, setPostList] = useState<PostType[]>([]);
+  const [bookmarks, setBookmarks] = useState<number[]>([]);
+  const [userId, setUserId] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const navigate = useNavigate();
 
@@ -41,7 +43,8 @@ const PostList = () => {
               setUserId(res.data.userId)
               axios.post(`http://localhost:5000/api/bookmarks/list?token=${token}`, {userId: res.data.userId})
                 .then(res => {
-                  setBookmarks(res.data);
+        console.log(res.data)
+        setBookmarks(res.data);
                 })
                 .catch(err => console.log(err))
             })
@@ -92,7 +95,7 @@ const PostList = () => {
         </Col>
       )}
       </Row>
-      <Pagination onPageChange={page => setCurrentPage(page)} totalCount={postList.length} siblingCount={0} currentPage={currentPage} pageSize={PageSize} />
+      <Pagination onPageChange={(page: number) => setCurrentPage(page)} totalCount={postList.length} siblingCount={0} currentPage={currentPage} pageSize={PageSize} />
     </div>
   )
 }

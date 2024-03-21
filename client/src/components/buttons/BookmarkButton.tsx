@@ -1,11 +1,19 @@
 import axios from 'axios';
 
-import {ReactComponent as Bookmark} from '../../icons/bookmark.svg';
+import {ReactComponent as Bookmark} from '../icons/bookmark.svg';
+
+type BookmarkButtonProps = {
+  bookmarks: number[]
+  setBookmarks: (bookmarks: number[]) => void
+  setUserId: (userId: number | null) => void
+  postId: number
+  width?: string
+}
 
 
-const BookmarkButton = ({bookmarks, setBookmarks, setUserId, postId, width="100%"}) => {
+const BookmarkButton = ({bookmarks, setBookmarks, setUserId, postId, width="100%"} : BookmarkButtonProps) => {
 
-  const changeBookmark = (e, postId) => {
+  const changeBookmark = (e: React.MouseEvent<SVGSVGElement>, postId: number) => {
     
     const token = localStorage.getItem('token');
     if (token !== null){
@@ -15,7 +23,7 @@ const BookmarkButton = ({bookmarks, setBookmarks, setUserId, postId, width="100%
           // set to not bookmarked
           axios.delete(`http://localhost:5000/api/bookmarks?token=${token}`,{data :{"userId": res.data.userId, "postId": postId}})
           .then(res => {
-            e.target.style.fill = "#efefef";
+            (e.target as SVGSVGElement).style.fill = "#efefef";
             let bookmarkList = bookmarks.filter(id => id !== postId);
             setBookmarks(bookmarkList);
           })
@@ -24,7 +32,7 @@ const BookmarkButton = ({bookmarks, setBookmarks, setUserId, postId, width="100%
           // set to bookmarked
           axios.post(`http://localhost:5000/api/bookmarks?token=${token}`,{"userId": res.data.userId, "postId": postId})
           .then(res => {
-            e.target.style.fill = "#eebc64"
+            (e.target as SVGSVGElement).style.fill = "#eebc64"
             bookmarks.push(postId);
             setBookmarks(bookmarks);
           })

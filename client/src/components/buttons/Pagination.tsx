@@ -1,6 +1,14 @@
 import usePagination from "../../hooks/usePagination"
 
-const Pagination = ({onPageChange, totalCount, siblingCount=1, currentPage, pageSize}) => {
+type PaginationProps = {
+  onPageChange: (page: number) => void
+  totalCount: number
+  siblingCount?: number
+  currentPage: number
+  pageSize: number
+}
+
+const Pagination = ({onPageChange, totalCount, siblingCount=1, currentPage, pageSize}: PaginationProps) => {
 
   const paginationRange = usePagination({totalCount, siblingCount, currentPage, pageSize});
 
@@ -15,7 +23,7 @@ const Pagination = ({onPageChange, totalCount, siblingCount=1, currentPage, page
 
 
   return (
-    <nav ariaLabel="pagination" className='my-4'>
+    <nav aria-label="pagination" className='my-4'>
       <ul className="pagination pagination-lg justify-content-center">
         <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
           <div className="page-link" onClick={onPrevious}>
