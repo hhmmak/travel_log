@@ -7,13 +7,13 @@ import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 
 import './UserProfile.css';
-import { UserType } from '../../types/users.types';
+import { UserProfileType } from '../../types/users.types';
 import UserPostButton from '../../components/buttons/UserPostButton';
 
 const UserProfile = () => {
 
   const navigate = useNavigate();
-  const [user, setUser] = useState<UserType | null>(null);
+  const [user, setUser] = useState<UserProfileType | null>(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {

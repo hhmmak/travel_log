@@ -7,15 +7,25 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 
 import './UserRegister.css'
+import { UserAccountType } from '../../../types/users.types';
 
 const UserRegister = () => {
 
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
-  const [error, setError] = useState({})
+  const [user, setUser] = useState<UserAccountType>({
+    email: "",
+    firstName: "",
+    lastName: "",
+    username: "",
+    confirmPassword: "",
+    password: "",
+  });
+  const [error, setError] = useState<Partial<UserAccountType>>({})
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    console.log(user)
 
     axios.post(`http://localhost:5000/api/users`, user)
       .then(res => navigate('/'))
@@ -25,8 +35,8 @@ const UserRegister = () => {
       })
   }
 
-  const onChangeHandler = (e) => {
-    setUser({...user, [e.target.name]: e.target.value})
+  const onChangeHandler = (e: React.ChangeEvent<HTMLElement>) => {
+    setUser({...user, [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value})
   }
 
 

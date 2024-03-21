@@ -9,13 +9,17 @@ import { Link } from 'react-router-dom';
 
 import './UserLogin.css'
 
-const UserLogin = ({setLogin}) => {
+type UserLoginProps = {
+  setLogin: (login: boolean) => void
+}
+
+const UserLogin = ({setLogin}: UserLoginProps) => {
   
   const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [error, setError] = useState(false);
   
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
     axios.post('http://localhost:5000/login', user)
@@ -31,8 +35,8 @@ const UserLogin = ({setLogin}) => {
       })
   }
   
-  const onChangeHandler = (e) => {
-    setUser({...user, [e.target.name]: e.target.value})
+  const onChangeHandler = (e: React.ChangeEvent<HTMLElement>) => {
+    setUser({...user, [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value})
   }
   return (
     <div className='d-flex align-items-center login-container'>
