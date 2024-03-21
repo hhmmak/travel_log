@@ -9,7 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('./asset/plane_horizon.jpg');
+  background-image: url('./asset/bg.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
