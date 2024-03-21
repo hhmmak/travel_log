@@ -10,6 +10,7 @@ import Col from 'react-bootstrap/Col'
 
 import './PostDetail.css';
 import { PostType } from '../../../types/posts.types';
+import ErrorDisplay from '../../../components/errorDisplay';
 
 const PostDetail = () => {
 
@@ -40,7 +41,7 @@ const PostDetail = () => {
   }, [id])
 
   if (post === null){
-    return <div>404 Forbidden</div>
+    return <ErrorDisplay message="404 Not Found" />
   }
 
   return ( 

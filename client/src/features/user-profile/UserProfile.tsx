@@ -9,6 +9,7 @@ import Table from 'react-bootstrap/Table';
 import './UserProfile.css';
 import { UserProfileType } from '../../types/users.types';
 import UserPostButton from '../../components/buttons/UserPostButton';
+import ErrorDisplay from '../../components/errorDisplay';
 
 const UserProfile = () => {
 
@@ -36,7 +37,7 @@ const UserProfile = () => {
   }, [navigate]);
 
   if (user === null){
-    return <div>404 Forbidden</div>
+    return <ErrorDisplay message="404 Not Found"/>
   }
 
   const removePost = (id: number) => {

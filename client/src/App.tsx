@@ -11,6 +11,7 @@ import PostDetail from './features/post-display/post-detail/PostDetail';
 import UserProfile from './features/user-profile/UserProfile';
 import PostAdd from './features/post-form/PostAdd';
 import PostEdit from './features/post-form/PostEdit';
+import PageNotFound from './features/pageNotFound';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
             <Route path='/post/new' element={<PostAdd setLogin={setLogin}/>} />
             <Route path='/post/edit/:id' element={<PostEdit setLogin={setLogin}/>} />
             <Route path='/user' element={<UserProfile />} />
+            <Route path='*' element={<PageNotFound />} />
           </Routes>
         </Container>
       </BrowserRouter>
