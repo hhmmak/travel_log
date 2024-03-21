@@ -1,8 +1,15 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import Button from 'react-bootstrap/Button';
 
-const DeleteButton = (props) => {
+type DeleteButtonProps = {
+  variant: string
+  postId: number
+  afterDelete: (res?: AxiosResponse) => void
+  notLoggedIn: () => void
+}
+
+const DeleteButton = (props: DeleteButtonProps) => {
 
   const {variant, postId, afterDelete, notLoggedIn} = props;
 

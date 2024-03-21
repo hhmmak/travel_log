@@ -2,21 +2,22 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import BookmarkButton from '../../../components/buttons/bookmarkButton/BookmarkButton';
+import BookmarkButton from '../../../components/buttons/BookmarkButton';
 import UserPostButton from '../../../components/buttons/UserPostButton';
 
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 import './PostDetail.css';
+import { PostType } from '../../../types/posts.types';
 
 const PostDetail = () => {
 
   const navigate = useNavigate();
   const {id} = useParams();
-  const[post, setPost] = useState({});
-  const[bookmarks, setBookmarks] = useState([]);
-  const[userId, setUserId] = useState(null);
+  const[post, setPost] = useState<PostType | null>(null);
+  const[bookmarks, setBookmarks] = useState<number[]>([]);
+  const[userId, setUserId] = useState<number | null>(null);
 
   useEffect( () => {
     axios.get(`http://localhost:5000/api/posts/${id}`)
@@ -38,6 +39,10 @@ const PostDetail = () => {
     }
   }, [id])
 
+  if (post === null){
+    return <div>404 Forbidden</div>
+  }
+
   return ( 
     <div className='my-3'>
       <Row className='align-items-center'>
@@ -46,7 +51,7 @@ const PostDetail = () => {
         </Col>
         <Col xs={{span:1, offset:1}}>
           { userId === post.userId 
-          ? <UserPostButton post={post} deleteAction={() => navigate('/')} />
+          ? <UserPostButton postId={post.id} deleteAction={() => navigate('/')} />
           : userId !== null
             ? <BookmarkButton bookmarks={bookmarks} setBookmarks={setBookmarks} setUserId={setUserId} postId={post.id} width={"3rem"} />
             : null
