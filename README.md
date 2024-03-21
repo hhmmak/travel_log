@@ -7,6 +7,9 @@ Where you had lunch on a day, when you started the day to arrive on time for the
   
 This app is here for everyone to keep track of their trips, so that you can share it with family and friends. Moreover, if you are short of ideas for you next travel, this is also a place where you can take reference of other's travel plan and make it as your own.
 
+![Screenshot 2024-03-21 at 00 21 44](https://github.com/hhmmak/travel_log/assets/100734684/2742c402-6416-43cd-b6c8-08cce721d734)
+
+
 ## Features
 * Keep track of travel details including travel itinerary and journal.
 * Create, read, update and delete your travel itinerary posts
